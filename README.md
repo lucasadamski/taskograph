@@ -10,7 +10,7 @@ Navigation Bar:
 4)  Motivation  -> Get motivated to work harder by reading some inspirational quotes or thoughts, celebrating your achivements.
 5)  Settings    -> Set up list of tasks, groups, and alarm clock to take a break during work.
 
-#Task Mode
+# Task Mode
 <img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/bcb2ecbf-b10c-4dfb-a02f-4f057c51d883">
 
 Sections: 
@@ -30,7 +30,7 @@ Sections:
 9) Time Targets Per Day - reminds you of resolutions of how much time you want to certain task each day
 10) Updoming Date Targets - keeps in your mind upcoming deadlines you decided to complete
 
-#Task Mode Options
+# Task Mode Options
 <img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/6a7ad772-2068-4398-9b9f-f6fe4943102b">
 
 # Targets
@@ -79,4 +79,5 @@ Get motivated with inspirational quotes, get reminded how much targets you've ac
 
 Decription:
 Add Tasks, Groups. Set Alarm Beep every Time Interval to take a break from work. 
+
 
