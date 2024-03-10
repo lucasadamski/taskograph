@@ -1,5 +1,5 @@
 ## taskograph
-Program that measures personal tasks (eg. reading, running, working, cooking) duration on each day. Provides charts of your efficiency (eg how much time you've spent reading in a day/week/month). Helps to focus on goals and maitain pace of productivity.
+Program that measures personal tasks (eg. reading, running, working, cooking) duration on each day. Provides charts of your efficiency (eg how much time you've spent reading in a day/week/month). Helps to focus on goals and maintain pace of productivity.
 
 ## Concept UI
 
