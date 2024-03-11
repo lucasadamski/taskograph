@@ -81,3 +81,23 @@ Decription:
 Add Tasks, Groups. Set Alarm Beep every Time Interval to take a break from work. 
 
 
+## Database 
+<img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/58d0ae83-3626-4f52-9dfe-4ec1eb6f44b3">
+
+1) Task Group
+    * Task belongs to a only one Group. Group contains many Tasks.
+    * Entry belongs to only one Task. Every day will have one Entry for one Task, so for example if user was doing task "Reading" 3 times per day for 10 minutes each,  this will be merged to one Entry "Reading" "30 minutes". The exact time of day doesn't matter. Day is the fundamental unit of time in this program.
+
+2) Target Group
+    * Precise_Target - eg. "Read Little Prince by 30th of March 2023"
+    * Regular_Target - eg "Read for 10 minutes everyday"
+
+3) Settings Group
+      * Settings - Bool, Time values for Alarm Clock. The rest is Option Ids that store string values.
+      * Option - eg. "TaskListOrder" value:"Id2_Id0_Id5" - stores order Tasks in Task Mode Table
+4) Quotes Group
+      * Standalone Quote for Motivational Section
+
+
+
+
