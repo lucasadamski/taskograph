@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace taskograph.Models.Tables
 {
@@ -18,7 +19,13 @@ namespace taskograph.Models.Tables
         public int? ColorId { get; set; }
         public int DateId { get; set; }
 
-        //add relations
+        public Group Group { get; set; }
+        public Color Color { get; set; }
+        public Date Date { get; set; }
+
+        public ICollection<Entry> Entries { get; set; }
+        public ICollection<PreciseTarget> PreciseTargets { get; set; }
+        public ICollection<RegularTarget> RegularTargets { get; set; }
 
     }
 }

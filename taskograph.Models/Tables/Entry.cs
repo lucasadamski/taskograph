@@ -15,6 +15,8 @@ namespace taskograph.Models.Tables
         public int DurationId { get; set; }
         public int DateId { get; set; }
 
-        //add relations
+        public Task Task{ get; set; }
+        public Duration Duration { get; set; }
+        public Date Date { get; set; }
     }
 }

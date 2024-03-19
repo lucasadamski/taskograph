@@ -14,5 +14,9 @@ namespace taskograph.Models.Tables
         [MaxLength(20)]
         [Column(TypeName = "varchar(20)")]
         public string Name { get; set; }
+
+        public ICollection<Task> Tasks { get; set; }
+        public ICollection<Group> Groups { get; set; }
+
     }
 }

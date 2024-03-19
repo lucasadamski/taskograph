@@ -16,6 +16,10 @@ namespace taskograph.Models.Tables
         public string Name { get; set; }
         public int? ColorId { get; set; }
         public int DateId { get; set; }
-        //add relations
+
+        public Color Color { get; set; }
+        public Date Date { get; set; }
+
+        public ICollection<Task> Tasks { get; set; }
     }
 }

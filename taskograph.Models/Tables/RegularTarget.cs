@@ -14,7 +14,9 @@ namespace taskograph.Models.Tables
         public int PerTimeframeDurationId { get; set; } //per every 1 week
         public int DateId { get; set; }
 
-        //add relations
+        public Task Task { get; set; }
+        public Duration Duration { get; set; }
+        public Date Date { get; set; }
 
     }
 }

@@ -14,5 +14,11 @@ namespace taskograph.Models.Tables
         public DateTime Created { get; set; }
         public DateTime? LastUpdated { get; set; }
         public DateTime? Deleted { get; set; }
+
+        public ICollection<Entry> Entries { get; set; }
+        public ICollection<Group> Groups { get; set; }
+        public ICollection<PreciseTarget> PreciseTargets { get; set; }
+        public ICollection<RegularTarget> RegularTargets { get; set; }
+        public ICollection<Task> Tasks { get; set; }
     }
 }
