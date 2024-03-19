@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34607.119
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "taskograph.Web", "taskograph.Web\taskograph.Web.csproj", "{0EE84B2F-011F-4E93-82CA-EF3AEF6FFBE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taskograph.EF", "taskograph.EF\taskograph.EF.csproj", "{B3FC1C06-EAFB-4985-81BA-C2796A5BB96A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taskograph.Models", "taskograph.Models\taskograph.Models.csproj", "{5BAD146C-159A-424A-B251-E3BFE1E9EB69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taskograph.Helpers", "taskograph.Helpers\taskograph.Helpers.csproj", "{C3A41EB2-1265-465C-B014-87F7612D8254}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0EE84B2F-011F-4E93-82CA-EF3AEF6FFBE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EE84B2F-011F-4E93-82CA-EF3AEF6FFBE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EE84B2F-011F-4E93-82CA-EF3AEF6FFBE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EE84B2F-011F-4E93-82CA-EF3AEF6FFBE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3FC1C06-EAFB-4985-81BA-C2796A5BB96A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3FC1C06-EAFB-4985-81BA-C2796A5BB96A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3FC1C06-EAFB-4985-81BA-C2796A5BB96A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3FC1C06-EAFB-4985-81BA-C2796A5BB96A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BAD146C-159A-424A-B251-E3BFE1E9EB69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BAD146C-159A-424A-B251-E3BFE1E9EB69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BAD146C-159A-424A-B251-E3BFE1E9EB69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BAD146C-159A-424A-B251-E3BFE1E9EB69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3A41EB2-1265-465C-B014-87F7612D8254}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3A41EB2-1265-465C-B014-87F7612D8254}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3A41EB2-1265-465C-B014-87F7612D8254}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3A41EB2-1265-465C-B014-87F7612D8254}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ABE01135-8DE2-4BC5-A971-89DAECD32FAA}
+	EndGlobalSection
+EndGlobal
