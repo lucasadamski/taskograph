@@ -14,7 +14,7 @@ namespace taskograph.Models.Tables
         [MaxLength(50)]
         [Column(TypeName = "varchar(50)")]
         public string Name { get; set; }
-        public int TaskId { get; set; }
+        public int? TaskId { get; set; }
         public DateTime DateDue { get; set; }
         public int DateId { get; set; }
 
