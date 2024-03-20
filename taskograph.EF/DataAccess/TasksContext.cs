@@ -99,17 +99,7 @@ namespace taskograph.EF.DataAccess
                new Duration { Id = 25, End = new DateTime(2, 0, 1, 0, 0, 0) }
                );
 
-            modelBuilder.Entity<Group>().HasData(
-                new Group { Id = 1, Name = "Health" },
-                new Group { Id = 2, Name = "Education" },
-                new Group { Id = 3, Name = "FriendsAndFamily" },
-                new Group { Id = 4, Name = "Sport" },
-                new Group { Id = 5, Name = "Work" },
-                new Group { Id = 6, Name = "Hobby" },
-                new Group { Id = 7, Name = "Relaxation" },
-                new Group { Id = 8, Name = "Entertaiment" },
-                new Group { Id = 9, Name = "Finance" }
-                );
+            
 
             modelBuilder.Entity<PreciseTarget>().HasData(
                     new PreciseTarget { Id = 1, Name = "Read Little Prince", DateDue = new DateTime(2024, 06, 01) , DateId = 1},
@@ -136,6 +126,18 @@ namespace taskograph.EF.DataAccess
             modelBuilder.Entity<Setting>().HasData(
               new Setting { Id = 1, Name = "AlarmClock" , Value = "Off"}
               );
+
+            modelBuilder.Entity<Group>().HasData(
+                new Group { Id = 1, Name = "Health", DateId = 9 },
+                new Group { Id = 2, Name = "Education", DateId = 10 },
+                new Group { Id = 3, Name = "FriendsAndFamily", DateId = 11 },
+                new Group { Id = 4, Name = "Sport", DateId = 12 },
+                new Group { Id = 5, Name = "Work", DateId = 13 },
+                new Group { Id = 6, Name = "Hobby", DateId = 14 },
+                new Group { Id = 7, Name = "Relaxation", DateId = 15 },
+                new Group { Id = 8, Name = "Entertaiment", DateId = 16 },
+                new Group { Id = 9, Name = "Finance", DateId = 17 }
+                );
 
         }
     }
