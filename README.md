@@ -4,7 +4,7 @@ Program that measures personal tasks (eg. reading, running, working, cooking) du
 ## Concept UI
 
 Navigation Bar:
-1)  Task Mode   -> Main place of the program, where you measure activities you do during day.
+1)  Task Mode   -> Main place of the program, where you add and measure activities you do during the day.
 2)  Targets     -> View specific targets dates you have set up so you know how much time you have left to complete it. Or view compleated tasks to celebrate your achievements.
 3)  Graphs      -> See charts of your productivity in the last day, week, month, year.
 4)  Motivation  -> Get motivated to work harder by reading some inspirational quotes or thoughts, celebrating your achivements.
@@ -85,18 +85,19 @@ Add Tasks, Groups. Set Alarm Beep every Time Interval to take a break from work.
 <img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/12c27c2d-cd74-43ac-8369-fe33b4fd4e23">
 
 1) Task Group
-    * Task belongs to a only one Group. Group contains many Tasks.
-    * Entry belongs to only one Task. Every day will have one Entry for one Task, so for example if user was doing task "Reading" 3 times per day for 10 minutes each,  this will be merged to one Entry "Reading" "30 minutes". The exact time of day doesn't matter. Day is the fundamental unit of time in this program.
+    * Task - table is central to Task Group realtions. Eg Task "Cooking" can belong to Group "Health", be of Color "Yellow", have Precise Target "Cook Christmas Dinner by 26th of December 2024", Regular Target "Cook vegetable lunch once per 1 week". Every day we can have Entry of Duration "30 minutes" (of Cooking Task).
+    * Group - Tasks can be grouped into a Group, but don't have to be (hence nullable).
+    * Precise Target - string description and deadline, nullable Task realtion "Read book by 12th of May 2024, relates to Task "Reading""
+    * Regular Target - Task for certain Duration per TimeFrameDuration, eg: "Task "Walking" 30 minutes per 1 day"
+    * Entry - single entry of Task, eg "Task "Working" for 5 hours". This is always per Day, so later we can have Graphs and Printouts of how much time per day/week/month we have done.
+    * Duration - time amount, is relative to 0001/01/01 00:00:00 , do End field 0001/01/01 00:15:00 means "15 minutes"
 
-2) Target Group
-    * Precise_Target - eg. "Read Little Prince by 30th of March 2023"
-    * Regular_Target - eg "Read for 10 minutes everyday"
+2) Date
+     * Has 1-1 relationship to every table in Task group
+3) Standalone tables:
+   * Quote 
+   * Setting - Name of Setting, and Value. Fully customizable by Program
 
-3) Settings Group
-      * Settings - Bool, Time values for Alarm Clock. The rest is Option Ids that store string values.
-      * Option - eg. "TaskListOrder" value:"Id2_Id0_Id5" - stores order Tasks in Task Mode Table
-4) Quotes Group
-      * Standalone Quote for Motivational Section
 
 
 
