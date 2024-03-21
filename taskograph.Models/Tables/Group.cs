@@ -11,8 +11,8 @@ namespace taskograph.Models.Tables
     public class Group
     {
         public int Id { get; set; }
-        [MaxLength(20)]
-        [Column(TypeName = "varchar(20)")]
+        [MaxLength(30)]
+        [Column(TypeName = "varchar(30)")]
         public string Name { get; set; }
         public int? ColorId { get; set; }
         public int DateId { get; set; }

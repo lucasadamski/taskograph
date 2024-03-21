@@ -11,8 +11,8 @@ namespace taskograph.Models.Tables
     public class Color
     {
         public int Id { get; set; }
-        [MaxLength(20)]
-        [Column(TypeName = "varchar(20)")]
+        [MaxLength(15)]
+        [Column(TypeName = "varchar(15)")]
         public string Name { get; set; }
 
         public ICollection<Task> Tasks { get; set; }

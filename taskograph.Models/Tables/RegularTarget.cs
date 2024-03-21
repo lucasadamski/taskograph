@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,10 @@ namespace taskograph.Models.Tables
         public int DateId { get; set; }
 
         public Task Task { get; set; }
-        public Duration Duration { get; set; }
+        [ForeignKey("TargetDurationId")]
+        public Duration TargetDuration { get; set; }
+        [ForeignKey("PerTimeframeDurationId")]
+        public Duration PerTimeframeDuration { get; set; }
         public Date Date { get; set; }
 
     }

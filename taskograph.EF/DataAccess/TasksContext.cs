@@ -1,21 +1,23 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using taskograph.Models.Tables;
 
 
 namespace taskograph.EF.DataAccess
 {
-   public class TasksContext : IdentityDbContext //TODO Indentity
+   public class TasksContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Color> Colors { get; set; }
         public DbSet<Date> Dates { get; set; }
         public DbSet<Duration> Durations { get; set; }
         public DbSet<Entry> Entries { get; set; }
-        public DbSet<Group> Groups { get; set; }
+        public DbSet<Models.Tables.Group> Groups { get; set; }
         public DbSet<PreciseTarget> PreciseTargets { get; set; }
         public DbSet<Quote> Quotes { get; set; }
         public DbSet<RegularTarget> RegularTargets { get; set; }
@@ -26,7 +28,31 @@ namespace taskograph.EF.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            //entry duration i taskid wyłącz cascade
+
+            modelBuilder.Entity<Entry>().HasOne(n => n.Duration)
+                .WithMany(n => n.Entries)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Entry>().HasOne(n => n.Task)
+                .WithMany(n => n.Entries)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<RegularTarget>().HasOne(n => n.TargetDuration)
+                .WithMany(n => n.TargetRegularTargets)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<RegularTarget>().HasOne(n => n.PerTimeframeDuration)
+                .WithMany(n => n.PerTimeframeRegularTargets)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<RegularTarget>().HasOne(n => n.Task)
+               .WithMany(n => n.RegularTargets)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            base.OnModelCreating(modelBuilder); //data base with users  
+
+           
 
             modelBuilder.Entity<Date>().HasData(
                new Date { Id = 1, Created = DateTime.Now },
@@ -96,7 +122,7 @@ namespace taskograph.EF.DataAccess
                new Duration { Id = 22, End = new DateTime(1, 4, 1, 0, 0, 0) },
                new Duration { Id = 23, End = new DateTime(1, 5, 1, 0, 0, 0) },
                new Duration { Id = 24, End = new DateTime(1, 6, 1, 0, 0, 0) },
-               new Duration { Id = 25, End = new DateTime(2, 0, 1, 0, 0, 0) }
+               new Duration { Id = 25, End = new DateTime(2, 1, 1, 0, 0, 0) }
                );
 
             
@@ -127,16 +153,16 @@ namespace taskograph.EF.DataAccess
               new Setting { Id = 1, Name = "AlarmClock" , Value = "Off"}
               );
 
-            modelBuilder.Entity<Group>().HasData(
-                new Group { Id = 1, Name = "Health", DateId = 9 },
-                new Group { Id = 2, Name = "Education", DateId = 10 },
-                new Group { Id = 3, Name = "FriendsAndFamily", DateId = 11 },
-                new Group { Id = 4, Name = "Sport", DateId = 12 },
-                new Group { Id = 5, Name = "Work", DateId = 13 },
-                new Group { Id = 6, Name = "Hobby", DateId = 14 },
-                new Group { Id = 7, Name = "Relaxation", DateId = 15 },
-                new Group { Id = 8, Name = "Entertaiment", DateId = 16 },
-                new Group { Id = 9, Name = "Finance", DateId = 17 }
+            modelBuilder.Entity<Models.Tables.Group>().HasData(
+                new Models.Tables.Group { Id = 1, Name = "Health", DateId = 9 },
+                new Models.Tables.Group { Id = 2, Name = "Education", DateId = 10 },
+                new Models.Tables.Group { Id = 3, Name = "FriendsAndFamily", DateId = 11 },
+                new Models.Tables.Group { Id = 4, Name = "Sport", DateId = 12 },
+                new Models.Tables.Group { Id = 5, Name = "Work", DateId = 13 },
+                new Models.Tables.Group { Id = 6, Name = "Hobby", DateId = 14 },
+                new Models.Tables.Group { Id = 7, Name = "Relaxation", DateId = 15 },
+                new Models.Tables.Group { Id = 8, Name = "Entertaiment", DateId = 16 },
+                new Models.Tables.Group { Id = 9, Name = "Finance", DateId = 17 }
                 );
 
         }

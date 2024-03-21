@@ -12,7 +12,7 @@ namespace taskograph.Models.Tables
     {
         public int Id { get; set; }
         [MaxLength(256)]
-        [Column(TypeName = "256")]
+        [Column(TypeName = "varchar(256)")]
         public string Name { get; set; }
     }
 }
