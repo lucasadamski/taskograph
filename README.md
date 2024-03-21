@@ -82,7 +82,7 @@ Add Tasks, Groups. Set Alarm Beep every Time Interval to take a break from work.
 
 
 ## Database 
-<img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/58d0ae83-3626-4f52-9dfe-4ec1eb6f44b3">
+<img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/12c27c2d-cd74-43ac-8369-fe33b4fd4e23">
 
 1) Task Group
     * Task belongs to a only one Group. Group contains many Tasks.
