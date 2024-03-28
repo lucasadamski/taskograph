@@ -1,4 +1,5 @@
 ﻿@model TaskViewModel
+@using Task = taskograph.Models.Tables.Task;
 
 
 <h1>Tasks</h1>
@@ -20,11 +21,11 @@
             foreach (Task task in Model.Tasks)
             {
                 <tr>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>                    
+                    <td>@task.Group.Name</td>
+                    <td>@task.Name</td>
+                    <td>StartTimerButton</td>
+                    <td>AddTimeButton</td>
+                    <td>TotalTimeToday</td>
                 </tr>
             }
         }

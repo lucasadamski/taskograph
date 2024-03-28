@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using taskograph.EF.DataAccess;
-using taskograph.Web.Data;
+using taskograph.EF.Repositories;
+using taskograph.EF.Repositories.Infrastructure;
 
 namespace taskograph.Web
 {
@@ -16,10 +17,11 @@ namespace taskograph.Web
             builder.Services.AddDbContext<TasksContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<TasksContext>();
+            builder.Services.AddScoped<ITaskRepository, TaskRepository>();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             var app = builder.Build();
 

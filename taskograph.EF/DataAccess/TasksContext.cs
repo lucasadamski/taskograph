@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using taskograph.Models.Tables;
+using taskograph.Models.Tables;
+using Task = taskograph.Models.Tables.Task;
 
 
 namespace taskograph.EF.DataAccess
@@ -21,7 +23,7 @@ namespace taskograph.EF.DataAccess
         public DbSet<PreciseTarget> PreciseTargets { get; set; }
         public DbSet<Quote> Quotes { get; set; }
         public DbSet<RegularTarget> RegularTargets { get; set; }
-        public DbSet<Models.Tables.Task> Tasks { get; set; }
+        public DbSet<Task> Tasks { get; set; }
 
 
         public TasksContext(DbContextOptions<TasksContext> options) : base(options) { }
@@ -137,11 +139,11 @@ namespace taskograph.EF.DataAccess
                  new Quote { Id = 2, Name = "It's about the marathon, not the sprint." },
                  new Quote { Id = 3, Name = "Don't feel bad because you don't know something and feel like you can't do anything. Do what you can do and then improve." }
                  );
-            modelBuilder.Entity<Models.Tables.Task>().HasData(
-              new Models.Tables.Task { Id = 1, Name = "Running", GroupId = 4, DateId = 5 },
-              new Models.Tables.Task { Id = 2, Name = "Reading", GroupId = 2, DateId = 6 },
-              new Models.Tables.Task { Id = 3, Name = "Cooking", GroupId = 1, DateId = 7 },
-              new Models.Tables.Task { Id = 4, Name = "Dancing", GroupId = 7, DateId = 8 }
+            modelBuilder.Entity<Task>().HasData(
+              new Task { Id = 1, Name = "Running", GroupId = 4, DateId = 5 },
+              new Task { Id = 2, Name = "Reading", GroupId = 2, DateId = 6 },
+              new Task { Id = 3, Name = "Cooking", GroupId = 1, DateId = 7 },
+              new Task { Id = 4, Name = "Dancing", GroupId = 7, DateId = 8 }
               );
 
             modelBuilder.Entity<RegularTarget>().HasData(
