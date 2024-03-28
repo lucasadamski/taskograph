@@ -23,7 +23,7 @@ namespace taskograph.Web.Controllers
         public IActionResult Index()
         {
             TaskViewModel taskVM = new TaskViewModel();
-            taskVM.Tasks = _taskRepository.GetAllTasks("asdf").ToList();
+            taskVM.Tasks = _taskRepository.GetAll("asdf").ToList();
             return View(taskVM);
         }
     }

@@ -69,7 +69,7 @@ namespace taskograph.EF.Repositories
             return true;
         }
 
-        public IEnumerable<Task> GetAllTasks(string userId)
+        public IEnumerable<Task> GetAll(string userId)
         {
             IEnumerable<Task> result;
             try
@@ -89,9 +89,9 @@ namespace taskograph.EF.Repositories
             return result;
         }
 
-        public Task GetTask(int id)
+        public Task Get(int id)
         {
-            Task result;
+            Task? result;
             try
             {
                 result = _db.Tasks
