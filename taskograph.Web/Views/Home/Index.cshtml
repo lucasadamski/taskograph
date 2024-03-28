@@ -3,6 +3,126 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 id="taskograph">taskograph</h1>
+    <p>Program that measures personal tasks (eg. reading, running, working, cooking) duration on each day. Provides charts of your efficiency (eg how much time you&#39;ve spent reading in a day/week/month). Helps to focus on goals and maintain pace of productivity.</p>
+    <h2 id="concept-ui">Concept UI</h2>
+    <h2>Navigation bar</h2>
+        <ol>
+            <li>
+                Task Mode   -&gt; Main place of the program, where you add and measure activities you do during the day.
+            </li>
+            <li>
+                Targets     -&gt; View specific targets dates you have set up so you know how much time you have left to complete it. Or view compleated tasks to celebrate your achievements.
+            </li>
+            <li>
+                Graphs      -&gt; See charts of your productivity in the last day, week, month, year.
+            </li>
+            <li>
+                Motivation  -&gt; Get motivated to work harder by reading some inspirational quotes or thoughts, celebrating your achivements.
+            </li>
+        </ol>
+      
+    <h1 id="task-mode">Task Mode</h1>
+    <p><img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/bcb2ecbf-b10c-4dfb-a02f-4f057c51d883"></p>
+    <p>
+        Sections:
+        1) Current date
+        2) Current task and timer - shows your current task and how much time you&#39;re at it.
+        3) Start/stop button - Start or Stop measuring time of current task.
+        4) All tasks today timer - summary of total work done for today.
+        5) Manual entry - Enables you add/edit/delete duration of tasks for past days or current day.
+        7) Add/remove tasks - add or remove tasks from current list so you can focus only on fewer things.
+        8) Task table: Shows Group Name, Task Name, Start Button, Add Custom Time, Total For Today, MoveUp/Down Buttons
+    </p>
+    <ul>
+        <li>Group - each task belongs to Group, eg. Tasks Running, Cooking, Walking might belong to Health Group.</li>
+        <li>Task Name - activity type you want to measure, eg. Running, Reading</li>
+        <li>Start - Start Button to start measuring the time while you at the task</li>
+        <li>Add Time - Insted of measuring the time you can Add fixed amount of time at once</li>
+        <li>Total Today - shows how much of task you&#39;ve done today</li>
+        <li>
+            MoveUp/Down Buttons - move task on up/down within table so you can prioritize it
+            9) Time Targets Per Day - reminds you of resolutions of how much time you want to certain task each day
+            10) Updoming Date Targets - keeps in your mind upcoming deadlines you decided to complete
+        </li>
+    </ul>
+    <h1 id="task-mode-options">Task Mode Options</h1>
+    <p><img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/6a7ad772-2068-4398-9b9f-f6fe4943102b"></p>
+    <h1 id="targets">Targets</h1>
+    <p><img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/2b12d9dd-84e8-4f8c-a7ec-274a2c4233c9"></p>
+    <p>
+        Sections:
+        1) Add New - add new Target
+        2) Filtering data:
+    </p>
+    <ul>
+        <li>Status - show compleated only / in-progress only / all</li>
+        <li>Date - date range</li>
+        <li>
+            Clear Filters - cancels filters and shows all Targets
+            4) Target List - in each row shows Group, Task, Description of Target, Date Added, Date Due (and how much time allocated from add date was), Status (how much time left / Compleated), Actions (Edit/Delete Target)
+        </li>
+    </ul>
+    <h1 id="graphs">Graphs</h1>
+    <p>
+        <img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/9624ca0a-b068-4c52-9371-1bbacce11751">
+        <img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/665829bb-cbc3-4156-a578-7e61da6b0f54">
+        <img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/2e2c36be-5b5c-4884-b457-1e4e6218709b">
+    </p>
+    <p>
+        Description:
+        You can see your productivity in 3 chart styles: Text, Line or Bar Graph. Next choose which time frame you want to see results (per day, week, month or year). Finally check which Tasks/Groups you want to be included in a Graph.
+    </p>
+    <p>
+        Select Task:
+        1) Single Task/Group
+        2) Multiple Tasks/Group
+        3) WARNING: Can&#39;t check Task AND Group  - it&#39;s only Task OR Group
+    </p>
+    <p>
+        Graph Styles:
+        1) Text
+        2) Line
+        3) Bar
+    </p>
+    <p>
+        Time Frames:
+        1) Day   - you get results for that day only.
+        2) Week  - you get each day of the week, and a summary of the whole week.
+        3) Month - each week of the month, and summary of the whole month.
+        4) Year  - each month of the year, and summary of the whole year.
+    </p>
+    <h1 id="motivation">Motivation</h1>
+    <p><img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/4e50cba9-8194-49aa-9e17-005498e2ad41"></p>
+    <p>
+        Description:
+        Get motivated with inspirational quotes, get reminded how much targets you&#39;ve achieved and get hyped up to work harder!
+    </p>
+    <h1 id="settings">Settings</h1>
+    <p><img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/b11f7af7-850f-40ad-a3f1-400f433847c0"></p>
+    <p>
+        Decription:
+        Add Tasks, Groups. Set Alarm Beep every Time Interval to take a break from work.
+    </p>
+    <h2 id="database">Database</h2>
+    <p><img width="611" alt="image" src="https://github.com/lucasadamski/taskograph/assets/12997783/12c27c2d-cd74-43ac-8369-fe33b4fd4e23"></p>
+    <p>1) Task Group</p>
+    <ul>
+        <li>Task - table is central to Task Group realtions. Eg Task &quot;Cooking&quot; can belong to Group &quot;Health&quot;, be of Color &quot;Yellow&quot;, have Precise Target &quot;Cook Christmas Dinner by 26th of December 2024&quot;, Regular Target &quot;Cook vegetable lunch once per 1 week&quot;. Every day we can have Entry of Duration &quot;30 minutes&quot; (of Cooking Task).</li>
+        <li>Group - Tasks can be grouped into a Group, but don&#39;t have to be (hence nullable).</li>
+        <li>Precise Target - string description and deadline, nullable Task realtion &quot;Read book by 12th of May 2024, relates to Task &quot;Reading&quot;&quot;</li>
+        <li>Regular Target - Task for certain Duration per TimeFrameDuration, eg: &quot;Task &quot;Walking&quot; 30 minutes per 1 day&quot;</li>
+        <li>Entry - single entry of Task, eg &quot;Task &quot;Working&quot; for 5 hours&quot;. This is always per Day, so later we can have Graphs and Printouts of how much time per day/week/month we have done.</li>
+        <li>Duration - time amount, is relative to 0001/01/01 00:00:00 , do End field 0001/01/01 00:15:00 means &quot;15 minutes&quot;</li>
+    </ul>
+    <p>2) Date</p>
+    <ul>
+        <li>
+            Has 1-1 relationship to every table in Task group
+            3) Standalone tables:
+        </li>
+        <li>Quote</li>
+        <li>Setting - Name of Setting, and Value. Fully customizable by Program</li>
+    </ul>
+
 </div>
