@@ -146,10 +146,10 @@ namespace taskograph.EF.DataAccess
                  );
 
             modelBuilder.Entity<Task>().HasData(
-              new Task { Id = 1, Name = "Running", GroupId = 4, DateId = 5 },
-              new Task { Id = 2, Name = "Reading", GroupId = 2, DateId = 6 },
-              new Task { Id = 3, Name = "Cooking", GroupId = 1, DateId = 7 },
-              new Task { Id = 4, Name = "Dancing", GroupId = 7, DateId = 8 }
+              new Task { Id = 1, Name = "Running", GroupId = 4, DateId = 5, UserId = "1" },
+              new Task { Id = 2, Name = "Reading", GroupId = 2, DateId = 6, UserId = "1" },
+              new Task { Id = 3, Name = "Cooking", GroupId = 1, DateId = 7, UserId = "1" },
+              new Task { Id = 4, Name = "Dancing", GroupId = 7, DateId = 8, UserId = "1" }
               );
 
             modelBuilder.Entity<RegularTarget>().HasData(
