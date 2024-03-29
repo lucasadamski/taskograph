@@ -24,10 +24,31 @@
                     <td>@task.Group.Name</td>
                     <td>@task.Name</td>
                     <td>StartTimerButton</td>
-                    <td>AddTimeButton</td>
+                    <td><button onclick="addEntry(@task.Id, 0, 45)" class="btn btn-primary">Add 45 minutes</button></td>
                     <td>TotalTimeToday</td>
                 </tr>
             }
         }
     </tbody>
 </table>
+
+@section scripts {
+    <script type="text/javascript">
+         
+        function addEntry(taskId, hours, minutes) {
+            $.ajax({
+                url: "@Url.Action("AddEntry", "Task")",
+                type: 'GET',
+                data: {
+                    taskId: taskId,
+                    hours: hours,
+                    minutes: minutes
+                },
+                success: function (res) {
+                    console.log(`Entry request sent for taskId ${taskId} hours ${hours} minutes ${minutes}`);
+                    location.reload();
+                }
+            });   
+        }
+    </script>
+}

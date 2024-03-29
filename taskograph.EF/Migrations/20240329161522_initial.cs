@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace taskograph.EF.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -86,7 +86,11 @@ namespace taskograph.EF.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    End = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Minutes = table.Column<int>(type: "int", nullable: true),
+                    Hours = table.Column<int>(type: "int", nullable: true),
+                    Days = table.Column<int>(type: "int", nullable: true),
+                    Weeks = table.Column<int>(type: "int", nullable: true),
+                    Months = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -401,63 +405,66 @@ namespace taskograph.EF.Migrations
                 columns: new[] { "Id", "Created", "Deleted", "LastUpdated" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5644), null, null },
-                    { 2, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5686), null, null },
-                    { 3, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5690), null, null },
-                    { 4, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5692), null, null },
-                    { 5, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5693), null, null },
-                    { 6, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5695), null, null },
-                    { 7, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5697), null, null },
-                    { 8, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5698), null, null },
-                    { 9, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5700), null, null },
-                    { 10, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5701), null, null },
-                    { 11, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5703), null, null },
-                    { 12, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5705), null, null },
-                    { 13, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5706), null, null },
-                    { 14, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5736), null, null },
-                    { 15, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5738), null, null },
-                    { 16, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5740), null, null },
-                    { 17, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5741), null, null },
-                    { 18, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5743), null, null },
-                    { 19, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5744), null, null },
-                    { 20, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5746), null, null },
-                    { 21, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5749), null, null },
-                    { 22, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5750), null, null },
-                    { 23, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5752), null, null },
-                    { 24, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5753), null, null },
-                    { 25, new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5755), null, null }
+                    { 1, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8461), null, null },
+                    { 2, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8506), null, null },
+                    { 3, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8508), null, null },
+                    { 4, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8510), null, null },
+                    { 5, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8511), null, null },
+                    { 6, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8513), null, null },
+                    { 7, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8515), null, null },
+                    { 8, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8516), null, null },
+                    { 9, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8518), null, null },
+                    { 10, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8519), null, null },
+                    { 11, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8520), null, null },
+                    { 12, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8522), null, null },
+                    { 13, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8523), null, null },
+                    { 14, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8525), null, null },
+                    { 15, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8526), null, null },
+                    { 16, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8528), null, null },
+                    { 17, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8529), null, null },
+                    { 18, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8531), null, null },
+                    { 19, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8532), null, null },
+                    { 20, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8534), null, null },
+                    { 21, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8535), null, null },
+                    { 22, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8537), null, null },
+                    { 23, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8538), null, null },
+                    { 24, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8540), null, null },
+                    { 25, new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8541), null, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Durations",
-                columns: new[] { "Id", "End" },
+                columns: new[] { "Id", "Days", "Hours", "Minutes", "Months", "Weeks" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1, 1, 1, 0, 1, 0, 0, DateTimeKind.Unspecified) },
-                    { 2, new DateTime(1, 1, 1, 0, 5, 0, 0, DateTimeKind.Unspecified) },
-                    { 3, new DateTime(1, 1, 1, 0, 10, 0, 0, DateTimeKind.Unspecified) },
-                    { 4, new DateTime(1, 1, 1, 0, 15, 0, 0, DateTimeKind.Unspecified) },
-                    { 5, new DateTime(1, 1, 1, 0, 30, 0, 0, DateTimeKind.Unspecified) },
-                    { 6, new DateTime(1, 1, 1, 0, 45, 0, 0, DateTimeKind.Unspecified) },
-                    { 7, new DateTime(1, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 8, new DateTime(1, 1, 1, 2, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 9, new DateTime(1, 1, 1, 3, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 10, new DateTime(1, 1, 1, 4, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 11, new DateTime(1, 1, 1, 5, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 12, new DateTime(1, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 13, new DateTime(1, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 14, new DateTime(1, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 15, new DateTime(1, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 16, new DateTime(1, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 17, new DateTime(1, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 18, new DateTime(1, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 19, new DateTime(1, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 20, new DateTime(1, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 21, new DateTime(1, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 22, new DateTime(1, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 23, new DateTime(1, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 24, new DateTime(1, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 25, new DateTime(2, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 1, null, null, 5, null, null },
+                    { 2, null, null, 10, null, null },
+                    { 3, null, null, 15, null, null },
+                    { 4, null, null, 30, null, null },
+                    { 5, null, null, 45, null, null },
+                    { 6, null, 1, null, null, null },
+                    { 7, null, 2, null, null, null },
+                    { 8, null, 3, null, null, null },
+                    { 9, null, 4, null, null, null },
+                    { 10, null, 5, null, null, null },
+                    { 11, null, 6, null, null, null },
+                    { 12, null, 12, null, null, null },
+                    { 13, 1, null, null, null, null },
+                    { 14, 2, null, null, null, null },
+                    { 15, 3, null, null, null, null },
+                    { 16, 4, null, null, null, null },
+                    { 17, 5, null, null, null, null },
+                    { 18, 6, null, null, null, null },
+                    { 19, null, null, null, null, 1 },
+                    { 20, null, null, null, null, 2 },
+                    { 21, null, null, null, null, 3 },
+                    { 22, null, null, null, 1, null },
+                    { 23, null, null, null, 2, null },
+                    { 24, null, null, null, 3, null },
+                    { 25, null, null, null, 6, null },
+                    { 26, null, null, null, 12, null },
+                    { 27, null, null, null, 24, null },
+                    { 28, null, null, null, 48, null }
                 });
 
             migrationBuilder.InsertData(

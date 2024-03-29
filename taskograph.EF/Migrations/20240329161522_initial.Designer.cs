@@ -12,8 +12,8 @@ using taskograph.EF.DataAccess;
 namespace taskograph.EF.Migrations
 {
     [DbContext(typeof(TasksContext))]
-    [Migration("20240321114536_initialMigration")]
-    partial class initialMigration
+    [Migration("20240329161522_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -322,127 +322,127 @@ namespace taskograph.EF.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5644)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8461)
                         },
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5686)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8506)
                         },
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5690)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8508)
                         },
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5692)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8510)
                         },
                         new
                         {
                             Id = 5,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5693)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8511)
                         },
                         new
                         {
                             Id = 6,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5695)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8513)
                         },
                         new
                         {
                             Id = 7,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5697)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8515)
                         },
                         new
                         {
                             Id = 8,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5698)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8516)
                         },
                         new
                         {
                             Id = 9,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5700)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8518)
                         },
                         new
                         {
                             Id = 10,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5701)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8519)
                         },
                         new
                         {
                             Id = 11,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5703)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8520)
                         },
                         new
                         {
                             Id = 12,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5705)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8522)
                         },
                         new
                         {
                             Id = 13,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5706)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8523)
                         },
                         new
                         {
                             Id = 14,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5736)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8525)
                         },
                         new
                         {
                             Id = 15,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5738)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8526)
                         },
                         new
                         {
                             Id = 16,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5740)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8528)
                         },
                         new
                         {
                             Id = 17,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5741)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8529)
                         },
                         new
                         {
                             Id = 18,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5743)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8531)
                         },
                         new
                         {
                             Id = 19,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5744)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8532)
                         },
                         new
                         {
                             Id = 20,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5746)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8534)
                         },
                         new
                         {
                             Id = 21,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5749)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8535)
                         },
                         new
                         {
                             Id = 22,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5750)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8537)
                         },
                         new
                         {
                             Id = 23,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5752)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8538)
                         },
                         new
                         {
                             Id = 24,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5753)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8540)
                         },
                         new
                         {
                             Id = 25,
-                            Created = new DateTime(2024, 3, 21, 11, 45, 35, 441, DateTimeKind.Local).AddTicks(5755)
+                            Created = new DateTime(2024, 3, 29, 16, 15, 20, 721, DateTimeKind.Local).AddTicks(8541)
                         });
                 });
 
@@ -454,8 +454,20 @@ namespace taskograph.EF.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
+                    b.Property<int?>("Days")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Hours")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Minutes")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Months")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Weeks")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -465,127 +477,142 @@ namespace taskograph.EF.Migrations
                         new
                         {
                             Id = 1,
-                            End = new DateTime(1, 1, 1, 0, 1, 0, 0, DateTimeKind.Unspecified)
+                            Minutes = 5
                         },
                         new
                         {
                             Id = 2,
-                            End = new DateTime(1, 1, 1, 0, 5, 0, 0, DateTimeKind.Unspecified)
+                            Minutes = 10
                         },
                         new
                         {
                             Id = 3,
-                            End = new DateTime(1, 1, 1, 0, 10, 0, 0, DateTimeKind.Unspecified)
+                            Minutes = 15
                         },
                         new
                         {
                             Id = 4,
-                            End = new DateTime(1, 1, 1, 0, 15, 0, 0, DateTimeKind.Unspecified)
+                            Minutes = 30
                         },
                         new
                         {
                             Id = 5,
-                            End = new DateTime(1, 1, 1, 0, 30, 0, 0, DateTimeKind.Unspecified)
+                            Minutes = 45
                         },
                         new
                         {
                             Id = 6,
-                            End = new DateTime(1, 1, 1, 0, 45, 0, 0, DateTimeKind.Unspecified)
+                            Hours = 1
                         },
                         new
                         {
                             Id = 7,
-                            End = new DateTime(1, 1, 1, 1, 0, 0, 0, DateTimeKind.Unspecified)
+                            Hours = 2
                         },
                         new
                         {
                             Id = 8,
-                            End = new DateTime(1, 1, 1, 2, 0, 0, 0, DateTimeKind.Unspecified)
+                            Hours = 3
                         },
                         new
                         {
                             Id = 9,
-                            End = new DateTime(1, 1, 1, 3, 0, 0, 0, DateTimeKind.Unspecified)
+                            Hours = 4
                         },
                         new
                         {
                             Id = 10,
-                            End = new DateTime(1, 1, 1, 4, 0, 0, 0, DateTimeKind.Unspecified)
+                            Hours = 5
                         },
                         new
                         {
                             Id = 11,
-                            End = new DateTime(1, 1, 1, 5, 0, 0, 0, DateTimeKind.Unspecified)
+                            Hours = 6
                         },
                         new
                         {
                             Id = 12,
-                            End = new DateTime(1, 1, 1, 10, 0, 0, 0, DateTimeKind.Unspecified)
+                            Hours = 12
                         },
                         new
                         {
                             Id = 13,
-                            End = new DateTime(1, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Days = 1
                         },
                         new
                         {
                             Id = 14,
-                            End = new DateTime(1, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Days = 2
                         },
                         new
                         {
                             Id = 15,
-                            End = new DateTime(1, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Days = 3
                         },
                         new
                         {
                             Id = 16,
-                            End = new DateTime(1, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Days = 4
                         },
                         new
                         {
                             Id = 17,
-                            End = new DateTime(1, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Days = 5
                         },
                         new
                         {
                             Id = 18,
-                            End = new DateTime(1, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Days = 6
                         },
                         new
                         {
                             Id = 19,
-                            End = new DateTime(1, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Weeks = 1
                         },
                         new
                         {
                             Id = 20,
-                            End = new DateTime(1, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Weeks = 2
                         },
                         new
                         {
                             Id = 21,
-                            End = new DateTime(1, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Weeks = 3
                         },
                         new
                         {
                             Id = 22,
-                            End = new DateTime(1, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Months = 1
                         },
                         new
                         {
                             Id = 23,
-                            End = new DateTime(1, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Months = 2
                         },
                         new
                         {
                             Id = 24,
-                            End = new DateTime(1, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Months = 3
                         },
                         new
                         {
                             Id = 25,
-                            End = new DateTime(2, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Months = 6
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Months = 12
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Months = 24
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Months = 48
                         });
                 });
 

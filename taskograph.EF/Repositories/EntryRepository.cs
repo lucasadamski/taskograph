@@ -53,17 +53,17 @@ namespace taskograph.EF.Repositories
 
         private Entry? GetEntryFromSameTaskAndDay(Entry entry)
         {
-            Entry result = new Entry();
+            Entry? result = new Entry();
             try
             {
                 result = _db.Entries
-                .Where(n => n.Date.Created.Date == entry.Date.Created.Date)
+                .Where(n => n.DateId == entry.DateId) // assumes that each day have one Date
                 .Where(n => n.TaskId == entry.TaskId)
                 .First();
             }
             catch (Exception e)
             {
-                _logger.LogDebug($"EntryRepository: GetEntryFromSameTaskAndDay: EntryId {entry.Id}: Message: {DATABASE_ERROR_CONNECTION}");
+                _logger.LogDebug($"EntryRepository: GetEntryFromSameTaskAndDay: EntryId {entry.Id} is a first entry of this task in current day");
                 return null;
             }
             return result;
@@ -102,10 +102,7 @@ namespace taskograph.EF.Repositories
         }
         public bool EditAddDuration(Entry entry, Duration duration)
         {
-            entry.Duration.End += duration.End.TimeOfDay; //Warining, works only for values up to 24 hours
-            //TODO write code for all times, more than 24 hours
-            Edit(entry);
-            return true;
+            throw new NotImplementedException();
         }
 
         public Entry Get(int id)

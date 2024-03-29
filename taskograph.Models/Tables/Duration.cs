@@ -10,9 +10,11 @@ namespace taskograph.Models.Tables
     public class Duration
     {
         public int Id { get; set; }
-        public DateTime End { get; set; }
-        //@Duration =  End - (2000-01-01 00:00:00)
-        //eg: 15 min = (2000-01-01 00:15:00) - (2000-01-01 00:00:00)
+        public int? Minutes { get; set; }
+        public int? Hours { get; set; }
+        public int? Days { get; set; }
+        public int? Weeks { get; set; }
+        public int? Months { get; set; }
         public ICollection<Entry> Entries { get; set; }
         [InverseProperty(nameof(RegularTarget.TargetDuration))]
         public ICollection<RegularTarget> TargetRegularTargets { get; set; }
