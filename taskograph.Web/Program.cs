@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using taskograph.EF.DataAccess;
 using taskograph.EF.Repositories;
 using taskograph.EF.Repositories.Infrastructure;
+using taskograph.Models;
 
 namespace taskograph.Web
 {
@@ -17,7 +18,7 @@ namespace taskograph.Web
             builder.Services.AddDbContext<TasksContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<TasksContext>();
             builder.Services.AddScoped<ITaskRepository, TaskRepository>();
             builder.Services.AddScoped<IEntryRepository, EntryRepository>();

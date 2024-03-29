@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using taskograph.Models;
 using taskograph.Models.Tables;
 using taskograph.Models.Tables;
 using Task = taskograph.Models.Tables.Task;
@@ -13,7 +14,7 @@ using Task = taskograph.Models.Tables.Task;
 
 namespace taskograph.EF.DataAccess
 {
-   public class TasksContext : IdentityDbContext<IdentityUser>
+   public class TasksContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Color> Colors { get; set; }
         public DbSet<Date> Dates { get; set; }
@@ -30,7 +31,15 @@ namespace taskograph.EF.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //entry duration i taskid wyłącz cascade
+            base.OnModelCreating(modelBuilder); //data base with users  
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(n => n.FirstName)
+                .HasMaxLength(25);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(n => n.LastName)
+                .HasMaxLength(25);
 
             modelBuilder.Entity<Entry>().HasOne(n => n.Duration)
                 .WithMany(n => n.Entries)
@@ -52,7 +61,6 @@ namespace taskograph.EF.DataAccess
                .WithMany(n => n.RegularTargets)
                .OnDelete(DeleteBehavior.NoAction);
 
-            base.OnModelCreating(modelBuilder); //data base with users  
 
             modelBuilder.Entity<Date>().HasData(
                new Date { Id = 1, Created = DateTime.Now },

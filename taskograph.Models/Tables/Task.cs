@@ -15,6 +15,8 @@ namespace taskograph.Models.Tables
         [MaxLength(30)]
         [Column(TypeName = "varchar(30)")]
         public string Name { get; set; }
+        public string UserId { get; set; }
+        public int MyProperty { get; set; }
         public int? GroupId { get; set; }
         public int? ColorId { get; set; }
         public int DateId { get; set; }
