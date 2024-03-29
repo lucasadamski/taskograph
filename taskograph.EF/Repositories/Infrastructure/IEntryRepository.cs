@@ -8,10 +8,9 @@ namespace taskograph.EF.Repositories.Infrastructure
     {
         public bool Add(Entry entry);
         public bool Edit(Entry entry);
-        public bool EditAddDuration(Entry entry, Duration duration);
         public bool Delete(Entry entry);
         public Entry Get(int id);
-        public IEnumerable<Entry> Get(DateTime from, DateTime to);
+        public IEnumerable<Entry> Get(string userId, DateTime from, DateTime to);
         public IEnumerable<Entry> GetByTask(int taskId, DateTime from, DateTime to);
         public IEnumerable<Entry> GetByGroup(int groupId, DateTime from, DateTime to);
         public IEnumerable<Entry> GetAll(string userId);

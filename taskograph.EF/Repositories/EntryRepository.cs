@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using taskograph.EF.DataAccess;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace taskograph.EF.Repositories
 {
@@ -25,54 +26,32 @@ namespace taskograph.EF.Repositories
         }
 
         public bool Add(Entry entry)
-        {
-            //if entry for same task and day exists, then add current duration to existing entry
-            Entry? alreadyAddedToday = GetEntryFromSameTaskAndDay(entry);
-            if (alreadyAddedToday != null)
-            {
-                EditAddDuration(alreadyAddedToday, entry.Duration);
-                Delete(entry);
-                _logger.LogDebug($"EntryRepository: Add: EntryId {entry.Id} merged with Already Existing EntryId: {alreadyAddedToday.Id} Message: {DATABASE_OK}");
-            }
-            else //if not, create new entry
-            {               
-                try
-                {
-                    _db.Entries.Add(entry);
-                    _db.SaveChanges();
-                    _logger.LogDebug($"EntryRepository: Add: EntryId {entry.Id} Message: {DATABASE_OK}");
-                }
-                catch (Exception e)
-                {
-                    _logger.LogError($"EntryRepository: Add: EntryId {entry.Id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        private Entry? GetEntryFromSameTaskAndDay(Entry entry)
-        {
-            Entry? result = new Entry();
+        {                         
             try
             {
-                result = _db.Entries
-                .Where(n => n.DateId == entry.DateId) // assumes that each day have one Date
-                .Where(n => n.TaskId == entry.TaskId)
-                .First();
+                entry.Date = new Date() { Created = DateTime.Now };
+                _db.Entries.Add(entry);
+                _db.SaveChanges();
+                _logger.LogDebug($"EntryRepository: Add: EntryId {entry.Id} Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
-                _logger.LogDebug($"EntryRepository: GetEntryFromSameTaskAndDay: EntryId {entry.Id} is a first entry of this task in current day");
-                return null;
+                _logger.LogError($"EntryRepository: Add: EntryId {entry.Id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return false;
             }
-            return result;
+            return true;
         }
 
         public bool Delete(Entry entry)
         {
             try
             {
+                Date? date = _db.Dates.Where(n => n.Id == entry.DateId).FirstOrDefault();
+                if (date != null)
+                {
+                    date.Deleted = DateTime.Now;
+                    _db.Dates.Update(date);
+                }
                 _db.Entries.Remove(entry);
                 _db.SaveChanges();
                 _logger.LogDebug($"EntryRepository: Delete EntryId: {entry.Id} Message: {DATABASE_OK}");
@@ -89,6 +68,12 @@ namespace taskograph.EF.Repositories
         {
             try
             {
+                Date? date = _db.Dates.Where(n => n.Id == entry.DateId).FirstOrDefault();
+                if (date != null)
+                {
+                    date.LastUpdated = DateTime.Now;
+                    _db.Dates.Update(date);
+                }
                 _db.Entries.Update(entry);
                 _db.SaveChanges();
                 _logger.LogDebug($"EntryRepository: Delete EntryId: {entry.Id} Message: {DATABASE_OK}");
@@ -99,10 +84,6 @@ namespace taskograph.EF.Repositories
                 return false;
             }
             return true;
-        }
-        public bool EditAddDuration(Entry entry, Duration duration)
-        {
-            throw new NotImplementedException();
         }
 
         public Entry Get(int id)
@@ -128,34 +109,125 @@ namespace taskograph.EF.Repositories
             return result;
         }
 
-        public IEnumerable<Entry> Get(DateTime from, DateTime to)
+        public IEnumerable<Entry> Get(string userId, DateTime from, DateTime to)
         {
-            throw new NotImplementedException();
+            List<Entry> result;
+            try
+            {
+                result = _db.Entries
+                    .Include(n => n.Task)
+                    .Include(n => n.Date)
+                    .Where(n => n.Task.UserId == userId)
+                    .Where(n => (n.Date.Created >= from) && (n.Date.Created <= to))
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"EntryRepository: Get from {from} to {to} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new List<Entry>();
+            }
+            _logger.LogDebug($"EntryRepository: Get Get from {from} to {to} Message: {DATABASE_OK}");
+            return result;
         }
 
         public IEnumerable<Entry> GetAll(string userId)
         {
-            throw new NotImplementedException();
+            List<Entry> result;
+            try
+            {
+                result = _db.Entries
+                    .Include(n => n.Task)
+                    .Where(n => n.Task.UserId == userId)
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"EntryRepository: GetAll Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new List<Entry>();
+            }
+            _logger.LogDebug($"EntryRepository: GetAll Message: {DATABASE_OK}");
+            return result;
         }
 
         public IEnumerable<Entry> GetAllByGroup(int groupId, string userId)
         {
-            throw new NotImplementedException();
+            List<Entry> result;
+            try
+            {
+                result = _db.Entries
+                    .Include(n => n.Task)
+                    .Where(n => n.Task.UserId == userId)
+                    .Where(n => n.Task.GroupId == groupId)
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"EntryRepository: GetAllByGroup groupId:{groupId} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new List<Entry>();
+            }
+            _logger.LogDebug($"EntryRepository: GetAllByGroup groupId:{groupId} Message: {DATABASE_OK}");
+            return result;
         }
 
         public IEnumerable<Entry> GetAllByTask(int taskId, string userId)
         {
-            throw new NotImplementedException();
+            List<Entry> result;
+            try
+            {
+                result = _db.Entries
+                    .Include(n => n.Task)
+                    .Where(n => n.Task.UserId == userId)
+                    .Where(n => n.TaskId == taskId)
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"EntryRepository: GetAllByTask taskId:{taskId} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new List<Entry>();
+            }
+            _logger.LogDebug($"EntryRepository: GetAllByTask taskId:{taskId} Message: {DATABASE_OK}");
+            return result;
         }
 
         public IEnumerable<Entry> GetByGroup(int groupId, DateTime from, DateTime to)
         {
-            throw new NotImplementedException();
+            List<Entry> result;
+            try
+            {
+                result = _db.Entries
+                    .Include(n => n.Task)
+                    .Include(n => n.Date)
+                    .Where(n => n.Task.GroupId == groupId)
+                    .Where(n => (n.Date.Created >= from) && (n.Date.Created <= to))
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"EntryRepository: GetByGroup from {from} to {to} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new List<Entry>();
+            }
+            _logger.LogDebug($"EntryRepository: GetByGroup from {from} to {to} Message: {DATABASE_OK}");
+            return result;
         }
 
         public IEnumerable<Entry> GetByTask(int taskId, DateTime from, DateTime to)
         {
-            throw new NotImplementedException();
+            List<Entry> result;
+            try
+            {
+                result = _db.Entries
+                    .Include(n => n.Date)
+                    .Where(n => n.TaskId == taskId)
+                    .Where(n => (n.Date.Created >= from) && (n.Date.Created <= to))
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"EntryRepository: GetByTask from {from} to {to} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new List<Entry>();
+            }
+            _logger.LogDebug($"EntryRepository: GetByTask from {from} to {to} Message: {DATABASE_OK}");
+            return result;
         }
 
     }
