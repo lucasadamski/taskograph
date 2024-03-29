@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing.Text;
+using System.Security.Claims;
 using taskograph.EF.Repositories;
 using taskograph.EF.Repositories.Infrastructure;
 using taskograph.Models.Tables;
@@ -16,18 +18,24 @@ namespace taskograph.Web.Controllers
         private readonly ILogger<TaskController> _logger;
         private IConfiguration _configuration;
 
+
         public TaskController(ITaskRepository taskRepository, IEntryRepository entryRepository, ILogger<TaskController> logger, IConfiguration configuration)
         {
             _taskRepository = taskRepository;
             _entryRepository = entryRepository;
             _logger = logger;
             _configuration = configuration;
+           
         }
 
         public IActionResult Index()
         {
+            string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            _taskRepository.DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser(_userId);    //****   Debug only!!!  ****
+
             TaskViewModel taskVM = new TaskViewModel();
-            taskVM.Tasks = _taskRepository.GetAll("asdf").ToList();
+            taskVM.Tasks = _taskRepository.GetAll(_userId).ToList();
             return View(taskVM);
         }
 
@@ -35,10 +43,8 @@ namespace taskograph.Web.Controllers
         {
             Entry entry = new Entry()
             {
-                //Id = 1,
                 TaskId = 2,
-                DurationId = 4,
-                DateId = 25
+                DurationId = 4
             };
 
             _entryRepository.Add(entry);

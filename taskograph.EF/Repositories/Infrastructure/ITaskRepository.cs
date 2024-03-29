@@ -16,6 +16,10 @@ namespace taskograph.EF.Repositories.Infrastructure
         public Task Get(int id);
 
 
+        //Debug only
+        public bool DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser(string userId);
+
+
 
     }
 }

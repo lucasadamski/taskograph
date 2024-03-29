@@ -76,6 +76,7 @@ namespace taskograph.EF.Repositories
             {
                 result = _db.Tasks.Include(n => n.Group) //TODO add UserId column
                     .Include(n => n.Color)
+                    .Where(n => n.UserId == userId)
                     .ToList();
                 _logger.LogDebug($"TaskRepository: GetAllTasks: UserID {userId} Message: {DATABASE_OK}");
 
@@ -112,6 +113,25 @@ namespace taskograph.EF.Repositories
             }
             _logger.LogDebug($"TaskRepository: GetTask: id {id} Message: {DATABASE_OK}");
             return result;
+        }
+
+        public bool DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser(string userId)
+        {
+            try
+            {
+                List<Task> result = _db.Tasks.ToList();
+                result.ForEach(n => n.UserId = userId);
+                _db.SaveChanges();
+                _logger.LogDebug($"TaskRepository: DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser: UserID {userId} Message: {DATABASE_OK}");
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"TaskRepository: DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser: UserID {userId} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return false;
+            }
+
+            return true;
         }
     }
 }
