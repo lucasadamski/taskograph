@@ -51,12 +51,12 @@ namespace taskograph.Web.Controllers
             return View(taskVM);
         }
 
-        public IActionResult AddEntry(int taskId, int hours, int minutes)
+        public IActionResult AddEntry(int taskId, int durationId)
         {
             Entry entry = new Entry()
             {
-                TaskId = 2,
-                DurationId = 4
+                TaskId = taskId,
+                DurationId = durationId
             };
 
             _entryRepository.Add(entry);

@@ -24,7 +24,17 @@
                         <td>@task.Group.Name</td>
                         <td>@task.Name</td>
                         <td>StartTimerButton</td>
-                        <td><button onclick="addEntry(@task.Id, 0, 45)" class="btn btn-primary">Add 45 minutes</button></td>
+                        <td>
+                        <select id="AddFixedTime-@(task.Id)">
+                            @{
+                                foreach(var duration in Model.Durations)
+                                {
+                                    <option value="@duration.Id">@duration.Text</option>
+                                }
+                            }
+                        </select>
+                            <button onclick="addEntry(@task.Id)" class="btn btn-primary">+</button>
+                        </td>
                         <td>TotalTimeToday</td>
                     </tr>
             }
@@ -52,17 +62,19 @@
 
        
         //Send Entry to controller
-        function addEntry(taskId, hours, minutes) {
+        function addEntry(taskId) {
+            const fixedTimeDropDown = document.getElementById(`AddFixedTime-${taskId}`);
+            const durationId = fixedTimeDropDown.value;
             $.ajax({
                 url: "@Url.Action("AddEntry", "Task")",
                 type: 'GET',
                 data: {
                     taskId: taskId,
-                    hours: hours,
-                    minutes: minutes
+                    durationId: durationId
                 },
                 success: function (res) {
-                    reloadPage();
+                    console.log(`Added fixedTime taskid:${taskId} durationid:${durationId}`);
+                    //reloadPage();
                 }
             });                       
         }
