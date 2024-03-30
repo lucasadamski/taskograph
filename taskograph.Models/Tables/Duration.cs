@@ -58,7 +58,7 @@ namespace taskograph.Models.Tables
             int? minutes = d1.Minutes + d2.Minutes;
             int? hours = d1.Hours + d2.Hours;
             int? days = d1.Days + d2.Days;
-            int? weeks = d1.Hours + d2.Hours;
+            int? weeks = d1.Weeks + d2.Weeks;
             int? months = d1.Months + d2.Months;
 
             //auxiliary variables
@@ -67,7 +67,7 @@ namespace taskograph.Models.Tables
 
             //turn minutes to hours if more than 60 minutes, hours to days if more than 24 hours etc.
             //minutes
-            if (minutes != 0 && minutes < 60)
+            if (minutes != 0 && minutes > 59)
             {
                 res = minutes / 60;
                 modulo = minutes % 60;
@@ -75,7 +75,7 @@ namespace taskograph.Models.Tables
                 minutes = modulo;
             }
             //hours
-            if (hours != 0 && hours < 24)
+            if (hours != 0 && hours > 23)
             {
                 res = hours / 24;
                 modulo = hours % 24;
@@ -83,15 +83,15 @@ namespace taskograph.Models.Tables
                 hours = modulo;
             }
             //days
-            if (days != 0 && days < 7)
+            if (days != 0 && days > 6)
             {
                 res = days / 7;
-                modulo = hours % 7;
+                modulo = days % 7;
                 weeks += res;
                 days = modulo;
             }            
             //weeks & months
-            if (weeks != 0 && weeks < 4)
+            if (weeks != 0 && weeks > 3)
             {
                 res = weeks / 4;
                 modulo = weeks % 4;

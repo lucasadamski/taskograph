@@ -5,11 +5,13 @@ VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "taskograph.Web", "taskograph.Web\taskograph.Web.csproj", "{0EE84B2F-011F-4E93-82CA-EF3AEF6FFBE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taskograph.EF", "taskograph.EF\taskograph.EF.csproj", "{B3FC1C06-EAFB-4985-81BA-C2796A5BB96A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "taskograph.EF", "taskograph.EF\taskograph.EF.csproj", "{B3FC1C06-EAFB-4985-81BA-C2796A5BB96A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taskograph.Models", "taskograph.Models\taskograph.Models.csproj", "{5BAD146C-159A-424A-B251-E3BFE1E9EB69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "taskograph.Models", "taskograph.Models\taskograph.Models.csproj", "{5BAD146C-159A-424A-B251-E3BFE1E9EB69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taskograph.Helpers", "taskograph.Helpers\taskograph.Helpers.csproj", "{C3A41EB2-1265-465C-B014-87F7612D8254}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "taskograph.Helpers", "taskograph.Helpers\taskograph.Helpers.csproj", "{C3A41EB2-1265-465C-B014-87F7612D8254}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelsTest", "ModelsTest\ModelsTest.csproj", "{B742A597-B8EE-4082-8875-5F0042CF8DEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C3A41EB2-1265-465C-B014-87F7612D8254}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3A41EB2-1265-465C-B014-87F7612D8254}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3A41EB2-1265-465C-B014-87F7612D8254}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B742A597-B8EE-4082-8875-5F0042CF8DEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B742A597-B8EE-4082-8875-5F0042CF8DEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B742A597-B8EE-4082-8875-5F0042CF8DEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B742A597-B8EE-4082-8875-5F0042CF8DEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
