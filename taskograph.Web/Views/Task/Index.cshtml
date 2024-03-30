@@ -20,13 +20,13 @@
         @{
             foreach (Task task in Model.Tasks)
             {
-                <tr>
-                    <td>@task.Group.Name</td>
-                    <td>@task.Name</td>
-                    <td>StartTimerButton</td>
-                    <td><button onclick="addEntry(@task.Id, 0, 45)" class="btn btn-primary">Add 45 minutes</button></td>
-                    <td>TotalTimeToday</td>
-                </tr>
+                    <tr>
+                        <td>@task.Group.Name</td>
+                        <td>@task.Name</td>
+                        <td>StartTimerButton</td>
+                        <td><button onclick="addEntry(@task.Id, 0, 45)" class="btn btn-primary">Add 45 minutes</button></td>
+                        <td>TotalTimeToday</td>
+                    </tr>
             }
         }
     </tbody>
@@ -34,7 +34,24 @@
 
 @section scripts {
     <script type="text/javascript">
-         
+
+        //************************************************
+        //Show toastr after page reload fix
+        window.onload = function () {
+            var reloading = sessionStorage.getItem("reloading");
+            if (reloading) {
+                sessionStorage.removeItem("reloading");
+                toastr["success"]("", "Entry Added");
+            }
+        }
+        function reloadPage() {
+            sessionStorage.setItem("reloading", "true");
+            document.location.reload();
+        }
+        //***********************************************
+
+       
+        //Send Entry to controller
         function addEntry(taskId, hours, minutes) {
             $.ajax({
                 url: "@Url.Action("AddEntry", "Task")",
@@ -45,10 +62,29 @@
                     minutes: minutes
                 },
                 success: function (res) {
-                    console.log(`Entry request sent for taskId ${taskId} hours ${hours} minutes ${minutes}`);
-                    location.reload();
+                    reloadPage();
                 }
-            });   
+            });                       
         }
+
+        //Toastr configuration
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
     </script>
 }
