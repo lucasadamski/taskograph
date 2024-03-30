@@ -21,22 +21,25 @@ namespace taskograph.Models.Tables
         [InverseProperty(nameof(RegularTarget.PerTimeframeDuration))]
         public ICollection<RegularTarget> PerTimeframeRegularTargets { get; set; }
 
-        public string PrepareText()
+
+        public override string ToString()
         {
-            if (Months != null) 
+            if (Months != null)
                 return $"{Months} months";
-            else if (Weeks != null) 
+            else if (Weeks != null)
                 return $"{Weeks} weeks";
-            else if (Days != null) 
+            else if (Days != null)
                 return $"{Days}d";
             else if (Hours != null && Minutes != null)
                 return String.Format("{0:00}:{1:00}", Hours, Minutes);
-            else if (Hours != null && Minutes == null) 
+            else if (Hours != null && Minutes == null)
                 return String.Format("{0:00}:00", Hours);
-            else if (Hours == null && Minutes != null) 
+            else if (Hours == null && Minutes != null)
                 return String.Format("00:{0:00}", Minutes);
-            else 
+            else
                 return "Empty";
         }
+
+
     }
 }

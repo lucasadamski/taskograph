@@ -45,7 +45,7 @@ namespace taskograph.Web.Controllers
             taskVM.Durations = _durationRepository.GetFirst(15).Select(n => new DurationDTO()
             {
                 Id = n.Id,
-                Text = n.PrepareText()
+                Text = n.ToString()
             }).ToList();
 
             return View(taskVM);
