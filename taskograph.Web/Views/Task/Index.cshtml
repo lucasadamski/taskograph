@@ -7,7 +7,6 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">Group</th>
             <th scope="col">Task</th>
             <th scope="col">Start</th>
             <th scope="col">Add time</th>
@@ -21,7 +20,6 @@
             foreach (Task task in Model.Tasks)
             {
                     <tr>
-                        <td>@task.Group.Name</td>
                         <td>@task.Name</td>
                         <td>StartTimerButton</td>
                         <td>
@@ -33,7 +31,7 @@
                                 }
                             }
                         </select>
-                            <button onclick="addEntry(@task.Id)" class="btn btn-primary">+</button>
+                            <button onclick="addEntry(@task.Id, '@task.Name')" class="btn btn-primary">+</button>
                         </td>
                         <td>TotalTimeToday</td>
                     </tr>
@@ -49,9 +47,13 @@
         //Show toastr after page reload fix
         window.onload = function () {
             var reloading = sessionStorage.getItem("reloading");
+            var taskName = sessionStorage.getItem("taskName");
+            var durationName = sessionStorage.getItem("durationName");
             if (reloading) {
                 sessionStorage.removeItem("reloading");
-                toastr["success"]("", "Entry Added");
+                sessionStorage.removeItem("taskName");
+                sessionStorage.removeItem("durationName");
+                toastr["success"]("", `Added ${durationName} of ${taskName}`);
             }
         }
         function reloadPage() {
@@ -62,9 +64,10 @@
 
        
         //Send Entry to controller
-        function addEntry(taskId) {
+        function addEntry(taskId, taskName) {
             const fixedTimeDropDown = document.getElementById(`AddFixedTime-${taskId}`);
             const durationId = fixedTimeDropDown.value;
+            const durationName = fixedTimeDropDown.options[fixedTimeDropDown.selectedIndex].text;
             $.ajax({
                 url: "@Url.Action("AddEntry", "Task")",
                 type: 'GET',
@@ -74,7 +77,9 @@
                 },
                 success: function (res) {
                     console.log(`Added fixedTime taskid:${taskId} durationid:${durationId}`);
-                    //reloadPage();
+                    sessionStorage.setItem("taskName", taskName);
+                    sessionStorage.setItem("durationName", durationName);
+                    reloadPage();
                 }
             });                       
         }
@@ -88,7 +93,7 @@
             "positionClass": "toast-bottom-right",
             "preventDuplicates": false,
             "onclick": null,
-            "showDuration": "300",
+            "showDuration": "3000",
             "hideDuration": "1000",
             "timeOut": "5000",
             "extendedTimeOut": "1000",
