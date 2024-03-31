@@ -39,7 +39,16 @@ namespace taskograph.Web.Controllers
             _taskRepository.DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser(_userId);    //****   Debug only!!!  ****
 
             TaskViewModel taskVM = new TaskViewModel();
-            taskVM.Tasks = _taskRepository.GetAll(_userId).ToList();
+            taskVM.Tasks = _taskRepository.GetAll(_userId)
+                .Select(n => new TaskDTO()
+                {
+                    Id = n.Id,
+                    Name = n.Name,
+                    Group = n.Group.Name,
+                    Color = n.Color.Name,
+                    TotalDurationToday = (_entryRepository.GetByTask(n.Id, DateTime.Now, DateTime.Now)).ToString()
+                })
+                .ToList();
 
             //used for populating Views DropDown with predefined times eg: 00:10, 00:30, 01:00
             taskVM.Durations = _durationRepository.GetFirst(15).Select(n => new DurationDTO()

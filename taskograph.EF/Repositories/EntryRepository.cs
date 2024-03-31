@@ -218,7 +218,7 @@ namespace taskograph.EF.Repositories
                 result = _db.Entries
                     .Include(n => n.Date)
                     .Where(n => n.TaskId == taskId)
-                    .Where(n => (n.Date.Created >= from) && (n.Date.Created <= to))
+                    .Where(n => (n.Date.Created.Date >= from) && (n.Date.Created <= to))
                     .ToList();
             }
             catch (Exception e)
@@ -227,6 +227,49 @@ namespace taskograph.EF.Repositories
                 return new List<Entry>();
             }
             _logger.LogDebug($"EntryRepository: GetByTask from {from} to {to} Message: {DATABASE_OK}");
+            return result;
+        }
+
+        public Duration GetTotalDurationForTask(int taskId, DateTime date)
+        {
+            Duration result;           
+            try
+            {
+                result = _db.Entries
+                    .Include(n => n.Duration)
+                    .Include(n => n.Date)
+                    .Where(n => n.TaskId == taskId)
+                    .Where(n => n.Date.Created.Date == date.Date)
+                    .Select(n => n.Duration)
+                    .Aggregate((a, b) => a + b);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"EntryRepository: GetTotalDurationForTask taskId {taskId} date {date} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new Duration();
+            }
+            _logger.LogDebug($"EntryRepository: GetTotalDurationForTask taskId {taskId} date {date} Message: {DATABASE_OK}");
+            return result;
+        }
+        public Duration GetTotalDurationForTask(int taskId, DateTime dateFrom, DateTime dateTo)
+        {
+            Duration result;
+            try
+            {
+                result = _db.Entries
+                    .Include(n => n.Duration)
+                    .Include(n => n.Date)
+                    .Where(n => n.TaskId == taskId) 
+                    .Where(n => (n.Date.Created.Date >= dateFrom.Date) && (n.Date.Created.Date <= dateTo.Date))
+                    .Select(n => n.Duration)
+                    .Aggregate((a, b) => a + b);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"EntryRepository: GetTotalDurationForTask taskId {taskId} date {dateFrom} - {dateTo} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new Duration();
+            }
+            _logger.LogDebug($"EntryRepository: GetTotalDurationForTask taskId {taskId} date {dateFrom} - {dateTo} Message: {DATABASE_OK}");
             return result;
         }
 
