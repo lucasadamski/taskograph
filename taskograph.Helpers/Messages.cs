@@ -19,5 +19,11 @@
         {
             return $"Exception message: {exceptionMessage}";
         }
+
+
+        // ************ VIEWS **********************
+
+        //Task 
+        public const string NULL_VALUE = "N/A";
     }
 }

@@ -40,7 +40,7 @@ namespace taskograph.Models.Tables
                 return "Empty";
         }
 
-        public static Duration operator +(Duration d1, Duration d2)
+        public static Duration operator +(Duration d1, Duration d2) //TODO Fix not nulling 
         {
             //turn null to 0
             if (d1.Minutes == null) d1.Minutes = 0;
@@ -113,6 +113,9 @@ namespace taskograph.Models.Tables
                 Weeks = weeks,
                 Months = months
             };
+
+
         }
+ 
     }
 }

@@ -232,16 +232,19 @@ namespace taskograph.EF.Repositories
 
         public Duration GetTotalDurationForTask(int taskId, DateTime date)
         {
-            Duration result;           
+            List<Duration> durationsList = new List<Duration>();
+            Duration durationTotal = new Duration();
             try
             {
-                result = _db.Entries
+                durationsList = _db.Entries
                     .Include(n => n.Duration)
                     .Include(n => n.Date)
                     .Where(n => n.TaskId == taskId)
                     .Where(n => n.Date.Created.Date == date.Date)
                     .Select(n => n.Duration)
-                    .Aggregate((a, b) => a + b);
+                    .ToList();
+
+                durationTotal = durationsList.Aggregate((a,b) => a + b);
             }
             catch (Exception e)
             {
@@ -249,7 +252,7 @@ namespace taskograph.EF.Repositories
                 return new Duration();
             }
             _logger.LogDebug($"EntryRepository: GetTotalDurationForTask taskId {taskId} date {date} Message: {DATABASE_OK}");
-            return result;
+            return durationTotal;
         }
         public Duration GetTotalDurationForTask(int taskId, DateTime dateFrom, DateTime dateTo)
         {

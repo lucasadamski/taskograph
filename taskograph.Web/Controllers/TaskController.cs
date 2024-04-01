@@ -7,6 +7,8 @@ using taskograph.EF.Repositories.Infrastructure;
 using taskograph.Models.Tables;
 using taskograph.Web.Models;
 using taskograph.Web.Models.DTOs;
+using Task = taskograph.Models.Tables.Task;
+using static taskograph.Helpers.Messages;
 
 namespace taskograph.Web.Controllers
 {
@@ -38,17 +40,10 @@ namespace taskograph.Web.Controllers
 
             _taskRepository.DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser(_userId);    //****   Debug only!!!  ****
 
+            //Displays Tasks in table, first load Tasks from DB, then convert it to TaskDTO 
             TaskViewModel taskVM = new TaskViewModel();
-            taskVM.Tasks = _taskRepository.GetAll(_userId)
-                .Select(n => new TaskDTO()
-                {
-                    Id = n.Id,
-                    Name = n.Name,
-                    Group = n.Group.Name,
-                    Color = n.Color.Name,
-                    TotalDurationToday = (_entryRepository.GetByTask(n.Id, DateTime.Now, DateTime.Now)).ToString()
-                })
-                .ToList();
+            List<Task> tasksList = _taskRepository.GetAll(_userId).ToList();
+            taskVM.Tasks = ConvertTasksToDTO(tasksList);
 
             //used for populating Views DropDown with predefined times eg: 00:10, 00:30, 01:00
             taskVM.Durations = _durationRepository.GetFirst(15).Select(n => new DurationDTO()
@@ -62,6 +57,8 @@ namespace taskograph.Web.Controllers
 
         public IActionResult AddEntry(int taskId, int durationId)
         {
+            string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             Entry entry = new Entry()
             {
                 TaskId = taskId,
@@ -73,9 +70,23 @@ namespace taskograph.Web.Controllers
             //create duration
 
             TaskViewModel taskVM = new TaskViewModel();
-            taskVM.Tasks = _taskRepository.GetAll("asdf").ToList();
+            List<Task> tasksList = _taskRepository.GetAll(_userId).ToList();
+            taskVM.Tasks = ConvertTasksToDTO(tasksList);
 
             return View("Index", taskVM);
+        }
+
+        private List<TaskDTO> ConvertTasksToDTO(List<Task> input)
+        {
+            return input.Select(n => new TaskDTO()
+            {
+                Id = n.Id,
+                Name = n.Name,
+                Group = n.Group?.Name ?? NULL_VALUE,
+                Color = n.Color?.Name ?? NULL_VALUE,
+                TotalDurationToday = (_entryRepository.GetTotalDurationForTask(n.Id, DateTime.Now)).ToString()
+            })
+                .ToList();
         }
 
     }

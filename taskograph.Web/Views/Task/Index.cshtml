@@ -1,5 +1,6 @@
 ﻿@model TaskViewModel
 @using Task = taskograph.Models.Tables.Task;
+@using taskograph.Web.Models.DTOs
 
 
 <h1>Tasks</h1>
@@ -17,7 +18,7 @@
 
     <tbody>
         @{
-            foreach (Task task in Model.Tasks)
+            foreach (TaskDTO task in Model.Tasks)
             {
                     <tr>
                         <td>@task.Name</td>
@@ -33,7 +34,7 @@
                         </select>
                             <button onclick="addEntry(@task.Id, '@task.Name')" class="btn btn-primary">+</button>
                         </td>
-                        <td>TotalTimeToday</td>
+                        <td>@task.TotalDurationToday</td>
                     </tr>
             }
         }
