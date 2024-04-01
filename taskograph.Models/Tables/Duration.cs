@@ -105,7 +105,18 @@ namespace taskograph.Models.Tables
             if (weeks == 0) weeks = null;
             if (months == 0) months = null;
 
-            return new Duration()
+            if (d1.Minutes == 0) d1.Minutes = null;
+            if (d1.Hours == 0) d1.Hours = null;
+            if (d1.Days == 0) d1.Days = null;
+            if (d1.Weeks == 0) d1.Weeks = null;
+            if (d1.Months == 0) d1.Months = null;
+            if (d2.Minutes == 0) d2.Minutes = null;
+            if (d2.Hours == 0) d2.Hours = null;
+            if (d2.Days == 0) d2.Days = null;
+            if (d2.Weeks == 0) d2.Weeks = null;
+            if (d2.Months == 0) d2.Months = null;
+
+            Duration temp = new Duration()
             {
                 Minutes = minutes,
                 Hours = hours,
@@ -114,7 +125,7 @@ namespace taskograph.Models.Tables
                 Months = months
             };
 
-
+            return temp;
         }
  
     }
