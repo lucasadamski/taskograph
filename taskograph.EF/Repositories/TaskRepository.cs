@@ -103,15 +103,15 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"TaskRepository: GetTask: id {id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"TaskRepository: Get: id {id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new Task();
             }
             if (result == null)
             {
-                _logger.LogError($"TaskRepository: GetTask: id {id} Message: {EMPTY_VARIABLE}");
+                _logger.LogError($"TaskRepository: Get: id {id} Message: {EMPTY_VARIABLE}");
                 return new Task();
             }
-            _logger.LogDebug($"TaskRepository: GetTask: id {id} Message: {DATABASE_OK}");
+            _logger.LogDebug($"TaskRepository: Get: id {id} Message: {DATABASE_OK}");
             return result;
         }
 

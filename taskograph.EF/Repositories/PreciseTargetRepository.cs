@@ -124,6 +124,7 @@ namespace taskograph.EF.Repositories
             {
                 result = _db.PreciseTargets
                     .Include(n => n.Task)
+                    .Include(n => n.Date)
                     .Where(n => n.Task.UserId == userId)
                     .ToList();
             }

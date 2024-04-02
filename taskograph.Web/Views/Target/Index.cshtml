@@ -1,5 +1,106 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model TargetViewModel
+@using Task = taskograph.Models.Tables.Task;
+@using taskograph.Models.Tables
+@using taskograph.Web.Models.DTOs
+
+
+<h1>Targets</h1>
+
+<h1>Precise Targets</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Task</th>
+            <th scope="col">Description</th>
+            <th scope="col">Date Created</th>
+            <th scope="col">Date Due</th>
+            <th scope="col">Status</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Edit</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @{
+            foreach (PreciseTarget target in Model.PreciseTargets)
+            {
+                <tr>
+                    <td>@target?.Task.Name</td>
+                    <td>@target.Name</td>
+                    <td>@target.Date.Created.ToString("dd-MM-yyyy")</td>
+                    <td>@target.DateDue.Date.ToString("dd-MM-yyyy")</td>
+                    <td>@((target.DateDue - target.Date.Created).Days) days left</td>
+                    <td>Delete Button</td>
+                    <td>Edit Button</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script type="text/javascript">
+
+        //************************************************
+        //Show toastr after page reload fix
+        window.onload = function () {
+            var reloading = sessionStorage.getItem("reloading");
+            var taskName = sessionStorage.getItem("taskName");
+            var durationName = sessionStorage.getItem("durationName");
+            if (reloading) {
+                sessionStorage.removeItem("reloading");
+                sessionStorage.removeItem("taskName");
+                sessionStorage.removeItem("durationName");
+                toastr["success"]("", `Added ${durationName} of ${taskName}`);
+            }
+        }
+        function reloadPage() {
+            sessionStorage.setItem("reloading", "true");
+            document.location.reload();
+        }
+        //***********************************************
+
+
+        //Send Entry to controller
+        function addEntry(taskId, taskName) {
+            const fixedTimeDropDown = document.getElementById(`AddFixedTime-${taskId}`);
+            const durationId = fixedTimeDropDown.value;
+            const durationName = fixedTimeDropDown.options[fixedTimeDropDown.selectedIndex].text;
+            $.ajax({
+                url: "@Url.Action("AddEntry", "Task")",
+                type: 'GET',
+                data: {
+                    taskId: taskId,
+                    durationId: durationId
+                },
+                success: function (res) {
+                    console.log(`Added fixedTime taskid:${taskId} durationid:${durationId}`);
+                    sessionStorage.setItem("taskName", taskName);
+                    sessionStorage.setItem("durationName", durationName);
+                    reloadPage();
+                }
+            });
+        }
+
+        //Toastr configuration
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": false,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "3000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+    </script>
 }
