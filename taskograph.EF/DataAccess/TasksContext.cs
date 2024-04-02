@@ -61,6 +61,10 @@ namespace taskograph.EF.DataAccess
                .WithMany(n => n.RegularTargets)
                .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<PreciseTarget>().HasOne(n => n.Task)
+               .WithMany(n => n.PreciseTargets)
+               .OnDelete(DeleteBehavior.NoAction);
+
 
             modelBuilder.Entity<Date>().HasData(
                new Date { Id = 1, Created = DateTime.Now },
@@ -135,8 +139,8 @@ namespace taskograph.EF.DataAccess
                );
 
             modelBuilder.Entity<PreciseTarget>().HasData(
-                    new PreciseTarget { Id = 1, Name = "Read Little Prince", DateDue = new DateTime(2024, 06, 01) , DateId = 1},
-                    new PreciseTarget { Id = 2, Name = "Run 10 km", DateDue = new DateTime(2024, 05, 10), DateId = 2 }
+                    new PreciseTarget { Id = 1, TaskId = 1, Name = "Read Little Prince", DateDue = new DateTime(2024, 06, 01), DateId = 1},
+                    new PreciseTarget { Id = 2, TaskId = 2,Name = "Run 10 km", DateDue = new DateTime(2024, 05, 10), DateId = 2 }
                     );
 
             modelBuilder.Entity<Quote>().HasData(

@@ -329,127 +329,127 @@ namespace taskograph.EF.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6864)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8473)
                         },
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6912)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8522)
                         },
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6914)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8524)
                         },
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6915)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8527)
                         },
                         new
                         {
                             Id = 5,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6917)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8532)
                         },
                         new
                         {
                             Id = 6,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6918)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8534)
                         },
                         new
                         {
                             Id = 7,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6920)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8536)
                         },
                         new
                         {
                             Id = 8,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6921)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8539)
                         },
                         new
                         {
                             Id = 9,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6923)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8541)
                         },
                         new
                         {
                             Id = 10,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6925)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8543)
                         },
                         new
                         {
                             Id = 11,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6926)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8545)
                         },
                         new
                         {
                             Id = 12,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6928)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8548)
                         },
                         new
                         {
                             Id = 13,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6929)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8550)
                         },
                         new
                         {
                             Id = 14,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6931)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8553)
                         },
                         new
                         {
                             Id = 15,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6932)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8556)
                         },
                         new
                         {
                             Id = 16,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6934)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8558)
                         },
                         new
                         {
                             Id = 17,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6935)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8560)
                         },
                         new
                         {
                             Id = 18,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6937)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8563)
                         },
                         new
                         {
                             Id = 19,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6938)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8565)
                         },
                         new
                         {
                             Id = 20,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6940)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8567)
                         },
                         new
                         {
                             Id = 21,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6941)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8569)
                         },
                         new
                         {
                             Id = 22,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6943)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8572)
                         },
                         new
                         {
                             Id = 23,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6944)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8574)
                         },
                         new
                         {
                             Id = 24,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6946)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8576)
                         },
                         new
                         {
                             Id = 25,
-                            Created = new DateTime(2024, 3, 29, 18, 44, 20, 996, DateTimeKind.Local).AddTicks(6947)
+                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8579)
                         });
                 });
 
@@ -756,7 +756,7 @@ namespace taskograph.EF.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int?>("TaskId")
+                    b.Property<int>("TaskId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -774,14 +774,16 @@ namespace taskograph.EF.Migrations
                             Id = 1,
                             DateDue = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateId = 1,
-                            Name = "Read Little Prince"
+                            Name = "Read Little Prince",
+                            TaskId = 1
                         },
                         new
                         {
                             Id = 2,
                             DateDue = new DateTime(2024, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateId = 2,
-                            Name = "Run 10 km"
+                            Name = "Run 10 km",
+                            TaskId = 2
                         });
                 });
 
@@ -1080,7 +1082,9 @@ namespace taskograph.EF.Migrations
 
                     b.HasOne("taskograph.Models.Tables.Task", "Task")
                         .WithMany("PreciseTargets")
-                        .HasForeignKey("TaskId");
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Date");
 
