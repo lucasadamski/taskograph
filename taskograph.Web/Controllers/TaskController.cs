@@ -38,7 +38,10 @@ namespace taskograph.Web.Controllers
         {
             string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            _taskRepository.DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser(_userId);    //****   Debug only!!!  ****
+            if (_configuration.GetValue<bool?>("ConnectUserIdWithExistingTaskEntries") ?? false)
+            {
+                _taskRepository.DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser(_userId);    //****   Debug only!!!  ****
+            }             
 
             //Displays Tasks in table, first load Tasks from DB, then convert it to TaskDTO 
             TaskViewModel taskVM = new TaskViewModel();
