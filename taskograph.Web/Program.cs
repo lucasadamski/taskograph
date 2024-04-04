@@ -24,6 +24,7 @@ namespace taskograph.Web
             builder.Services.AddScoped<IEntryRepository, EntryRepository>();
             builder.Services.AddScoped<IDurationRepository, DurationRepository>();
             builder.Services.AddScoped<IPreciseTargetRepository, PreciseTargetRepository>();
+            builder.Services.AddScoped<IRegularTargetRepository, RegularTargetRepository>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
