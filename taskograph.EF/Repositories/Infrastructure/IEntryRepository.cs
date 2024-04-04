@@ -17,6 +17,7 @@ namespace taskograph.EF.Repositories.Infrastructure
         public IEnumerable<Entry> GetAllByTask(int taskId, string userId);
         public IEnumerable<Entry> GetAllByGroup(int groupId, string userId);
         public Duration GetTotalDurationForTask(int taskId, DateTime date);
+        public Duration GetTotalDurationForAllTasks(string userId, DateTime date);
         public Duration GetTotalDurationForTask(int taskId, DateTime dateFrom, DateTime dateTo);
     }
 }

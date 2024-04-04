@@ -254,6 +254,31 @@ namespace taskograph.EF.Repositories
             _logger.LogDebug($"EntryRepository: GetTotalDurationForTask taskId {taskId} date {date} Message: {DATABASE_OK}");
             return durationTotal;
         }
+        public Duration GetTotalDurationForAllTasks(string userId, DateTime date)
+        {
+            List<Duration> durationsList = new List<Duration>();
+            Duration durationTotal = new Duration();
+            try
+            {
+                durationsList = _db.Entries
+                    .Include(n => n.Duration)
+                    .Include(n => n.Task)
+                    .Include(n => n.Date)
+                    .Where(n => n.Task.UserId == userId)
+                    .Where(n => n.Date.Created.Date == date.Date)
+                    .Select(n => n.Duration)
+                    .ToList();
+
+                durationTotal = durationsList.Aggregate((a, b) => a + b);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"EntryRepository: GetTotalDurationForAllTasks date {date} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new Duration();
+            }
+            _logger.LogDebug($"EntryRepository: GetTotalDurationForAllTasks date {date} Message: {DATABASE_OK}");
+            return durationTotal;
+        }
         public Duration GetTotalDurationForTask(int taskId, DateTime dateFrom, DateTime dateTo)
         {
             Duration result;

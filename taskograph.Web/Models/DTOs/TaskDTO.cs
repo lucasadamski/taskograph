@@ -1,4 +1,6 @@
-﻿namespace taskograph.Web.Models.DTOs
+﻿using taskograph.Models.Tables;
+
+namespace taskograph.Web.Models.DTOs
 {
     public class TaskDTO
     {
@@ -6,6 +8,6 @@
         public string Name { get; set; }
         public string Group { get; set; }
         public string Color { get; set; }
-        public string TotalDurationToday { get; set; }
+        public Duration TotalDurationToday { get; set; }
     }
 }
