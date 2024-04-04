@@ -11,15 +11,17 @@ namespace taskograph.Web.Controllers
     public class TargetController : Controller
     {
         private IPreciseTargetRepository _preciseTargetRepository;
-        
+        private IRegularTargetRepository _regularTargetRepository;
 
         private readonly ILogger<TargetController> _logger;
         private IConfiguration _configuration;
 
 
-        public TargetController(IPreciseTargetRepository preciseTargetRepository, ILogger<TargetController> logger, IConfiguration configuration)
+        public TargetController(IPreciseTargetRepository preciseTargetRepository, IRegularTargetRepository regularTargetRepository,
+            ILogger<TargetController> logger, IConfiguration configuration)
         {
             _preciseTargetRepository = preciseTargetRepository;
+            _regularTargetRepository = regularTargetRepository;
             _logger = logger;
             _configuration = configuration;
 
@@ -32,14 +34,12 @@ namespace taskograph.Web.Controllers
             TargetViewModel targetVM = new TargetViewModel();
 
             targetVM.PreciseTargets = _preciseTargetRepository.GetAll(_userId).ToList();
+            targetVM.RegularTargets = _regularTargetRepository.GetAll(_userId).ToList();
 
             return View(targetVM);
         }
 
-        private TimeSpan CalculatePrectiseTargetStatus(DateTime dateCreated, DateTime dateDue)
-        {
-            TimeSpan result = dateDue - dateCreated;
-            return result;
-        }
+
+
     }
 }
