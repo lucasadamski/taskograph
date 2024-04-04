@@ -4,6 +4,8 @@ using System.Security.Claims;
 using taskograph.EF.Repositories;
 using taskograph.EF.Repositories.Infrastructure;
 using taskograph.Web.Models;
+using Task = taskograph.Models.Tables.Task;
+using static taskograph.Helpers.Messages;
 
 namespace taskograph.Web.Controllers
 {
@@ -38,8 +40,5 @@ namespace taskograph.Web.Controllers
 
             return View(targetVM);
         }
-
-
-
     }
 }
