@@ -25,7 +25,7 @@ namespace taskograph.EF.DataAccess
         public DbSet<Quote> Quotes { get; set; }
         public DbSet<RegularTarget> RegularTargets { get; set; }
         public DbSet<Task> Tasks { get; set; }
-
+        public DbSet<Setting> Settings { get; set; }
 
         public TasksContext(DbContextOptions<TasksContext> options) : base(options) { }
 
@@ -144,9 +144,9 @@ namespace taskograph.EF.DataAccess
                     );
 
             modelBuilder.Entity<Quote>().HasData(
-                 new Quote { Id = 1, Name = "What you have to do today is insignificant, but is very important that you do it." },
-                 new Quote { Id = 2, Name = "It's about the marathon, not the sprint." },
-                 new Quote { Id = 3, Name = "Don't feel bad because you don't know something and feel like you can't do anything. Do what you can do and then improve." }
+                 new Quote { Id = 1, Name = "What you have to do today is insignificant, but is very important that you do it.", UserId = "1" },
+                 new Quote { Id = 2, Name = "It's about the marathon, not the sprint.", UserId = "1" },
+                 new Quote { Id = 3, Name = "Don't feel bad because you don't know something and feel like you can't do anything. Do what you can do and then improve.", UserId = "1" }
                  );
 
             modelBuilder.Entity<Task>().HasData(
@@ -162,7 +162,7 @@ namespace taskograph.EF.DataAccess
               );
 
             modelBuilder.Entity<Setting>().HasData(
-              new Setting { Id = 1, Name = "AlarmClock" , Value = "Off"}
+              new Setting { Id = 1, Name = "AlarmClock" , Value = "Off", UserId ="1"}
               );
 
             modelBuilder.Entity<Models.Tables.Group>().HasData(

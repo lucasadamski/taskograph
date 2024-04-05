@@ -17,7 +17,7 @@ namespace taskograph.EF.Repositories.Infrastructure
 
 
         //Debug only
-        public bool DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser(string userId);
+        public bool DEBUG_ONLY_AssignUserIdToAllTables(string userId);
 
 
 

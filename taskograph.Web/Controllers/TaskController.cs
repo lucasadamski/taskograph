@@ -40,7 +40,7 @@ namespace taskograph.Web.Controllers
 
             if (_configuration.GetValue<bool?>("ConnectUserIdWithExistingTaskEntries") ?? false)
             {
-                _taskRepository.DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser(_userId);    //****   Debug only!!!  ****
+                _taskRepository.DEBUG_ONLY_AssignUserIdToAllTables(_userId);    //****   Debug only!!!  ****
             }             
 
             //Displays Tasks in table, first load Tasks from DB, then convert it to TaskDTO 

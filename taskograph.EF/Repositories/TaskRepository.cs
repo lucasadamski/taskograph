@@ -5,6 +5,7 @@ using taskograph.EF.Repositories.Infrastructure;
 using Task = taskograph.Models.Tables.Task;
 using static taskograph.Helpers.Messages;
 using Microsoft.EntityFrameworkCore;
+using taskograph.Models.Tables;
 
 namespace taskograph.EF.Repositories
 {
@@ -115,12 +116,16 @@ namespace taskograph.EF.Repositories
             return result;
         }
 
-        public bool DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser(string userId)
+        public bool DEBUG_ONLY_AssignUserIdToAllTables(string userId)
         {
             try
             {
-                List<Task> result = _db.Tasks.ToList();
-                result.ForEach(n => n.UserId = userId);
+                List<Task> tasks = _db.Tasks.ToList();
+                tasks.ForEach(n => n.UserId = userId);
+                List<Quote> quotes = _db.Quotes.ToList();
+                quotes.ForEach(n => n.UserId = userId);
+                List<Setting> settings = _db.Settings.ToList();
+                settings.ForEach(n => n.UserId = userId);
                 _db.SaveChanges();
                 _logger.LogDebug($"TaskRepository: DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser: UserID {userId} Message: {DATABASE_OK}");
 

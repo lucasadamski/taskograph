@@ -12,7 +12,7 @@ using taskograph.EF.DataAccess;
 namespace taskograph.EF.Migrations
 {
     [DbContext(typeof(TasksContext))]
-    [Migration("20240402092428_initial")]
+    [Migration("20240405090608_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -332,127 +332,127 @@ namespace taskograph.EF.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8473)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4033)
                         },
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8522)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4085)
                         },
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8524)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4099)
                         },
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8527)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4129)
                         },
                         new
                         {
                             Id = 5,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8532)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4131)
                         },
                         new
                         {
                             Id = 6,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8534)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4133)
                         },
                         new
                         {
                             Id = 7,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8536)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4135)
                         },
                         new
                         {
                             Id = 8,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8539)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4137)
                         },
                         new
                         {
                             Id = 9,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8541)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4138)
                         },
                         new
                         {
                             Id = 10,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8543)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4140)
                         },
                         new
                         {
                             Id = 11,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8545)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4142)
                         },
                         new
                         {
                             Id = 12,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8548)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4144)
                         },
                         new
                         {
                             Id = 13,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8550)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4146)
                         },
                         new
                         {
                             Id = 14,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8553)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4148)
                         },
                         new
                         {
                             Id = 15,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8556)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4149)
                         },
                         new
                         {
                             Id = 16,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8558)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4151)
                         },
                         new
                         {
                             Id = 17,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8560)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4153)
                         },
                         new
                         {
                             Id = 18,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8563)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4154)
                         },
                         new
                         {
                             Id = 19,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8565)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4156)
                         },
                         new
                         {
                             Id = 20,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8567)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4158)
                         },
                         new
                         {
                             Id = 21,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8569)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4160)
                         },
                         new
                         {
                             Id = 22,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8572)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4162)
                         },
                         new
                         {
                             Id = 23,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8574)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4163)
                         },
                         new
                         {
                             Id = 24,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8576)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4200)
                         },
                         new
                         {
                             Id = 25,
-                            Created = new DateTime(2024, 4, 2, 10, 24, 27, 561, DateTimeKind.Local).AddTicks(8579)
+                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4202)
                         });
                 });
 
@@ -803,6 +803,10 @@ namespace taskograph.EF.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Quotes");
@@ -811,17 +815,20 @@ namespace taskograph.EF.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "What you have to do today is insignificant, but is very important that you do it."
+                            Name = "What you have to do today is insignificant, but is very important that you do it.",
+                            UserId = "1"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "It's about the marathon, not the sprint."
+                            Name = "It's about the marathon, not the sprint.",
+                            UserId = "1"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Don't feel bad because you don't know something and feel like you can't do anything. Do what you can do and then improve."
+                            Name = "Don't feel bad because you don't know something and feel like you can't do anything. Do what you can do and then improve.",
+                            UserId = "1"
                         });
                 });
 
@@ -890,6 +897,10 @@ namespace taskograph.EF.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("varchar(30)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasMaxLength(256)
@@ -897,13 +908,14 @@ namespace taskograph.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Setting");
+                    b.ToTable("Settings");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Name = "AlarmClock",
+                            UserId = "1",
                             Value = "Off"
                         });
                 });
