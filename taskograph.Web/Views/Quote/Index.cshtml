@@ -1,0 +1,32 @@
+﻿@model QuoteViewModel
+@using Task = taskograph.Models.Tables.Task;
+@using taskograph.Models.Tables
+@using taskograph.Web.Models.DTOs
+
+
+<h1>Motivation</h1>
+
+<h2>Motivational quotes</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Quote</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Edit</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @{
+            foreach (string quote in Model.Quotes)
+            {
+                <tr>
+                    <td>@quote</td>                    
+                    <td>Delete Button</td>
+                    <td>Edit Button</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
