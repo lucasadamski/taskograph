@@ -10,11 +10,7 @@ namespace taskograph.Models.Tables
     public class Duration
     {
         public int Id { get; set; }
-        public int? Minutes { get; set; }
-        public int? Hours { get; set; }
-        public int? Days { get; set; }
-        public int? Weeks { get; set; }
-        public int? Months { get; set; }
+        public long Minutes { get; set; }
         public ICollection<Entry> Entries { get; set; }
         [InverseProperty(nameof(RegularTarget.TargetDuration))]
         public ICollection<RegularTarget> TargetRegularTargets { get; set; }
@@ -24,109 +20,18 @@ namespace taskograph.Models.Tables
 
         public override string ToString()
         {
-            if (Months != null)
-                return $"{Months} months";
-            else if (Weeks != null)
-                return $"{Weeks} weeks";
-            else if (Days != null)
-                return $"{Days}d";
-            else if (Hours != null && Minutes != null)
-                return String.Format("{0:00}:{1:00}", Hours, Minutes);
-            else if (Hours != null && Minutes == null)
-                return String.Format("{0:00}:00", Hours);
-            else if (Hours == null && Minutes != null)
-                return String.Format("00:{0:00}", Minutes);
-            else
-                return "Empty";
+            TimeSpan span = TimeSpan.FromMinutes(Minutes);
+
+            string formatted = string.Format("{0}{1}{2}{3}",
+            span.Duration().Days > 0 ? string.Format("{0:0} day{1}, ", span.Days, span.Days == 1 ? string.Empty : "s") : string.Empty,
+            span.Duration().Hours > 0 ? string.Format("{0:0} hour{1}, ", span.Hours, span.Hours == 1 ? string.Empty : "s") : string.Empty,
+            span.Duration().Minutes > 0 ? string.Format("{0:0} minute{1}, ", span.Minutes, span.Minutes == 1 ? string.Empty : "s") : string.Empty);
+
+            return formatted;
         }
 
-        public static Duration operator +(Duration d1, Duration d2) //TODO Fix not nulling 
-        {
-            //turn null to 0
-            if (d1.Minutes == null) d1.Minutes = 0;
-            if (d1.Hours == null)   d1.Hours = 0;
-            if (d1.Days == null)    d1.Days = 0;
-            if (d1.Weeks == null)   d1.Weeks = 0;
-            if (d1.Months == null)  d1.Months = 0;
-            if (d2.Minutes == null) d2.Minutes = 0;
-            if (d2.Hours == null)   d2.Hours = 0;
-            if (d2.Days == null)    d2.Days = 0;
-            if (d2.Weeks == null)   d2.Weeks = 0;
-            if (d2.Months == null)  d2.Months = 0;
-
-            //perform add operation
-            int? minutes = d1.Minutes + d2.Minutes;
-            int? hours = d1.Hours + d2.Hours;
-            int? days = d1.Days + d2.Days;
-            int? weeks = d1.Weeks + d2.Weeks;
-            int? months = d1.Months + d2.Months;
-
-            //auxiliary variables
-            int? res = 0;
-            int? modulo = 0;
-
-            //turn minutes to hours if more than 60 minutes, hours to days if more than 24 hours etc.
-            //minutes
-            if (minutes != 0 && minutes > 59)
-            {
-                res = minutes / 60;
-                modulo = minutes % 60;
-                hours += res;
-                minutes = modulo;
-            }
-            //hours
-            if (hours != 0 && hours > 23)
-            {
-                res = hours / 24;
-                modulo = hours % 24;
-                days += res;
-                hours = modulo;
-            }
-            //days
-            if (days != 0 && days > 6)
-            {
-                res = days / 7;
-                modulo = days % 7;
-                weeks += res;
-                days = modulo;
-            }            
-            //weeks & months
-            if (weeks != 0 && weeks > 3)
-            {
-                res = weeks / 4;
-                modulo = weeks % 4;
-                months += res;
-                weeks = modulo;
-            }
-
-            if (minutes == 0) minutes = null;
-            if (hours == 0) hours = null;
-            if (days == 0) days = null;
-            if (weeks == 0) weeks = null;
-            if (months == 0) months = null;
-
-            if (d1.Minutes == 0) d1.Minutes = null;
-            if (d1.Hours == 0) d1.Hours = null;
-            if (d1.Days == 0) d1.Days = null;
-            if (d1.Weeks == 0) d1.Weeks = null;
-            if (d1.Months == 0) d1.Months = null;
-            if (d2.Minutes == 0) d2.Minutes = null;
-            if (d2.Hours == 0) d2.Hours = null;
-            if (d2.Days == 0) d2.Days = null;
-            if (d2.Weeks == 0) d2.Weeks = null;
-            if (d2.Months == 0) d2.Months = null;
-
-            Duration temp = new Duration()
-            {
-                Minutes = minutes,
-                Hours = hours,
-                Days = days,
-                Weeks = weeks,
-                Months = months
-            };
-
-            return temp;
-        }
+        public static Duration operator +(Duration d1, Duration d2)=>  new Duration() { Minutes = d1.Minutes + d2.Minutes };
+        
  
     }
 }
