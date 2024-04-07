@@ -1,13 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using taskograph.Models;
-using taskograph.Models.Tables;
 using taskograph.Models.Tables;
 using Task = taskograph.Models.Tables.Task;
 
@@ -112,30 +105,35 @@ namespace taskograph.EF.DataAccess
                new Duration { Id = 2, Minutes = 10 },
                new Duration { Id = 3, Minutes = 15  },
                new Duration { Id = 4, Minutes = 30  },
-               new Duration { Id = 5, Minutes = 45  },
-               new Duration { Id = 6, Hours = 1 },
-               new Duration { Id = 7, Hours = 2 },
-               new Duration { Id = 8, Hours = 3 },
-               new Duration { Id = 9, Hours = 4 },
-               new Duration { Id = 10, Hours = 5 },
-               new Duration { Id = 11, Hours = 6 },
-               new Duration { Id = 12, Hours = 12 },
-               new Duration { Id = 13, Days = 1 },
-               new Duration { Id = 14, Days = 2 },
-               new Duration { Id = 15, Days = 3 },
-               new Duration { Id = 16, Days = 4 },
-               new Duration { Id = 17, Days = 5 },
-               new Duration { Id = 18, Days = 6 },
-               new Duration { Id = 19, Weeks = 1 },
-               new Duration { Id = 20, Weeks = 2 },
-               new Duration { Id = 21, Weeks = 3 },
-               new Duration { Id = 22, Months = 1  },
-               new Duration { Id = 23, Months = 2 },
-               new Duration { Id = 24, Months = 3 },
-               new Duration { Id = 25, Months = 6 },
-               new Duration { Id = 26, Months = 12 },
-               new Duration { Id = 27, Months = 24 },
-               new Duration { Id = 28, Months = 48 }
+               new Duration { Id = 5, Minutes = 45  },  
+               new Duration { Id = 6, Minutes = 60 },     //1:00
+               new Duration { Id = 7, Minutes = 75 },     //1:15
+               new Duration { Id = 8, Minutes = 90 },     //1:30
+               new Duration { Id = 9, Minutes = 105 },    //1:45
+               new Duration { Id = 10, Minutes = 120 },   //2:00
+               new Duration { Id = 11, Minutes = 135 },   //2:15
+               new Duration { Id = 11, Minutes = 150 },   //2:30
+               new Duration { Id = 11, Minutes = 165 },   //2:45
+               new Duration { Id = 11, Minutes = 180 },   //3:00
+               new Duration { Id = 11, Minutes = 195 },   //3:15
+               new Duration { Id = 12, Minutes = 210 },   //3:30
+               new Duration { Id = 12, Minutes = 225 },   //3:45
+               new Duration { Id = 13, Minutes = 240 },   //4:00
+               new Duration { Id = 14, Minutes = 300 },   //5:00
+               new Duration { Id = 15, Minutes = 360 },   //6:00
+               new Duration { Id = 16, Minutes = 420 },   //7:00
+               new Duration { Id = 17, Minutes = 480 },   //8:00
+               new Duration { Id = 18, Minutes = 720 },   //12:00
+               new Duration { Id = 19, Minutes = 1440 },   //1 day
+               new Duration { Id = 20, Minutes = 2880 },   //2 days
+               new Duration { Id = 21, Minutes = 4320 },   //3 days
+               new Duration { Id = 22, Minutes = 5760 },   //4 days
+               new Duration { Id = 23, Minutes = 7200 },   //5 days
+               new Duration { Id = 24, Minutes = 8640 },   //6 days
+               new Duration { Id = 25, Minutes = 10080 },   //1 week
+               new Duration { Id = 26, Minutes = 20160 },   //2 weeks
+               new Duration { Id = 27, Minutes = 30240 },   //3 weeks
+               new Duration { Id = 28, Minutes = 40320 }     //1 month
                );
 
             modelBuilder.Entity<PreciseTarget>().HasData(
