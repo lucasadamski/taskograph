@@ -329,127 +329,127 @@ namespace taskograph.EF.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4033)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2407)
                         },
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4085)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2536)
                         },
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4099)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2542)
                         },
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4129)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2546)
                         },
                         new
                         {
                             Id = 5,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4131)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2549)
                         },
                         new
                         {
                             Id = 6,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4133)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2553)
                         },
                         new
                         {
                             Id = 7,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4135)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2557)
                         },
                         new
                         {
                             Id = 8,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4137)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2561)
                         },
                         new
                         {
                             Id = 9,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4138)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2565)
                         },
                         new
                         {
                             Id = 10,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4140)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2569)
                         },
                         new
                         {
                             Id = 11,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4142)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2572)
                         },
                         new
                         {
                             Id = 12,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4144)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2576)
                         },
                         new
                         {
                             Id = 13,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4146)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2580)
                         },
                         new
                         {
                             Id = 14,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4148)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2584)
                         },
                         new
                         {
                             Id = 15,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4149)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2588)
                         },
                         new
                         {
                             Id = 16,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4151)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2592)
                         },
                         new
                         {
                             Id = 17,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4153)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2596)
                         },
                         new
                         {
                             Id = 18,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4154)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2600)
                         },
                         new
                         {
                             Id = 19,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4156)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2604)
                         },
                         new
                         {
                             Id = 20,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4158)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2608)
                         },
                         new
                         {
                             Id = 21,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4160)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2611)
                         },
                         new
                         {
                             Id = 22,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4162)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2615)
                         },
                         new
                         {
                             Id = 23,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4163)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2618)
                         },
                         new
                         {
                             Id = 24,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4200)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2622)
                         },
                         new
                         {
                             Id = 25,
-                            Created = new DateTime(2024, 4, 5, 10, 6, 7, 383, DateTimeKind.Local).AddTicks(4202)
+                            Created = new DateTime(2024, 4, 7, 16, 51, 20, 665, DateTimeKind.Local).AddTicks(2626)
                         });
                 });
 
@@ -461,20 +461,8 @@ namespace taskograph.EF.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("Days")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Hours")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Minutes")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Months")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Weeks")
-                        .HasColumnType("int");
+                    b.Property<long>("Minutes")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -484,142 +472,167 @@ namespace taskograph.EF.Migrations
                         new
                         {
                             Id = 1,
-                            Minutes = 5
+                            Minutes = 5L
                         },
                         new
                         {
                             Id = 2,
-                            Minutes = 10
+                            Minutes = 10L
                         },
                         new
                         {
                             Id = 3,
-                            Minutes = 15
+                            Minutes = 15L
                         },
                         new
                         {
                             Id = 4,
-                            Minutes = 30
+                            Minutes = 30L
                         },
                         new
                         {
                             Id = 5,
-                            Minutes = 45
+                            Minutes = 45L
                         },
                         new
                         {
                             Id = 6,
-                            Hours = 1
+                            Minutes = 60L
                         },
                         new
                         {
                             Id = 7,
-                            Hours = 2
+                            Minutes = 75L
                         },
                         new
                         {
                             Id = 8,
-                            Hours = 3
+                            Minutes = 90L
                         },
                         new
                         {
                             Id = 9,
-                            Hours = 4
+                            Minutes = 105L
                         },
                         new
                         {
                             Id = 10,
-                            Hours = 5
+                            Minutes = 120L
                         },
                         new
                         {
                             Id = 11,
-                            Hours = 6
+                            Minutes = 135L
                         },
                         new
                         {
                             Id = 12,
-                            Hours = 12
+                            Minutes = 150L
                         },
                         new
                         {
                             Id = 13,
-                            Days = 1
+                            Minutes = 165L
                         },
                         new
                         {
                             Id = 14,
-                            Days = 2
+                            Minutes = 180L
                         },
                         new
                         {
                             Id = 15,
-                            Days = 3
+                            Minutes = 195L
                         },
                         new
                         {
                             Id = 16,
-                            Days = 4
+                            Minutes = 210L
                         },
                         new
                         {
                             Id = 17,
-                            Days = 5
+                            Minutes = 225L
                         },
                         new
                         {
                             Id = 18,
-                            Days = 6
+                            Minutes = 240L
                         },
                         new
                         {
                             Id = 19,
-                            Weeks = 1
+                            Minutes = 300L
                         },
                         new
                         {
                             Id = 20,
-                            Weeks = 2
+                            Minutes = 360L
                         },
                         new
                         {
                             Id = 21,
-                            Weeks = 3
+                            Minutes = 420L
                         },
                         new
                         {
                             Id = 22,
-                            Months = 1
+                            Minutes = 480L
                         },
                         new
                         {
                             Id = 23,
-                            Months = 2
+                            Minutes = 720L
                         },
                         new
                         {
                             Id = 24,
-                            Months = 3
+                            Minutes = 1440L
                         },
                         new
                         {
                             Id = 25,
-                            Months = 6
+                            Minutes = 2880L
                         },
                         new
                         {
                             Id = 26,
-                            Months = 12
+                            Minutes = 4320L
                         },
                         new
                         {
                             Id = 27,
-                            Months = 24
+                            Minutes = 5760L
                         },
                         new
                         {
                             Id = 28,
-                            Months = 48
+                            Minutes = 7200L
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Minutes = 8640L
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Minutes = 10080L
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Minutes = 20160L
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Minutes = 30240L
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Minutes = 40320L
                         });
                 });
 

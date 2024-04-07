@@ -112,28 +112,28 @@ namespace taskograph.EF.DataAccess
                new Duration { Id = 9, Minutes = 105 },    //1:45
                new Duration { Id = 10, Minutes = 120 },   //2:00
                new Duration { Id = 11, Minutes = 135 },   //2:15
-               new Duration { Id = 11, Minutes = 150 },   //2:30
-               new Duration { Id = 11, Minutes = 165 },   //2:45
-               new Duration { Id = 11, Minutes = 180 },   //3:00
-               new Duration { Id = 11, Minutes = 195 },   //3:15
-               new Duration { Id = 12, Minutes = 210 },   //3:30
-               new Duration { Id = 12, Minutes = 225 },   //3:45
-               new Duration { Id = 13, Minutes = 240 },   //4:00
-               new Duration { Id = 14, Minutes = 300 },   //5:00
-               new Duration { Id = 15, Minutes = 360 },   //6:00
-               new Duration { Id = 16, Minutes = 420 },   //7:00
-               new Duration { Id = 17, Minutes = 480 },   //8:00
-               new Duration { Id = 18, Minutes = 720 },   //12:00
-               new Duration { Id = 19, Minutes = 1440 },   //1 day
-               new Duration { Id = 20, Minutes = 2880 },   //2 days
-               new Duration { Id = 21, Minutes = 4320 },   //3 days
-               new Duration { Id = 22, Minutes = 5760 },   //4 days
-               new Duration { Id = 23, Minutes = 7200 },   //5 days
-               new Duration { Id = 24, Minutes = 8640 },   //6 days
-               new Duration { Id = 25, Minutes = 10080 },   //1 week
-               new Duration { Id = 26, Minutes = 20160 },   //2 weeks
-               new Duration { Id = 27, Minutes = 30240 },   //3 weeks
-               new Duration { Id = 28, Minutes = 40320 }     //1 month
+               new Duration { Id = 12, Minutes = 150 },   //2:30
+               new Duration { Id = 13, Minutes = 165 },   //2:45
+               new Duration { Id = 14, Minutes = 180 },   //3:00
+               new Duration { Id = 15, Minutes = 195 },   //3:15
+               new Duration { Id = 16, Minutes = 210 },   //3:30
+               new Duration { Id = 17, Minutes = 225 },   //3:45
+               new Duration { Id = 18, Minutes = 240 },   //4:00
+               new Duration { Id = 19, Minutes = 300 },   //5:00
+               new Duration { Id = 20, Minutes = 360 },   //6:00
+               new Duration { Id = 21, Minutes = 420 },   //7:00
+               new Duration { Id = 22, Minutes = 480 },   //8:00
+               new Duration { Id = 23, Minutes = 720 },   //12:00
+               new Duration { Id = 24, Minutes = 1440 },   //1 day
+               new Duration { Id = 25, Minutes = 2880 },   //2 days
+               new Duration { Id = 26, Minutes = 4320 },   //3 days
+               new Duration { Id = 27, Minutes = 5760 },   //4 days
+               new Duration { Id = 28, Minutes = 7200 },   //5 days
+               new Duration { Id = 29, Minutes = 8640 },   //6 days
+               new Duration { Id = 30, Minutes = 10080 },   //1 week
+               new Duration { Id = 31, Minutes = 20160 },   //2 weeks
+               new Duration { Id = 32, Minutes = 30240 },   //3 weeks
+               new Duration { Id = 33, Minutes = 40320 }     //1 month
                );
 
             modelBuilder.Entity<PreciseTarget>().HasData(
