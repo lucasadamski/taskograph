@@ -6,6 +6,7 @@ using Task = taskograph.Models.Tables.Task;
 using static taskograph.Helpers.Messages;
 using Microsoft.EntityFrameworkCore;
 using taskograph.Models.Tables;
+using taskograph.Web.Models.DTOs;
 
 namespace taskograph.EF.Repositories
 {
@@ -14,12 +15,14 @@ namespace taskograph.EF.Repositories
         private readonly TasksContext _db;
         private readonly ILogger<TaskRepository> _logger;
         private readonly IMapper _mapper;
+        private IEntryRepository _entryRepository;
 
-        public TaskRepository(TasksContext db, ILogger<TaskRepository> logger, IMapper mapper)
+        public TaskRepository(TasksContext db, ILogger<TaskRepository> logger, IMapper mapper, IEntryRepository entryRepository)
         {
             _db = db;
             _logger = logger;
             _mapper = mapper;
+            _entryRepository = entryRepository;
         }
 
         public bool Add(Task task)
@@ -89,6 +92,34 @@ namespace taskograph.EF.Repositories
             {
                 _logger.LogError($"TaskRepository: GetAllTasks: UserID {userId} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new List<Task>();
+            }
+
+            return result;
+        }
+
+        public IEnumerable<TaskDTO> GetAllTaskDTOs(string userId)
+        {
+            IEnumerable<TaskDTO> result;
+            
+            try
+            {
+                result = GetAll(userId)
+                    .Select(n => new TaskDTO()
+                    {
+                        Id = n.Id,
+                        Name = n.Name,
+                        Group = n.Group?.Name ?? NULL_VALUE,
+                        Color = n.Color?.Name ?? NULL_VALUE,
+                        TotalDurationToday = (_entryRepository.GetTotalDurationForTask(n.Id, DateTime.Now))
+                    })
+                 .ToList();
+                _logger.LogDebug($"GetAllTaskDTOs: UserID {userId} Message: {DATABASE_OK}");
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"GetAllTaskDTOs: UserID {userId} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new List<TaskDTO>();
             }
 
             return result;

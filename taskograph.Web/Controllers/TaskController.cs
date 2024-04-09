@@ -45,8 +45,7 @@ namespace taskograph.Web.Controllers
 
             //Displays Tasks in table, first load Tasks from DB, then convert it to TaskDTO 
             TaskViewModel taskVM = new TaskViewModel();
-            List<Task> tasksList = _taskRepository.GetAll(_userId).ToList();
-            taskVM.Tasks = ConvertTasksToDTO(tasksList);
+            taskVM.Tasks = _taskRepository.GetAllTaskDTOs(_userId).ToList();
 
             //used for populating Views DropDown with predefined times eg: 00:10, 00:30, 01:00
             taskVM.Durations = _durationRepository.GetFirst(15).Select(n => new DurationDTO()
@@ -69,28 +68,11 @@ namespace taskograph.Web.Controllers
             };
 
             _entryRepository.Add(entry);
-            //create new entry
-            //create duration
 
             TaskViewModel taskVM = new TaskViewModel();
-            List<Task> tasksList = _taskRepository.GetAll(_userId).ToList();
-            taskVM.Tasks = ConvertTasksToDTO(tasksList);
+            taskVM.Tasks = _taskRepository.GetAllTaskDTOs(_userId).ToList();
 
             return View("Index", taskVM);
         }
-
-        private List<TaskDTO> ConvertTasksToDTO(List<Task> input)
-        {
-            return input.Select(n => new TaskDTO()
-            {
-                Id = n.Id,
-                Name = n.Name,
-                Group = n.Group?.Name ?? NULL_VALUE,
-                Color = n.Color?.Name ?? NULL_VALUE,
-                TotalDurationToday = (_entryRepository.GetTotalDurationForTask(n.Id, DateTime.Now))
-            })
-                .ToList();
-        }
-
     }
 }

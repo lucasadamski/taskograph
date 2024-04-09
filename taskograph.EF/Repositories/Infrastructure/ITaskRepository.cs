@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using taskograph.Web.Models.DTOs;
 using Task = taskograph.Models.Tables.Task;
 
 namespace taskograph.EF.Repositories.Infrastructure
@@ -14,6 +15,7 @@ namespace taskograph.EF.Repositories.Infrastructure
 
         public IEnumerable<Task> GetAll(string userId);
         public Task Get(int id);
+        public IEnumerable<TaskDTO> GetAllTaskDTOs(string userId);
 
 
         //Debug only
