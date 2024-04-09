@@ -29,7 +29,7 @@
                 @for (int j = 0; j < Model.TextGraphCell.Count(); j++)
                 {
                         
-                        if (Model.TextGraphCell.ElementAt(j).Tasks.ElementAt(i).TotalDurationToday.ToString() != "Empty")
+                        if (Model.TextGraphCell.ElementAt(j).Tasks.ElementAt(i).TotalDurationToday.ToString() != "")
                         {
                             <td>@Model.TextGraphCell.ElementAt(j).Tasks.ElementAt(i).Name @Model.TextGraphCell.ElementAt(j).Tasks.ElementAt(i).TotalDurationToday</td>
                         }
