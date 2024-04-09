@@ -48,11 +48,7 @@ namespace taskograph.Web.Controllers
             taskVM.Tasks = _taskRepository.GetAllTaskDTOs(_userId).ToList();
 
             //used for populating Views DropDown with predefined times eg: 00:10, 00:30, 01:00
-            taskVM.Durations = _durationRepository.GetFirst(15).Select(n => new DurationDTO()
-            {
-                Id = n.Id,
-                Text = n.ToString()
-            }).ToList();
+            taskVM.Durations = _durationRepository.GetFirst(15).ToList();
 
             return View(taskVM);
         }

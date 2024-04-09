@@ -28,7 +28,7 @@
                             @{
                                 foreach(var duration in Model.Durations)
                                 {
-                                    <option value="@duration.Id">@duration.Text</option>
+                                    <option value="@duration.Id">@duration.ToString()</option>
                                 }
                             }
                         </select>
