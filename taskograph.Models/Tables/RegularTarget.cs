@@ -13,14 +13,16 @@ namespace taskograph.Models.Tables
         public int TaskId { get; set; }
         public int TargetDurationId { get; set; }  //eg 15 min
         public int PerTimeframeDurationId { get; set; } //per every 1 week
-        public int DateId { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime? LastUpdated { get; set; }
+        public DateTime? Deleted { get; set; }
+
 
         public Task Task { get; set; }
         [ForeignKey("TargetDurationId")]
         public Duration TargetDuration { get; set; }
         [ForeignKey("PerTimeframeDurationId")]
         public Duration PerTimeframeDuration { get; set; }
-        public Date Date { get; set; }
 
     }
 }

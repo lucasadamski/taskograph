@@ -13,10 +13,11 @@ namespace taskograph.Models.Tables
         public int Id { get; set; }
         public int TaskId { get; set; }
         public int DurationId { get; set; }
-        public int DateId { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime? LastUpdated { get; set; }
+        public DateTime? Deleted { get; set; }
 
         public Task Task{ get; set; }
         public Duration Duration { get; set; }
-        public Date Date { get; set; }
     }
 }

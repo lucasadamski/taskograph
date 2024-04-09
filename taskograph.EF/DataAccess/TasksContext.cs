@@ -10,7 +10,6 @@ namespace taskograph.EF.DataAccess
    public class TasksContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Color> Colors { get; set; }
-        public DbSet<Date> Dates { get; set; }
         public DbSet<Duration> Durations { get; set; }
         public DbSet<Entry> Entries { get; set; }
         public DbSet<Models.Tables.Group> Groups { get; set; }
@@ -58,34 +57,7 @@ namespace taskograph.EF.DataAccess
                .WithMany(n => n.PreciseTargets)
                .OnDelete(DeleteBehavior.NoAction);
 
-
-            modelBuilder.Entity<Date>().HasData(
-               new Date { Id = 1, Created = DateTime.Now },
-               new Date { Id = 2, Created = DateTime.Now },
-               new Date { Id = 3, Created = DateTime.Now },
-               new Date { Id = 4, Created = DateTime.Now },
-               new Date { Id = 5, Created = DateTime.Now },
-               new Date { Id = 6, Created = DateTime.Now },
-               new Date { Id = 7, Created = DateTime.Now },
-               new Date { Id = 8, Created = DateTime.Now },
-               new Date { Id = 9, Created = DateTime.Now },
-               new Date { Id = 10, Created = DateTime.Now },
-               new Date { Id = 11, Created = DateTime.Now },
-               new Date { Id = 12, Created = DateTime.Now },
-               new Date { Id = 13, Created = DateTime.Now },
-               new Date { Id = 14, Created = DateTime.Now },
-               new Date { Id = 15, Created = DateTime.Now },
-               new Date { Id = 16, Created = DateTime.Now },
-               new Date { Id = 17, Created = DateTime.Now },
-               new Date { Id = 18, Created = DateTime.Now },
-               new Date { Id = 19, Created = DateTime.Now },
-               new Date { Id = 20, Created = DateTime.Now },
-               new Date { Id = 21, Created = DateTime.Now },
-               new Date { Id = 22, Created = DateTime.Now },
-               new Date { Id = 23, Created = DateTime.Now },
-               new Date { Id = 24, Created = DateTime.Now },
-               new Date { Id = 25, Created = DateTime.Now }
-              );
+            DateTime dayToday = DateTime.Today;
 
             modelBuilder.Entity<Color>().HasData(
                 new Color { Id = 1, Name = "Red" },
@@ -137,8 +109,8 @@ namespace taskograph.EF.DataAccess
                );
 
             modelBuilder.Entity<PreciseTarget>().HasData(
-                    new PreciseTarget { Id = 1, TaskId = 1, Name = "Read Little Prince", DateDue = new DateTime(2024, 06, 01), DateId = 1},
-                    new PreciseTarget { Id = 2, TaskId = 2,Name = "Run 10 km", DateDue = new DateTime(2024, 05, 10), DateId = 2 }
+                    new PreciseTarget { Id = 1, TaskId = 1, Name = "Read Little Prince", DateDue = new DateTime(2024, 06, 01), Created = dayToday},
+                    new PreciseTarget { Id = 2, TaskId = 2,Name = "Run 10 km", DateDue = new DateTime(2024, 05, 10), Created = dayToday }
                     );
 
             modelBuilder.Entity<Quote>().HasData(
@@ -148,15 +120,15 @@ namespace taskograph.EF.DataAccess
                  );
 
             modelBuilder.Entity<Task>().HasData(
-              new Task { Id = 1, Name = "Running", GroupId = 4, DateId = 5, UserId = "1" },
-              new Task { Id = 2, Name = "Reading", GroupId = 2, DateId = 6, UserId = "1" },
-              new Task { Id = 3, Name = "Cooking", GroupId = 1, DateId = 7, UserId = "1" },
-              new Task { Id = 4, Name = "Dancing", GroupId = 7, DateId = 8, UserId = "1" }
+              new Task { Id = 1, Name = "Running", GroupId = 4, UserId = "1", Created = dayToday },
+              new Task { Id = 2, Name = "Reading", GroupId = 2, UserId = "1", Created = dayToday },
+              new Task { Id = 3, Name = "Cooking", GroupId = 1, UserId = "1", Created = dayToday },
+              new Task { Id = 4, Name = "Dancing", GroupId = 7, UserId = "1", Created = dayToday }
               );
 
             modelBuilder.Entity<RegularTarget>().HasData(
-              new RegularTarget { Id = 1, TaskId = 1, TargetDurationId = 3, PerTimeframeDurationId =  13, DateId = 3},
-              new RegularTarget { Id = 2, TaskId = 2, TargetDurationId = 4, PerTimeframeDurationId = 14, DateId = 4 }
+              new RegularTarget { Id = 1, TaskId = 1, TargetDurationId = 3, PerTimeframeDurationId =  13, Created = dayToday },
+              new RegularTarget { Id = 2, TaskId = 2, TargetDurationId = 4, PerTimeframeDurationId = 14,  Created = dayToday  }
               );
 
             modelBuilder.Entity<Setting>().HasData(
@@ -164,15 +136,15 @@ namespace taskograph.EF.DataAccess
               );
 
             modelBuilder.Entity<Models.Tables.Group>().HasData(
-                new Models.Tables.Group { Id = 1, Name = "Health", DateId = 9 },
-                new Models.Tables.Group { Id = 2, Name = "Education", DateId = 10 },
-                new Models.Tables.Group { Id = 3, Name = "FriendsAndFamily", DateId = 11 },
-                new Models.Tables.Group { Id = 4, Name = "Sport", DateId = 12 },
-                new Models.Tables.Group { Id = 5, Name = "Work", DateId = 13 },
-                new Models.Tables.Group { Id = 6, Name = "Hobby", DateId = 14 },
-                new Models.Tables.Group { Id = 7, Name = "Relaxation", DateId = 15 },
-                new Models.Tables.Group { Id = 8, Name = "Entertaiment", DateId = 16 },
-                new Models.Tables.Group { Id = 9, Name = "Finance", DateId = 17 }
+                new Models.Tables.Group { Id = 1, Name = "Health", Created = dayToday},
+                new Models.Tables.Group { Id = 2, Name = "Education", Created = dayToday },
+                new Models.Tables.Group { Id = 3, Name = "FriendsAndFamily", Created = dayToday },
+                new Models.Tables.Group { Id = 4, Name = "Sport", Created = dayToday },
+                new Models.Tables.Group { Id = 5, Name = "Work", Created = dayToday },
+                new Models.Tables.Group { Id = 6, Name = "Hobby", Created = dayToday },
+                new Models.Tables.Group { Id = 7, Name = "Relaxation", Created = dayToday },
+                new Models.Tables.Group { Id = 8, Name = "Entertaiment", Created = dayToday },
+                new Models.Tables.Group { Id = 9, Name = "Finance", Created = dayToday }
                 );
 
         }
