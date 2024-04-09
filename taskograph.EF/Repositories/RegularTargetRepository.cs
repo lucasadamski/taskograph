@@ -26,6 +26,7 @@ namespace taskograph.EF.Repositories
         {
             try
             {
+                regularTarget.Created = DateTime.Now;
                 _db.RegularTargets.Add(regularTarget);
                 _db.SaveChanges();
                 _logger.LogDebug($"RegularTargetRepository: Add TargetID: {regularTarget.Id}: Message: {DATABASE_OK}");
@@ -42,7 +43,7 @@ namespace taskograph.EF.Repositories
         {
             try
             {
-                regularTarget.Date.Deleted = DateTime.Now;
+                regularTarget.Deleted = DateTime.Now;
                 _db.Update(regularTarget);
                 _db.SaveChanges();
                 _logger.LogDebug($"RegularTargetRepository: Delete TargetID: {regularTarget.Id}: Message: {DATABASE_OK}");
@@ -59,6 +60,7 @@ namespace taskograph.EF.Repositories
         {
             try
             {
+                regularTarget.LastUpdated = DateTime.Now;
                 _db.RegularTargets.Update(regularTarget);
                 _db.SaveChanges();
                 _logger.LogDebug($"RegularTargetRepository: Edit TargetID: {regularTarget.Id}: Message: {DATABASE_OK}");
@@ -81,9 +83,8 @@ namespace taskograph.EF.Repositories
                     .Include(n => n.Task)           //nullable
                     .Include(n => n.Task.Group)
                     .Include(n => n.TargetDuration)
-                    .Include(n => n.Date)
                     .Include(n => n.PerTimeframeDuration)
-                    .Where(n => n.Date.Deleted == null)
+                    .Where(n => n.Deleted == null)
                     .FirstOrDefault();
             }
             catch (Exception e)
@@ -111,8 +112,8 @@ namespace taskograph.EF.Repositories
                     .Include(n => n.TargetDuration)
                     .Include(n => n.PerTimeframeDuration)
                     .Where(n => n.Task.UserId == userId)
-                    .Where(n => (n.Date.Created.Date >= from.Date) && (n.Date.Created.Date <= to.Date))
-                    .Where(n => n.Date.Deleted == null)
+                    .Where(n => (n.Created.Date >= from.Date) && (n.Created.Date <= to.Date))
+                    .Where(n => n.Deleted == null)
                     .ToList();
             }
             catch (Exception e)
@@ -132,11 +133,10 @@ namespace taskograph.EF.Repositories
                 result = _db.RegularTargets
                     .Include(n => n.Task)
                     .Include(n => n.Task.Group)
-                    .Include(n => n.Date)
                     .Include(n => n.TargetDuration)
                     .Include(n => n.PerTimeframeDuration)
                     .Where(n => n.Task.UserId == userId)
-                    .Where(n => n.Date.Deleted == null)
+                    .Where(n => n.Deleted == null)
                     .ToList();
             }
             catch (Exception e)

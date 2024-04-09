@@ -26,6 +26,7 @@ namespace taskograph.EF.Repositories
         {
             try
             {
+                task.Created = DateTime.Now;
                 _db.Tasks.Add(task);
                 _db.SaveChanges();
                 _logger.LogDebug($"TaskRepository: Add {task.Name}: Message: {DATABASE_OK}");
@@ -42,7 +43,8 @@ namespace taskograph.EF.Repositories
         {
             try
             {
-                _db.Tasks.Remove(task);
+                task.Deleted = DateTime.Now;
+                _db.Tasks.Update(task);
                 _db.SaveChanges();
                 _logger.LogDebug($"TaskRepository: Delete {task.Name}: Message: {DATABASE_OK}");
             }
@@ -58,6 +60,7 @@ namespace taskograph.EF.Repositories
         {
             try
             {
+                task.LastUpdated = DateTime.Now;
                 _db.Tasks.Update(task);
                 _db.SaveChanges();
                 _logger.LogDebug($"TaskRepository: Edit {task.Name}: Message: {DATABASE_OK}");

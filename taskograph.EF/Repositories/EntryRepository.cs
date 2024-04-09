@@ -29,7 +29,7 @@ namespace taskograph.EF.Repositories
         {                         
             try
             {
-                entry.Date = new Date() { Created = DateTime.Now };
+                entry.Created = DateTime.Now;
                 _db.Entries.Add(entry);
                 _db.SaveChanges();
                 _logger.LogDebug($"EntryRepository: Add: EntryId {entry.Id} Message: {DATABASE_OK}");
@@ -46,13 +46,8 @@ namespace taskograph.EF.Repositories
         {
             try
             {
-                Date? date = _db.Dates.Where(n => n.Id == entry.DateId).FirstOrDefault();
-                if (date != null)
-                {
-                    date.Deleted = DateTime.Now;
-                    _db.Dates.Update(date);
-                }
-                _db.Entries.Remove(entry);
+                entry.Deleted = DateTime.Now;
+                _db.Entries.Update(entry);
                 _db.SaveChanges();
                 _logger.LogDebug($"EntryRepository: Delete EntryId: {entry.Id} Message: {DATABASE_OK}");
             }
@@ -68,12 +63,7 @@ namespace taskograph.EF.Repositories
         {
             try
             {
-                Date? date = _db.Dates.Where(n => n.Id == entry.DateId).FirstOrDefault();
-                if (date != null)
-                {
-                    date.LastUpdated = DateTime.Now;
-                    _db.Dates.Update(date);
-                }
+                entry.LastUpdated = DateTime.Now;
                 _db.Entries.Update(entry);
                 _db.SaveChanges();
                 _logger.LogDebug($"EntryRepository: Delete EntryId: {entry.Id} Message: {DATABASE_OK}");
@@ -116,9 +106,8 @@ namespace taskograph.EF.Repositories
             {
                 result = _db.Entries
                     .Include(n => n.Task)
-                    .Include(n => n.Date)
                     .Where(n => n.Task.UserId == userId)
-                    .Where(n => (n.Date.Created >= from) && (n.Date.Created <= to))
+                    .Where(n => (n.Created.Date >= from.Date) && (n.Created.Date <= to.Date))
                     .ToList();
             }
             catch (Exception e)
@@ -196,9 +185,8 @@ namespace taskograph.EF.Repositories
             {
                 result = _db.Entries
                     .Include(n => n.Task)
-                    .Include(n => n.Date)
                     .Where(n => n.Task.GroupId == groupId)
-                    .Where(n => (n.Date.Created >= from) && (n.Date.Created <= to))
+                    .Where(n => (n.Created.Date >= from.Date) && (n.Created.Date <= to.Date))
                     .ToList();
             }
             catch (Exception e)
@@ -216,9 +204,8 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Entries
-                    .Include(n => n.Date)
                     .Where(n => n.TaskId == taskId)
-                    .Where(n => (n.Date.Created.Date >= from) && (n.Date.Created <= to))
+                    .Where(n => (n.Created.Date >= from.Date) && (n.Created.Date <= to.Date))
                     .ToList();
             }
             catch (Exception e)
@@ -238,9 +225,8 @@ namespace taskograph.EF.Repositories
             {
                 durationsList = _db.Entries
                     .Include(n => n.Duration)
-                    .Include(n => n.Date)
                     .Where(n => n.TaskId == taskId)
-                    .Where(n => n.Date.Created.Date == date.Date)
+                    .Where(n => n.Created.Date == date.Date)
                     .Select(n => n.Duration)
                     .ToList();
 
@@ -263,9 +249,8 @@ namespace taskograph.EF.Repositories
                 durationsList = _db.Entries
                     .Include(n => n.Duration)
                     .Include(n => n.Task)
-                    .Include(n => n.Date)
                     .Where(n => n.Task.UserId == userId)
-                    .Where(n => n.Date.Created.Date == date.Date)
+                    .Where(n => n.Created.Date == date.Date)
                     .Select(n => n.Duration)
                     .ToList();
 
@@ -286,9 +271,8 @@ namespace taskograph.EF.Repositories
             {
                 result = _db.Entries
                     .Include(n => n.Duration)
-                    .Include(n => n.Date)
                     .Where(n => n.TaskId == taskId) 
-                    .Where(n => (n.Date.Created.Date >= dateFrom.Date) && (n.Date.Created.Date <= dateTo.Date))
+                    .Where(n => (n.Created.Date >= dateFrom.Date) && (n.Created.Date <= dateTo.Date))
                     .Select(n => n.Duration)
                     .Aggregate((a, b) => a + b);
             }

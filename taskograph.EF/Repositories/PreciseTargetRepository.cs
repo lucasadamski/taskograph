@@ -26,6 +26,7 @@ namespace taskograph.EF.Repositories
         {
             try
             {
+                preciseTarget.Created = DateTime.Now;
                 _db.PreciseTargets.Add(preciseTarget);
                 _db.SaveChanges();
                 _logger.LogDebug($"PreciseTargetRepository: Add {preciseTarget.Name}: Message: {DATABASE_OK}");
@@ -42,7 +43,8 @@ namespace taskograph.EF.Repositories
         {
             try
             {
-                _db.PreciseTargets.Remove(preciseTarget);
+                preciseTarget.Deleted = DateTime.Now;
+                _db.PreciseTargets.Update(preciseTarget);
                 _db.SaveChanges();
                 _logger.LogDebug($"PreciseTargetRepository: Delete {preciseTarget.Name}: Message: {DATABASE_OK}");
             }
@@ -58,6 +60,7 @@ namespace taskograph.EF.Repositories
         {
             try
             {
+                preciseTarget.LastUpdated = DateTime.Now;
                 _db.PreciseTargets.Update(preciseTarget);
                 _db.SaveChanges();
                 _logger.LogDebug($"PreciseTargetRepository: Edit {preciseTarget.Name}: Message: {DATABASE_OK}");
@@ -124,7 +127,6 @@ namespace taskograph.EF.Repositories
             {
                 result = _db.PreciseTargets
                     .Include(n => n.Task)
-                    .Include(n => n.Date)
                     .Where(n => n.Task.UserId == userId)
                     .ToList();
             }
