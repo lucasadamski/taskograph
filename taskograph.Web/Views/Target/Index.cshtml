@@ -13,7 +13,7 @@
         <tr>
             <th scope="col">Task</th>
             <th scope="col">Description</th>
-            <th scope="col">Date Created</th>
+            <th scope="col">Created</th>
             <th scope="col">Date Due</th>
             <th scope="col">Status</th>
             <th scope="col">Delete</th>
@@ -28,9 +28,9 @@
                 <tr>
                     <td>@target?.Task.Name</td>
                     <td>@target.Name</td>
-                    <td>@target.Date.Created.ToString("dd-MM-yyyy")</td>
+                    <td>@target.Created.ToString("dd-MM-yyyy")</td>
                     <td>@target.DateDue.Date.ToString("dd-MM-yyyy")</td>
-                    <td>@((target.DateDue - target.Date.Created).Days) days left</td>
+                    <td>@((target.DateDue - target.Created).Days) days left</td>
                     <td>Delete Button</td>
                     <td>Edit Button</td>
                 </tr>
@@ -61,7 +61,7 @@
                     <td>@target.Task.Name</td>
                     <td>@target.TargetDuration.ToString()</td>
                     <td>@target.PerTimeframeDuration.ToString()</td>
-                    <td>@target.Date.Created.ToString("dd-MM-yyyy")</td>
+                    <td>@target.Created.ToString("dd-MM-yyyy")</td>
                     <td>Delete Button</td>
                     <td>Edit Button</td>
                 </tr>
