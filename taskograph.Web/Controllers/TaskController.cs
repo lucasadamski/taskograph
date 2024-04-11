@@ -60,7 +60,8 @@ namespace taskograph.Web.Controllers
             Entry entry = new Entry()
             {
                 TaskId = taskId,
-                DurationId = durationId
+                DurationId = durationId,
+                Created = DateTime.Now
             };
 
             _entryRepository.Add(entry);

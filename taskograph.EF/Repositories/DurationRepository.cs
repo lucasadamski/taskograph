@@ -54,5 +54,51 @@ namespace taskograph.EF.Repositories
             _logger.LogDebug($"DurationRepository: GetAll Message: {DATABASE_OK}");
             return result;
         }
+        public Duration Get(int id)
+        {
+            Duration result;
+            try
+            {
+                result = _db.Durations.Where(n => n.Id == id).First();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Get Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new Duration();
+            }
+            _logger.LogDebug($"Get Message: {DATABASE_OK}");
+            return result;
+        }
+        public Duration Add(Duration duration)
+        {
+            Duration? existingDuration = GetExistingDuration(duration.Minutes);
+            if (existingDuration != null)
+            {
+                _logger.LogDebug($"Add: Duration already exists Id {existingDuration.Id} Message: {DATABASE_OK}");
+                return existingDuration;
+            }
+            else
+            {                
+                _db.Durations.Add(duration);
+                _db.SaveChanges();
+                _logger.LogDebug($"Add: Added new Duration Id {duration.Id} Message: {DATABASE_OK}");
+                return duration;
+            }
+        }
+        private Duration? GetExistingDuration(long minutes)
+        {
+            Duration? result;
+            try
+            {
+                result = _db.Durations
+                    .Where(n => n.Minutes == minutes)
+                    .First();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            return result;
+        }
     }
 }
