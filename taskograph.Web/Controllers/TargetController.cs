@@ -36,7 +36,7 @@ namespace taskograph.Web.Controllers
             TargetViewModel targetVM = new TargetViewModel();
 
             targetVM.PreciseTargets = _preciseTargetRepository.GetAll(_userId).ToList();
-            targetVM.RegularTargets = _regularTargetRepository.GetAll(_userId).ToList();
+            targetVM.RegularTargets = _regularTargetRepository.Get(_userId).ToList();
 
             return View(targetVM);
         }

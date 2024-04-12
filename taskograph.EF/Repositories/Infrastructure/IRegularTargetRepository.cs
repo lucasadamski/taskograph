@@ -1,4 +1,5 @@
-﻿using taskograph.Models.Tables;
+﻿using taskograph.Models.DTOs;
+using taskograph.Models.Tables;
 
 namespace taskograph.EF.Repositories.Infrastructure
 {
@@ -8,7 +9,6 @@ namespace taskograph.EF.Repositories.Infrastructure
         public bool Edit(RegularTarget regularTarget);
         public bool Delete(RegularTarget regularTarget);
         public RegularTarget Get(int id);
-        public IEnumerable<RegularTarget> Get(string userId, DateTime from, DateTime to);
-        public IEnumerable<RegularTarget> GetAll(string userId);
+        public IEnumerable<RegularTargetDTO> Get(string userId, DateTime? from = null, DateTime? to = null);
     }
 }

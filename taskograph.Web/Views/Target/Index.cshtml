@@ -1,5 +1,6 @@
 ﻿@model TargetViewModel
 @using Task = taskograph.Models.Tables.Task;
+@using taskograph.Models.DTOs
 @using taskograph.Models.Tables
 @using taskograph.Web.Models.DTOs
 
@@ -55,10 +56,10 @@
 
     <tbody>
         @{
-            foreach (RegularTarget target in Model.RegularTargets)
+            foreach (RegularTargetDTO target in Model.RegularTargets)
             {
                 <tr>
-                    <td>@target.Task.Name</td>
+                    <td>@target.TaskName</td>
                     <td>@target.TargetDuration.ToString()</td>
                     <td>@target.PerTimeframeDuration.ToString()</td>
                     <td>@target.Created.ToString("dd-MM-yyyy")</td>

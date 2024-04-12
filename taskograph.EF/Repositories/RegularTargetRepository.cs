@@ -6,6 +6,8 @@ using taskograph.Models.Tables;
 using Task = taskograph.Models.Tables.Task;
 using static taskograph.Helpers.Messages;
 using Microsoft.EntityFrameworkCore;
+using taskograph.Models.StoredProcedures;
+using taskograph.Models.DTOs;
 
 namespace taskograph.EF.Repositories
 {
@@ -101,50 +103,31 @@ namespace taskograph.EF.Repositories
             return result;
         }
 
-        public IEnumerable<RegularTarget> Get(string userId, DateTime from, DateTime to)
+        public IEnumerable<RegularTargetDTO> Get(string userId, DateTime? from = null, DateTime? to = null)
         {
-            List<RegularTarget> result;
+            List<RegularTargetSP> spOutput;
+            List<RegularTargetDTO> result;
+            string query = (from == null && to == null) ? ($"exec spGetAllRegularTargets '{userId}';") : ($"exec spGetRegularTargets '{userId}', '{from}', '{to}';") ;
             try
             {
-                result = _db.RegularTargets
-                    .Include(n => n.Task)
-                    .Include(n => n.Task.Group)
-                    .Include(n => n.TargetDuration)
-                    .Include(n => n.PerTimeframeDuration)
-                    .Where(n => n.Task.UserId == userId)
-                    .Where(n => (n.Created.Date >= from.Date) && (n.Created.Date <= to.Date))
-                    .Where(n => n.Deleted == null)
-                    .ToList();
+                spOutput = _db.Database.SqlQueryRaw<RegularTargetSP>(query).ToList();
+                result = spOutput.Select(n => new RegularTargetDTO()
+                {
+                    Id = n.Id,
+                    TaskName = n.TaskName,
+                    TargetDuration = new Duration() { Minutes = n.TargetDuration},
+                    PerTimeframeDuration = new Duration() { Minutes = n.PerTimeframeDuration},
+                    Created = n.Created,
+                    LastUpdated = n.LastUpdated,
+                    Deleted = n.Deleted
+                }).ToList();
             }
             catch (Exception e)
             {
-                _logger.LogError($"RegularTargetRepository: Get from {from} to {to} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new List<RegularTarget>();
+                _logger.LogError($"RegularTargetRepository: Get from {(from ?? new DateTime())} to {(to ?? new DateTime())} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new List<RegularTargetDTO>();
             }
-            _logger.LogDebug($"RegularTargetRepository: Get Get from {from} to {to} Message: {DATABASE_OK}");
-            return result;
-        }
-
-        public IEnumerable<RegularTarget> GetAll(string userId)
-        {
-            List<RegularTarget> result;
-            try
-            {
-                result = _db.RegularTargets
-                    .Include(n => n.Task)
-                    .Include(n => n.Task.Group)
-                    .Include(n => n.TargetDuration)
-                    .Include(n => n.PerTimeframeDuration)
-                    .Where(n => n.Task.UserId == userId)
-                    .Where(n => n.Deleted == null)
-                    .ToList();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"RegularTargetRepository: GetAll from Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new List<RegularTarget>();
-            }
-            _logger.LogDebug($"RegularTargetRepository: Get GetAll from Message: {DATABASE_OK}");
+            _logger.LogDebug($"RegularTargetRepository: Get Get from {(from ?? new DateTime())} to {(to ?? new DateTime())} Message: {DATABASE_OK}");
             return result;
         }
     }

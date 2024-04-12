@@ -1,10 +1,11 @@
-﻿using taskograph.Models.Tables;
+﻿using taskograph.Models.DTOs;
+using taskograph.Models.Tables;
 
 namespace taskograph.Web.Models
 {
     public class TargetViewModel
     {
         public List<PreciseTarget> PreciseTargets { get; set; } = new List<PreciseTarget>();
-        public List<RegularTarget> RegularTargets { get; set; } = new List<RegularTarget>();
+        public List<RegularTargetDTO> RegularTargets { get; set; } = new List<RegularTargetDTO>();
     }
 }
