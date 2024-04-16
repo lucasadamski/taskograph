@@ -1,5 +1,6 @@
 ﻿@model TaskViewModel
 @using Task = taskograph.Models.Tables.Task;
+@using taskograph.Models.Tables
 @using taskograph.Web.Models.DTOs
 
 
@@ -20,27 +21,27 @@
         @{
             foreach (TaskDTO task in Model.Tasks)
             {
-                    <tr>
-                        <td>@task.Name</td>
-                    <td>
-                        <button id="startTimer" class="btn btn-primary">Start</button>
-                        <button id="pauseTimer" class="btn btn-primary">Pause</button>
-                        <button id="resetTimer" class="btn btn-primary">Reset</button>
-                        <p class="timerDisplay">Timer not active</p>
-                    </td>
+                        <tr>
+                            <td>@task.Name</td>
                         <td>
-                        <select id="AddFixedTime-@(task.Id)">
-                            @{
+                            <button id="startTimer" class="btn btn-primary">Start</button>
+                            <button id="pauseTimer" class="btn btn-primary">Pause</button>
+                            <button onclick="resetTimer(@task.Id, '@task.Name')" class="btn btn-primary">Add Time</button>
+                            <p class="timerDisplay">00 : 00 : 00</p>
+                        </td>
+                            <td>
+                            <select id="AddFixedTime-@(task.Id)">
+                                @{
                                 foreach(var duration in Model.Durations)
                                 {
-                                    <option value="@duration.Minutes">@duration.ToString()</option>
+                                            <option value="@duration.Minutes">@duration.ToString()</option>
                                 }
-                            }
-                        </select>
-                            <button onclick="addEntry(@task.Id, '@task.Name')" class="btn btn-primary">+</button>
-                        </td>
-                        <td>@task.TotalDurationToday.ToString()</td>
-                    </tr>
+                                }
+                            </select>
+                            <button onclick="addFixedTimeEntry(@task.Id, '@task.Name')" class="btn btn-primary">+</button>
+                            </td>
+                            <td>@task.TotalDurationToday.ToString()</td>
+                        </tr>
             }
         }
     </tbody>
@@ -63,13 +64,34 @@
 
             clearInterval(int);
         });
-        document.getElementById('resetTimer').addEventListener('click', () => {
+        function resetTimer(taskId, taskName) {
             console.log('reset fired');
+
+            if (minutes < 1) {
+                toastr["error"]("", `Can not add time less than 1 minute. Please add more time.`);
+                return;
+            }
+
+            sessionStorage.setItem("durationName", timerRef.innerHTML)
+            $.ajax({
+                url: "@Url.Action("AddEntry", "Task")",
+                type: 'GET',
+                data: {
+                    taskId: taskId,
+                    minutes: minutes
+                },
+                success: function (res) {
+                    console.log(`Added fixedTime taskid:${taskId}`);
+                    sessionStorage.setItem("taskName", taskName);
+                    //sessionStorage.setItem("durationName", timerRef.innerHTML)
+                    reloadPage();
+                }
+            });
 
             clearInterval(int);
             [seconds, minutes, hours] = [0, 0, 0];
             timerRef.innerHTML = '00 : 00 : 00';
-        });
+        }
         function displayTimer() {
                 seconds++;
                 if (seconds == 60) {
@@ -109,7 +131,7 @@
         //***********************************************
 
         //Send Entry to controller
-        function addEntry(taskId, taskName) {
+        function addFixedTimeEntry(taskId, taskName) {
             const fixedTimeDropDown = document.getElementById(`AddFixedTime-${taskId}`);
             const durationMinutes = fixedTimeDropDown.value;
             const durationName = fixedTimeDropDown.options[fixedTimeDropDown.selectedIndex].text;
@@ -121,7 +143,7 @@
                     minutes: durationMinutes
                 },
                 success: function (res) {
-                    console.log(`Added fixedTime taskid:${taskId} durationid:${durationId}`);
+                    console.log(`Added fixedTime taskid:${taskId}`);
                     sessionStorage.setItem("taskName", taskName);
                     sessionStorage.setItem("durationName", durationName);
                     reloadPage();

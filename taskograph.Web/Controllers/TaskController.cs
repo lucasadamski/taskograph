@@ -57,18 +57,6 @@ namespace taskograph.Web.Controllers
         {
             string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            /* Duration addedDuration = _durationRepository.Add(new Duration() { Minutes = minutes });
-
-             Entry entry = new Entry()
-             {
-                 Created = DateTime.Now,
-                 TaskId = taskId,
-                 Task = _taskRepository.Get(taskId),
-                 Duration = addedDuration,
-                 DurationId = addedDuration.Id
-             };
-
-             _entryRepository.Add(entry);*/
             _entryRepository.Add(taskId, minutes, DateTime.Now);
 
             TaskViewModel taskVM = new TaskViewModel();
