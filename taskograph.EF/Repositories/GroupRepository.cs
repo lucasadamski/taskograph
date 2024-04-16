@@ -1,13 +1,10 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using taskograph.EF.DataAccess;
 using taskograph.EF.Repositories.Infrastructure;
 using Task = taskograph.Models.Tables.Task;
 using Group = taskograph.Models.Tables.Group;
 using static taskograph.Helpers.Messages;
 using Microsoft.EntityFrameworkCore;
-using taskograph.Models.Tables;
-using taskograph.Web.Models.DTOs;
 
 namespace taskograph.EF.Repositories
 {
@@ -15,45 +12,136 @@ namespace taskograph.EF.Repositories
     {
         private readonly TasksContext _db;
         private readonly ILogger<GroupRepository> _logger;
-        private readonly IMapper _mapper;
-        private ITaskRepository _taskRepository;
 
-        public GroupRepository(TasksContext db, ILogger<GroupRepository> logger, IMapper mapper, ITaskRepository taskRepository)
+        public GroupRepository(TasksContext db, ILogger<GroupRepository> logger)
         {
             _db = db;
             _logger = logger;
-            _mapper = mapper;
-            _taskRepository = taskRepository;
         }
 
         public bool Add(Group group)
         {
-            throw new NotImplementedException();
+            try
+            {
+                group.Created = DateTime.Now;
+                _db.Groups.Add(group);
+                _db.SaveChanges();
+                _logger.LogDebug($"TaskRepository: Add {group.Name}: Message: {DATABASE_OK}");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Add {group.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return false;
+            }
+            return true;
         }
 
         public bool Delete(Group group)
         {
-            throw new NotImplementedException();
+            try
+            {
+                group.Deleted = DateTime.Now;
+                _db.Groups.Update(group);
+                _db.SaveChanges();
+                _logger.LogDebug($"Delete {group.Name}: Message: {DATABASE_OK}");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Delete {group.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return false;
+            }
+            return true;
         }
 
         public bool Edit(Group group)
         {
-            throw new NotImplementedException();
+            try
+            {
+                group.LastUpdated = DateTime.Now;
+                _db.Groups.Update(group);
+                _db.SaveChanges();
+                _logger.LogDebug($"Edit {group.Name}: Message: {DATABASE_OK}");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"TEdit {group.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return false;
+            }
+            return true;
         }
 
         public Group Get(int id)
         {
-            throw new NotImplementedException();
+            Group? result;
+            try
+            {
+                result = _db.Groups
+                    .Where(n => n.Id == id)
+                    .Include(n => n.Color.Name)
+                    .FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Get: id {id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new Group();
+            }
+            if (result == null)
+            {
+                _logger.LogError($"Get: id {id} Message: {EMPTY_VARIABLE}");
+                return new Group();
+            }
+            _logger.LogDebug($"Get: id {id} Message: {DATABASE_OK}");
+            return result;
         }
 
         public IEnumerable<Group> GetAll(string userId)
         {
-            throw new NotImplementedException();
+            List<Group> result;
+            try
+            {
+                result = _db.Tasks
+                    .Where(n => n.UserId == userId)
+                    .Include(n => n.Group)
+                    .Include(n => n.Group.Color)
+                    .Select(n => n.Group)
+                    .Distinct()
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Get: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new List<Group>();
+            }
+            if (result == null)
+            {
+                _logger.LogError($"Get: Message: {EMPTY_VARIABLE}");
+                return new List<Group>();
+            }
+            _logger.LogDebug($"Get: Message: {DATABASE_OK}");
+            return result;
         }
 
         public IEnumerable<Task> GetTasks(int groupId)
         {
-            throw new NotImplementedException();
+            List<Task> result;
+            try
+            {
+                result = _db.Tasks
+                    .Where(n => n.GroupId == groupId)
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Get: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new List<Task>();
+            }
+            if (result == null)
+            {
+                _logger.LogError($"Get: Message: {EMPTY_VARIABLE}");
+                return new List<Task>();
+            }
+            _logger.LogDebug($"Get: Message: {DATABASE_OK}");
+            return result;
         }
     }
 }
