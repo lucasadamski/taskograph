@@ -9,6 +9,7 @@ using taskograph.Web.Models;
 using taskograph.Web.Models.DTOs;
 using Task = taskograph.Models.Tables.Task;
 using static taskograph.Helpers.Messages;
+using System.Linq;
 
 namespace taskograph.Web.Controllers
 {
@@ -18,17 +19,20 @@ namespace taskograph.Web.Controllers
         private ITaskRepository _taskRepository;
         private IEntryRepository _entryRepository;
         private IDurationRepository _durationRepository;
+        private IGroupRepository _groupRepository;
 
         private readonly ILogger<TaskController> _logger;
         private IConfiguration _configuration;
 
 
         public TaskController(ITaskRepository taskRepository, IEntryRepository entryRepository, 
-            IDurationRepository durationRepository, ILogger<TaskController> logger, IConfiguration configuration)
+            IDurationRepository durationRepository, IGroupRepository groupRepository,
+            ILogger<TaskController> logger, IConfiguration configuration)
         {
             _taskRepository = taskRepository;
             _entryRepository = entryRepository;
             _durationRepository = durationRepository;
+            _groupRepository = groupRepository;
             _logger = logger;
             _configuration = configuration;
            
@@ -68,8 +72,11 @@ namespace taskograph.Web.Controllers
         public IActionResult ConfigTasks()
         {
             string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ConfigTasksViewModel configTasksVM = new ConfigTasksViewModel();
+            configTasksVM.Tasks = _taskRepository.GetAllTaskDTOs(_userId).ToList();
+            configTasksVM.Groups = _groupRepository.GetAll(_userId).ToList();
 
-            return View("ConfigTasks");
+            return View("ConfigTasks", configTasksVM);
         }
     }
 }
