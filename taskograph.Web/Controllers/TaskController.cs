@@ -53,15 +53,19 @@ namespace taskograph.Web.Controllers
             return View(taskVM);
         }
 
-        public IActionResult AddEntry(int taskId, int durationId)
+        public IActionResult AddEntry(int taskId, long minutes)
         {
             string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            Duration addedDuration = _durationRepository.Add(new Duration() { Minutes = minutes });
+
             Entry entry = new Entry()
             {
+                Created = DateTime.Now,
                 TaskId = taskId,
-                DurationId = durationId,
-                Created = DateTime.Now
+                Task = _taskRepository.Get(taskId),
+                Duration = addedDuration,
+                DurationId = addedDuration.Id
             };
 
             _entryRepository.Add(entry);

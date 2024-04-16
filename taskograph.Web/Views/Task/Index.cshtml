@@ -26,14 +26,14 @@
                         <button id="startTimer" class="btn btn-primary">Start</button>
                         <button id="pauseTimer" class="btn btn-primary">Pause</button>
                         <button id="resetTimer" class="btn btn-primary">Reset</button>
-                        <p class="timerDisplay">dsfasdf</p>
+                        <p class="timerDisplay">Timer not active</p>
                     </td>
                         <td>
                         <select id="AddFixedTime-@(task.Id)">
                             @{
                                 foreach(var duration in Model.Durations)
                                 {
-                                    <option value="@duration.Id">@duration.ToString()</option>
+                                    <option value="@duration.Minutes">@duration.ToString()</option>
                                 }
                             }
                         </select>
@@ -111,14 +111,14 @@
         //Send Entry to controller
         function addEntry(taskId, taskName) {
             const fixedTimeDropDown = document.getElementById(`AddFixedTime-${taskId}`);
-            const durationId = fixedTimeDropDown.value;
+            const durationMinutes = fixedTimeDropDown.value;
             const durationName = fixedTimeDropDown.options[fixedTimeDropDown.selectedIndex].text;
             $.ajax({
                 url: "@Url.Action("AddEntry", "Task")",
                 type: 'GET',
                 data: {
-                    taskId: taskId,
-                    durationId: durationId
+                    taskId: taskId, 
+                    minutes: durationMinutes
                 },
                 success: function (res) {
                     console.log(`Added fixedTime taskid:${taskId} durationid:${durationId}`);
