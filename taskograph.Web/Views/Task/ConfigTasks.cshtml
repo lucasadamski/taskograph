@@ -35,3 +35,50 @@
         }
     </tbody>
 </table>
+<div>
+    <button onclick="" class="btn btn-primary">Add Task</button>
+</div>
+
+
+<h1>Groups</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Group</th>
+            <th scope="col">Tasks</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        @{
+            foreach (Group group in Model.Groups)
+            {
+                <tr>
+                    <td>@group.Name</td>
+                    <td>
+                        @{
+                            foreach(Task task in group.Tasks)
+                            {
+                                <p>@(task.Name)</p>
+                            }
+
+                    }
+                    </td>
+                    <td>
+                        <button onclick="" class="btn btn-primary">Edit</button>
+                    </td>
+                    <td>
+                        <button onclick="" class="btn btn-primary">Delete</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<div>
+    <button onclick="" class="btn btn-primary">Add Group</button>
+</div>
+
