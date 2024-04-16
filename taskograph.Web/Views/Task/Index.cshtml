@@ -47,6 +47,12 @@
     </tbody>
 </table>
 
+<div>
+    <input type="button" class="btn btn-primary" value="Configure Tasks" onclick="window.location= '@Url.Action( "ConfigTasks", "Task")'" />
+
+</div>
+
+
 @section scripts {
     <script>
         let [seconds, minutes, hours] = [0, 0, 0];

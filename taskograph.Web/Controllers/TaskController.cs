@@ -64,5 +64,12 @@ namespace taskograph.Web.Controllers
 
             return View("Index", taskVM);
         }
+
+        public IActionResult ConfigTasks()
+        {
+            string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return View("ConfigTasks");
+        }
     }
 }
