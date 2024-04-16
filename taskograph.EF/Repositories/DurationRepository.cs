@@ -85,7 +85,7 @@ namespace taskograph.EF.Repositories
                 return duration;
             }
         }
-        private Duration? GetExistingDuration(long minutes)
+        public Duration? GetExistingDuration(long minutes)
         {
             Duration? result;
             try

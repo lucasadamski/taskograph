@@ -6,7 +6,7 @@ namespace taskograph.EF.Repositories.Infrastructure
 {
     public interface IEntryRepository
     {
-        public bool Add(Entry entry);
+        public bool Add(int taskId, long minutes, DateTime date);
         public bool Edit(Entry entry);
         public bool Delete(Entry entry);
         public Entry Get(int id);

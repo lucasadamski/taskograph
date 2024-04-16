@@ -13,5 +13,6 @@ namespace taskograph.EF.Repositories.Infrastructure
         public IEnumerable<Duration> GetFirst(int amount);
         public Duration Get(int id);
         public Duration Add(Duration duration);
+        public Duration? GetExistingDuration(long minutes);
     }
 }

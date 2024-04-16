@@ -19,8 +19,8 @@ namespace taskograph.EF.Repositories
         private readonly ILogger<EntryRepository> _logger;
         private readonly IMapper _mapper;
         private readonly IDurationRepository _durationRepository;
-
-        public EntryRepository(TasksContext db, ILogger<EntryRepository> logger, IMapper mapper, IDurationRepository durationRepository)
+        public EntryRepository(TasksContext db, ILogger<EntryRepository> logger, IMapper mapper, 
+            IDurationRepository durationRepository)
         {
             _db = db;
             _logger = logger;
@@ -28,31 +28,15 @@ namespace taskograph.EF.Repositories
             _durationRepository = durationRepository;
         }
 
-        public bool Add(Entry entry)
+        private bool Add(Entry entry)
         {                         
             try
             {
-                Entry? existingEntry = GetExistingEntry(entry.TaskId, entry.Created);
-                if (existingEntry != null)
-                {
-                    entry.Duration = _durationRepository.Get(entry.DurationId);         //initialize Duration
-                    Duration newDuration = existingEntry.Duration + entry.Duration;     //Sum Durations
-                    existingEntry.Duration = _durationRepository.Add(newDuration);      //Updates Duration
-                    existingEntry.DurationId = existingEntry.Duration.Id;
-                    existingEntry.LastUpdated = DateTime.Now;
-                    _db.Update(existingEntry);
-                    _logger.LogDebug($"Add: EntryId {existingEntry.Id} duration was merged with {entry.Id} Message: {DATABASE_OK}");
-                    _db.SaveChanges();
-                }
-                else
-                {
-                    entry.Created = DateTime.Now;
-                    _db.Entries.Add(entry);
-                    _db.SaveChanges();
-                    _logger.LogDebug($"Add: EntryId {entry.Id} Message: {DATABASE_OK}");
-                }
-                
-                
+                entry.Created = DateTime.Now;
+                _db.Entries.Add(entry);
+                _db.SaveChanges();
+                _logger.LogDebug($"Add: EntryId {entry.Id} Message: {DATABASE_OK}");
+               
             }
             catch (Exception e)
             {
@@ -60,6 +44,42 @@ namespace taskograph.EF.Repositories
                 return false;
             }
             return true;
+        }
+        public bool Add(int taskId, long minutes, DateTime date)
+        {
+            try
+            {
+                Entry? existingEntry = GetExistingEntry(taskId, date);
+                if (existingEntry != null)
+                {
+                    Duration? existingDuration = _durationRepository.GetExistingDuration(existingEntry.Duration.Minutes + minutes);
+                    if (existingDuration == null)
+                    {
+                        existingDuration = _durationRepository.Add(new Duration() { Minutes = existingEntry.Duration.Minutes + minutes });
+                    }
+                    existingEntry.DurationId = existingDuration.Id;
+                    Edit(existingEntry);
+                }
+                else
+                {
+                    Entry newEntry = new Entry();
+                    Duration? existingDuration = _durationRepository.GetExistingDuration(minutes);
+                    if (existingDuration == null)
+                    {
+                        existingDuration = _durationRepository.Add(new Duration() { Minutes = minutes });
+                    }
+                    newEntry.DurationId = existingDuration.Id;
+                    newEntry.TaskId = taskId;
+                    Add(newEntry);
+                }
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Add: TaskId {taskId} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return false;
+            }
         }
 
         public bool Delete(Entry entry)
