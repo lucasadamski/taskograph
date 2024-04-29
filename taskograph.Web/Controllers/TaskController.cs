@@ -20,19 +20,21 @@ namespace taskograph.Web.Controllers
         private IEntryRepository _entryRepository;
         private IDurationRepository _durationRepository;
         private IGroupRepository _groupRepository;
+        private IColorRepository _colorRepository;
 
         private readonly ILogger<TaskController> _logger;
         private IConfiguration _configuration;
 
 
         public TaskController(ITaskRepository taskRepository, IEntryRepository entryRepository, 
-            IDurationRepository durationRepository, IGroupRepository groupRepository,
+            IDurationRepository durationRepository, IGroupRepository groupRepository, IColorRepository colorRepository,
             ILogger<TaskController> logger, IConfiguration configuration)
         {
             _taskRepository = taskRepository;
             _entryRepository = entryRepository;
             _durationRepository = durationRepository;
             _groupRepository = groupRepository;
+            _colorRepository = colorRepository;
             _logger = logger;
             _configuration = configuration;
            
@@ -77,6 +79,21 @@ namespace taskograph.Web.Controllers
             configTasksVM.Groups = _groupRepository.GetAll(_userId).ToList();
 
             return View("ConfigTasks", configTasksVM);
+        }
+
+        public IActionResult AddTask()
+        {
+            string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            TaskViewModel taskVM = new TaskViewModel();
+            taskVM.Groups = _groupRepository.GetAll(_userId).ToList();
+            taskVM.Colors = _colorRepository.GetAll().ToList();
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        public IActionResult AddTask(string taskName, int? groupId, int? colorId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
