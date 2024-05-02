@@ -17,12 +17,12 @@ namespace taskograph.Models.Tables
         public string Name { get; set; }
         public int? GroupId { get; set; }
         public int? ColorId { get; set; }
-        public string UserId { get; set; }
+        /*public string UserId { get; set; }*/
         public DateTime Created { get; set; }
         public DateTime? LastUpdated { get; set; }
         public DateTime? Deleted { get; set; }
 
-
+        public User User { get; set; }
         public Group Group { get; set; }
         public Color Color { get; set; }
 

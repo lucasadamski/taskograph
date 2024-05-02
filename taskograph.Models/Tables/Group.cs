@@ -21,7 +21,7 @@ namespace taskograph.Models.Tables
 
 
         public Color Color { get; set; }
-
+        public User User { get; set; }
         public ICollection<Task> Tasks { get; set; }
     }
 }
