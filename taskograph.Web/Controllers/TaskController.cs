@@ -10,6 +10,7 @@ using taskograph.Web.Models.DTOs;
 using Task = taskograph.Models.Tables.Task;
 using static taskograph.Helpers.Messages;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace taskograph.Web.Controllers
 {
@@ -40,9 +41,13 @@ namespace taskograph.Web.Controllers
            
         }
 
+        private string? GetIdentityUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
+
         public IActionResult Index()
         {
-            string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string _userId = GetIdentityUserId();
 
             if (_configuration.GetValue<bool?>("ConnectUserIdWithExistingTaskEntries") ?? false)
             {
@@ -61,7 +66,7 @@ namespace taskograph.Web.Controllers
 
         public IActionResult AddEntry(int taskId, long minutes)
         {
-            string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string _userId = GetIdentityUserId();
 
             _entryRepository.Add(taskId, minutes, DateTime.Now);
 
@@ -73,7 +78,7 @@ namespace taskograph.Web.Controllers
 
         public IActionResult ConfigTasks()
         {
-            string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string _userId = GetIdentityUserId();
             ConfigTasksViewModel configTasksVM = new ConfigTasksViewModel();
             configTasksVM.Tasks = _taskRepository.GetAllTaskDTOs(_userId).ToList();
             configTasksVM.Groups = _groupRepository.GetAll(_userId).ToList();
@@ -83,17 +88,90 @@ namespace taskograph.Web.Controllers
 
         public IActionResult AddTask()
         {
-            string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string _userId = GetIdentityUserId();
             TaskViewModel taskVM = new TaskViewModel();
-            taskVM.Groups = _groupRepository.GetAll(_userId).ToList();
-            taskVM.Colors = _colorRepository.GetAll().ToList();
-            throw new NotImplementedException();
+            ReadGroupsSelectedItems(taskVM);
+            ReadColorsSelectedItems(taskVM);
+            taskVM.IsFormForTask = true;
+            return View("AddTask", taskVM);
+        }
+
+       
+
+        [HttpPost]
+        public IActionResult AddTask(TaskViewModel taskVM)
+        {
+            string _userId = GetIdentityUserId();
+            Task task = new Task()
+            {
+                Name = taskVM.Name,
+                GroupId = taskVM.GroupId,
+                ColorId = taskVM.ColorId,
+                UserId = _userId
+            };
+            _taskRepository.Add(task);
+            return ConfigTasks();
+        }
+
+        public IActionResult AddGroup()
+        {
+            string _userId = GetIdentityUserId();
+            TaskViewModel taskVM = new TaskViewModel();
+            ReadColorsSelectedItems(taskVM);
+            ReadTasksSelectedItems(taskVM);
+            taskVM.IsFormForTask = false;
+            return View("AddTask", taskVM);
         }
 
         [HttpPost]
-        public IActionResult AddTask(string taskName, int? groupId, int? colorId)
+        public IActionResult AddGroup(TaskViewModel taskVM)
         {
-            throw new NotImplementedException();
+            string _userId = GetIdentityUserId();
+            Group group = new Group()
+            {
+                Name = taskVM.Name,
+                ColorId = taskVM.ColorId
+            };
+            _groupRepository.Add(group);
+            Task task = _taskRepository.Get((int)taskVM.TaskId);
+            task.GroupId = group.Id;
+            _taskRepository.Edit(task);
+            return ConfigTasks();
+        }
+
+        private void ReadGroupsSelectedItems(TaskViewModel task)
+        {
+            string _userId = GetIdentityUserId();
+            task.Groups = _groupRepository.GetAll(_userId)
+                .Select(n => new SelectListItem()
+                {
+                    Text = n.Name,
+                    Value = n.Id.ToString()
+                })
+                .ToList();
+        }
+        private void ReadColorsSelectedItems(TaskViewModel task)
+        {
+            string _userId = GetIdentityUserId();
+            task.Colors = _colorRepository.GetAll()
+                .Select(n => new SelectListItem()
+                {
+                    Text = n.Name,
+                    Value = n.Id.ToString()
+                })
+                .ToList();
+        }
+
+        private void ReadTasksSelectedItems(TaskViewModel task)
+        {
+            string _userId = GetIdentityUserId();
+            task.TasksSI = _taskRepository.GetAll(_userId)
+                .Select(n => new SelectListItem()
+                {
+                    Text = n.Name,
+                    Value = n.Id.ToString()
+                })
+                .ToList();
         }
     }
 }
