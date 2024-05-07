@@ -22,6 +22,7 @@ namespace taskograph.Web.Controllers
         private IDurationRepository _durationRepository;
         private IGroupRepository _groupRepository;
         private IColorRepository _colorRepository;
+        private IAppUserRepository _appUserRepository;
 
         private readonly ILogger<TaskController> _logger;
         private IConfiguration _configuration;
@@ -29,13 +30,14 @@ namespace taskograph.Web.Controllers
 
         public TaskController(ITaskRepository taskRepository, IEntryRepository entryRepository, 
             IDurationRepository durationRepository, IGroupRepository groupRepository, IColorRepository colorRepository,
-            ILogger<TaskController> logger, IConfiguration configuration)
+            IAppUserRepository appUserRepository, ILogger<TaskController> logger, IConfiguration configuration)
         {
             _taskRepository = taskRepository;
             _entryRepository = entryRepository;
             _durationRepository = durationRepository;
             _groupRepository = groupRepository;
             _colorRepository = colorRepository;
+            _appUserRepository = appUserRepository;
             _logger = logger;
             _configuration = configuration;
            
@@ -107,7 +109,7 @@ namespace taskograph.Web.Controllers
                 Name = taskVM.Name,
                 GroupId = taskVM.GroupId,
                 ColorId = taskVM.ColorId,
-                UserId = _userId
+                AppUserId = _appUserRepository.GetId(_userId)
             };
             _taskRepository.Add(task);
             return ConfigTasks();

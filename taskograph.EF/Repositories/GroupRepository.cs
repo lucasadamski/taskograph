@@ -100,7 +100,8 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Tasks
-                    .Where(n => n.UserId == userId)
+                    .Include(n => n.AppUser)
+                    .Where(n => n.AppUser.UserId == userId)
                     .Include(n => n.Group)
                     .Include(n => n.Group.Color)
                     .Select(n => n.Group)

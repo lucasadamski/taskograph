@@ -14,6 +14,19 @@ namespace taskograph.EF.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AppUsers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -87,11 +100,17 @@ namespace taskograph.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    AppUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Quotes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Quotes_AppUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -102,11 +121,17 @@ namespace taskograph.EF.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
                     Value = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    AppUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Settings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Settings_AppUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -223,6 +248,7 @@ namespace taskograph.EF.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
                     ColorId = table.Column<int>(type: "int", nullable: true),
+                    AppUserId = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -230,6 +256,12 @@ namespace taskograph.EF.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Groups", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Groups_AppUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Groups_Colors_ColorId",
                         column: x => x.ColorId,
@@ -246,14 +278,20 @@ namespace taskograph.EF.Migrations
                     Name = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
                     GroupId = table.Column<int>(type: "int", nullable: true),
                     ColorId = table.Column<int>(type: "int", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AppUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tasks_AppUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Tasks_Colors_ColorId",
                         column: x => x.ColorId,
@@ -350,6 +388,11 @@ namespace taskograph.EF.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AppUsers",
+                columns: new[] { "Id", "UserId" },
+                values: new object[] { 1, "123123123123" });
+
+            migrationBuilder.InsertData(
                 table: "Colors",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
@@ -408,44 +451,44 @@ namespace taskograph.EF.Migrations
 
             migrationBuilder.InsertData(
                 table: "Groups",
-                columns: new[] { "Id", "ColorId", "Created", "Deleted", "LastUpdated", "Name" },
+                columns: new[] { "Id", "AppUserId", "ColorId", "Created", "Deleted", "LastUpdated", "Name" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Health" },
-                    { 2, null, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Education" },
-                    { 3, null, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, null, "FriendsAndFamily" },
-                    { 4, null, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Sport" },
-                    { 5, null, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Work" },
-                    { 6, null, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Hobby" },
-                    { 7, null, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Relaxation" },
-                    { 8, null, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Entertaiment" },
-                    { 9, null, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Finance" }
+                    { 1, 1, null, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Health" },
+                    { 2, 1, null, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Education" },
+                    { 3, 1, null, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, null, "FriendsAndFamily" },
+                    { 4, 1, null, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Sport" },
+                    { 5, 1, null, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Work" },
+                    { 6, 1, null, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Hobby" },
+                    { 7, 1, null, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Relaxation" },
+                    { 8, 1, null, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Entertaiment" },
+                    { 9, 1, null, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Finance" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Quotes",
-                columns: new[] { "Id", "Name", "UserId" },
+                columns: new[] { "Id", "AppUserId", "Name" },
                 values: new object[,]
                 {
-                    { 1, "What you have to do today is insignificant, but is very important that you do it.", "1" },
-                    { 2, "It's about the marathon, not the sprint.", "1" },
-                    { 3, "Don't feel bad because you don't know something and feel like you can't do anything. Do what you can do and then improve.", "1" }
+                    { 1, 1, "What you have to do today is insignificant, but is very important that you do it." },
+                    { 2, 1, "It's about the marathon, not the sprint." },
+                    { 3, 1, "Don't feel bad because you don't know something and feel like you can't do anything. Do what you can do and then improve." }
                 });
 
             migrationBuilder.InsertData(
                 table: "Settings",
-                columns: new[] { "Id", "Name", "UserId", "Value" },
-                values: new object[] { 1, "AlarmClock", "1", "Off" });
+                columns: new[] { "Id", "AppUserId", "Name", "Value" },
+                values: new object[] { 1, 1, "AlarmClock", "Off" });
 
             migrationBuilder.InsertData(
                 table: "Tasks",
-                columns: new[] { "Id", "ColorId", "Created", "Deleted", "GroupId", "LastUpdated", "Name", "UserId" },
+                columns: new[] { "Id", "AppUserId", "ColorId", "Created", "Deleted", "GroupId", "LastUpdated", "Name" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, 4, null, "Running", "1" },
-                    { 2, null, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, 2, null, "Reading", "1" },
-                    { 3, null, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, 1, null, "Cooking", "1" },
-                    { 4, null, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, 7, null, "Dancing", "1" }
+                    { 1, 1, null, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, 4, null, "Running" },
+                    { 2, 1, null, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, 2, null, "Reading" },
+                    { 3, 1, null, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, 1, null, "Cooking" },
+                    { 4, 1, null, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, 7, null, "Dancing" }
                 });
 
             migrationBuilder.InsertData(
@@ -453,8 +496,8 @@ namespace taskograph.EF.Migrations
                 columns: new[] { "Id", "Created", "DateDue", "Deleted", "LastUpdated", "Name", "TaskId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Read Little Prince", 1 },
-                    { 2, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2024, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Run 10 km", 2 }
+                    { 1, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Read Little Prince", 1 },
+                    { 2, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2024, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Run 10 km", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -462,8 +505,8 @@ namespace taskograph.EF.Migrations
                 columns: new[] { "Id", "Created", "Deleted", "LastUpdated", "PerTimeframeDurationId", "TargetDurationId", "TaskId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, null, 13, 3, 1 },
-                    { 2, new DateTime(2024, 4, 9, 0, 0, 0, 0, DateTimeKind.Local), null, null, 14, 4, 2 }
+                    { 1, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, null, 13, 3, 1 },
+                    { 2, new DateTime(2024, 5, 7, 0, 0, 0, 0, DateTimeKind.Local), null, null, 14, 4, 2 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -516,6 +559,11 @@ namespace taskograph.EF.Migrations
                 column: "TaskId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Groups_AppUserId",
+                table: "Groups",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Groups_ColorId",
                 table: "Groups",
                 column: "ColorId");
@@ -524,6 +572,11 @@ namespace taskograph.EF.Migrations
                 name: "IX_PreciseTargets_TaskId",
                 table: "PreciseTargets",
                 column: "TaskId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Quotes_AppUserId",
+                table: "Quotes",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RegularTargets_PerTimeframeDurationId",
@@ -539,6 +592,16 @@ namespace taskograph.EF.Migrations
                 name: "IX_RegularTargets_TaskId",
                 table: "RegularTargets",
                 column: "TaskId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Settings_AppUserId",
+                table: "Settings",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasks_AppUserId",
+                table: "Tasks",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_ColorId",
@@ -598,6 +661,9 @@ namespace taskograph.EF.Migrations
 
             migrationBuilder.DropTable(
                 name: "Groups");
+
+            migrationBuilder.DropTable(
+                name: "AppUsers");
 
             migrationBuilder.DropTable(
                 name: "Colors");

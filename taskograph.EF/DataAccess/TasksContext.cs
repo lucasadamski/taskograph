@@ -18,6 +18,7 @@ namespace taskograph.EF.DataAccess
         public DbSet<RegularTarget> RegularTargets { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Setting> Settings { get; set; }
+        public new DbSet<AppUser> AppUsers { get; set; }
 
         public TasksContext(DbContextOptions<TasksContext> options) : base(options) { }
 
@@ -58,6 +59,10 @@ namespace taskograph.EF.DataAccess
                .OnDelete(DeleteBehavior.NoAction);
 
             DateTime dayToday = DateTime.Today;
+
+            modelBuilder.Entity<AppUser>().HasData(
+                    new AppUser { Id = 1, UserId = "123123123123"}
+                    );
 
             modelBuilder.Entity<Color>().HasData(
                 new Color { Id = 1, Name = "Red" },
@@ -108,23 +113,35 @@ namespace taskograph.EF.DataAccess
                new Duration { Id = 33, Minutes = 40320 }     //1 month
                );
 
+
+            modelBuilder.Entity<Quote>().HasData(
+                 new Quote { Id = 1, Name = "What you have to do today is insignificant, but is very important that you do it.", AppUserId = 1 },
+                 new Quote { Id = 2, Name = "It's about the marathon, not the sprint.", AppUserId = 1 },
+                 new Quote { Id = 3, Name = "Don't feel bad because you don't know something and feel like you can't do anything. Do what you can do and then improve.", AppUserId = 1 }
+                 );
+            modelBuilder.Entity<Models.Tables.Group>().HasData(
+                new Models.Tables.Group { Id = 1, Name = "Health", Created = dayToday, AppUserId = 1 },
+                new Models.Tables.Group { Id = 2, Name = "Education", Created = dayToday, AppUserId = 1 },
+                new Models.Tables.Group { Id = 3, Name = "FriendsAndFamily", Created = dayToday, AppUserId = 1 },
+                new Models.Tables.Group { Id = 4, Name = "Sport", Created = dayToday, AppUserId = 1 },
+                new Models.Tables.Group { Id = 5, Name = "Work", Created = dayToday, AppUserId = 1 },
+                new Models.Tables.Group { Id = 6, Name = "Hobby", Created = dayToday, AppUserId = 1 },
+                new Models.Tables.Group { Id = 7, Name = "Relaxation", Created = dayToday, AppUserId = 1 },
+                new Models.Tables.Group { Id = 8, Name = "Entertaiment", Created = dayToday, AppUserId = 1 },
+                new Models.Tables.Group { Id = 9, Name = "Finance", Created = dayToday, AppUserId = 1 }
+                );
+
+            modelBuilder.Entity<Task>().HasData(
+              new Task { Id = 1, Name = "Running", GroupId = 4, AppUserId = 1, Created = dayToday },
+              new Task { Id = 2, Name = "Reading", GroupId = 2, AppUserId = 1, Created = dayToday },
+              new Task { Id = 3, Name = "Cooking", GroupId = 1, AppUserId = 1, Created = dayToday },
+              new Task { Id = 4, Name = "Dancing", GroupId = 7, AppUserId = 1, Created = dayToday }
+              );
+
             modelBuilder.Entity<PreciseTarget>().HasData(
                     new PreciseTarget { Id = 1, TaskId = 1, Name = "Read Little Prince", DateDue = new DateTime(2024, 06, 01), Created = dayToday},
                     new PreciseTarget { Id = 2, TaskId = 2,Name = "Run 10 km", DateDue = new DateTime(2024, 05, 10), Created = dayToday }
                     );
-
-            modelBuilder.Entity<Quote>().HasData(
-                 new Quote { Id = 1, Name = "What you have to do today is insignificant, but is very important that you do it.", UserId = "1" },
-                 new Quote { Id = 2, Name = "It's about the marathon, not the sprint.", UserId = "1" },
-                 new Quote { Id = 3, Name = "Don't feel bad because you don't know something and feel like you can't do anything. Do what you can do and then improve.", UserId = "1" }
-                 );
-
-            modelBuilder.Entity<Task>().HasData(
-              new Task { Id = 1, Name = "Running", GroupId = 4, UserId = "1", Created = dayToday },
-              new Task { Id = 2, Name = "Reading", GroupId = 2, UserId = "1", Created = dayToday },
-              new Task { Id = 3, Name = "Cooking", GroupId = 1, UserId = "1", Created = dayToday },
-              new Task { Id = 4, Name = "Dancing", GroupId = 7, UserId = "1", Created = dayToday }
-              );
 
             modelBuilder.Entity<RegularTarget>().HasData(
               new RegularTarget { Id = 1, TaskId = 1, TargetDurationId = 3, PerTimeframeDurationId =  13, Created = dayToday },
@@ -132,20 +149,9 @@ namespace taskograph.EF.DataAccess
               );
 
             modelBuilder.Entity<Setting>().HasData(
-              new Setting { Id = 1, Name = "AlarmClock" , Value = "Off", UserId ="1"}
+              new Setting { Id = 1, Name = "AlarmClock" , Value = "Off", AppUserId = 1 }
               );
 
-            modelBuilder.Entity<Models.Tables.Group>().HasData(
-                new Models.Tables.Group { Id = 1, Name = "Health", Created = dayToday},
-                new Models.Tables.Group { Id = 2, Name = "Education", Created = dayToday },
-                new Models.Tables.Group { Id = 3, Name = "FriendsAndFamily", Created = dayToday },
-                new Models.Tables.Group { Id = 4, Name = "Sport", Created = dayToday },
-                new Models.Tables.Group { Id = 5, Name = "Work", Created = dayToday },
-                new Models.Tables.Group { Id = 6, Name = "Hobby", Created = dayToday },
-                new Models.Tables.Group { Id = 7, Name = "Relaxation", Created = dayToday },
-                new Models.Tables.Group { Id = 8, Name = "Entertaiment", Created = dayToday },
-                new Models.Tables.Group { Id = 9, Name = "Finance", Created = dayToday }
-                );
 
         }
     }

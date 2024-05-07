@@ -83,7 +83,8 @@ namespace taskograph.EF.Repositories
             {
                 result = _db.Tasks.Include(n => n.Group) //TODO add UserId column
                     .Include(n => n.Color)
-                    .Where(n => n.UserId == userId)
+                    .Include(n => n.AppUser)
+                    .Where(n => n.AppUser.UserId == userId)
                     .ToList();
                 _logger.LogDebug($"TaskRepository: GetAllTasks: UserID {userId} Message: {DATABASE_OK}");
 
@@ -154,12 +155,13 @@ namespace taskograph.EF.Repositories
         {
             try
             {
+                int currentAppUserId = _db.AppUsers.Where(n => n.UserId == userId).Select(n => n.Id).FirstOrDefault();
                 List<Task> tasks = _db.Tasks.ToList();
-                tasks.ForEach(n => n.UserId = userId);
+                tasks.ForEach(n => n.AppUserId = currentAppUserId);
                 List<Quote> quotes = _db.Quotes.ToList();
-                quotes.ForEach(n => n.UserId = userId);
+                quotes.ForEach(n => n.AppUserId = currentAppUserId);
                 List<Setting> settings = _db.Settings.ToList();
-                settings.ForEach(n => n.UserId = userId);
+                settings.ForEach(n => n.AppUserId = currentAppUserId);
                 _db.SaveChanges();
                 _logger.LogDebug($"TaskRepository: DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser: UserID {userId} Message: {DATABASE_OK}");
 
