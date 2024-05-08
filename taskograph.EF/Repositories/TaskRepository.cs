@@ -84,6 +84,7 @@ namespace taskograph.EF.Repositories
                 result = _db.Tasks.Include(n => n.Group) //TODO add UserId column
                     .Include(n => n.Color)
                     .Include(n => n.AppUser)
+                    .Where(n => n.Deleted == null)
                     .Where(n => n.AppUser.UserId == userId)
                     .ToList();
                 _logger.LogDebug($"TaskRepository: GetAllTasks: UserID {userId} Message: {DATABASE_OK}");

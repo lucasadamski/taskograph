@@ -127,6 +127,7 @@ namespace taskograph.EF.Repositories
             {
                 result = _db.PreciseTargets
                     .Include(n => n.Task.AppUser)
+                    .Where(n => n.Deleted == null)
                     .Where(n => n.Task.AppUser.UserId == userId)
                     .ToList();
             }

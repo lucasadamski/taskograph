@@ -107,7 +107,7 @@ namespace taskograph.Web.Controllers
             Task task = new Task()
             {
                 Name = taskVM.Name,
-                GroupId = taskVM.GroupId,
+                GroupId = (taskVM.GroupId == UNASSIGNED_INT ? null : taskVM.GroupId),
                 ColorId = taskVM.ColorId,
                 AppUserId = _appUserRepository.GetId(_userId)
             };
@@ -139,7 +139,7 @@ namespace taskograph.Web.Controllers
                 AppUserId = _appUserRepository.GetId(_userId)
             };
             _groupRepository.Add(group);
-            if (taskVM.TaskId != null)
+            if (taskVM.TaskId != null && taskVM.TaskId != UNASSIGNED_INT)
             {
                 Task task = _taskRepository.Get((int)taskVM.TaskId);
                 task.GroupId = group.Id;
@@ -158,6 +158,8 @@ namespace taskograph.Web.Controllers
                     Value = n.Id.ToString()
                 })
                 .ToList();
+            task.Groups.Add(new SelectListItem() { Text = UNASSIGNED, Value = UNASSIGNED_INT.ToString() });
+
         }
         private void ReadColorsSelectedItems(TaskViewModel task)
         {
@@ -181,6 +183,8 @@ namespace taskograph.Web.Controllers
                     Value = n.Id.ToString()
                 })
                 .ToList();
+            task.TasksSI.Add(new SelectListItem() { Text = UNASSIGNED, Value = UNASSIGNED_INT.ToString() });
+
         }
     }
 }

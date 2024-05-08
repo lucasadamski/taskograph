@@ -16,9 +16,9 @@ namespace taskograph.Web.Models
         public int? GroupId { get; set; }
         public int? ColorId { get; set; }
         public int? TaskId { get; set; }
-        public IEnumerable<SelectListItem> Groups { get; set; }
-        public IEnumerable<SelectListItem> Colors { get; set; }
-        public IEnumerable<SelectListItem> TasksSI { get; set; }
+        public List<SelectListItem> Groups { get; set; }
+        public List<SelectListItem> Colors { get; set; }
+        public List<SelectListItem> TasksSI { get; set; }
         public string Name { get; set; } = "";
         public bool IsFormForTask { get; set; }
 

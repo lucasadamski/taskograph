@@ -14,6 +14,8 @@
         //Other
         public const string METHOD_EMPTY_PARAMETER = "Method received empty parameter";
         public const string EMPTY_VARIABLE = "Variable is empty or null";
+        public const string UNASSIGNED = "-UNASSIGNED-";
+        public const int UNASSIGNED_INT = 0;
 
         public static string GetErrorMessage(string exceptionMessage)
         {

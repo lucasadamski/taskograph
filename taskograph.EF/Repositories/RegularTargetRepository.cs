@@ -111,7 +111,9 @@ namespace taskograph.EF.Repositories
             try
             {
                 spOutput = _db.Database.SqlQueryRaw<RegularTargetSP>(query).ToList();
-                result = spOutput.Select(n => new RegularTargetDTO()
+                result = spOutput
+                    .Where(n => n.Deleted == null)
+                    .Select(n => new RegularTargetDTO()
                 {
                     Id = n.Id,
                     TaskName = n.TaskName,

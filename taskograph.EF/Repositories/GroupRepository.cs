@@ -104,6 +104,7 @@ namespace taskograph.EF.Repositories
                 result = _db.Groups
                     .Include(n => n.Tasks)
                     .Where(n => n.AppUserId == _appUserRepository.GetId(userId))
+                    .Where(n => n.Deleted == null)
                     .ToList();
             }
             catch (Exception e)
