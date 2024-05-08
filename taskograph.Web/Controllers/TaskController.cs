@@ -186,5 +186,11 @@ namespace taskograph.Web.Controllers
             task.TasksSI.Add(new SelectListItem() { Text = UNASSIGNED, Value = UNASSIGNED_INT.ToString() });
 
         }
+
+        public void DeleteTask(int id)
+        {
+            Task task = _taskRepository.Get(id);
+            _taskRepository.Delete(task);
+        }
     }
 }

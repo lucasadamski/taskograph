@@ -28,7 +28,7 @@
                         <button onclick="" class="btn btn-primary">Edit</button>
                     </td>
                     <td>
-                        <button onclick="" class="btn btn-primary">Delete</button>
+                        <button onclick="deleteTask(@task.Id)" class="btn btn-primary">Delete</button>
                     </td>
                 </tr>
             }
@@ -82,3 +82,21 @@
     <button class="btn btn-primary" onclick="window.location= '@Url.Action( "AddGroup", "Task")'">Add Group</button>
 </div>
 
+@section scripts {
+    <script type="text/javascript">
+       
+        function deleteTask(taskId) {
+            $.ajax({
+                url: "@Url.Action("DeleteTask", "Task")",
+                type: 'GET',
+                data: {
+                    id: taskId
+                },
+                success: function (res) {
+                    console.log(`Deleted task id ${taskId}`);
+                    location.reload();
+                }
+            });
+        }
+    </script>
+}
