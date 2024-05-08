@@ -64,7 +64,7 @@ namespace taskograph.EF.Repositories
 
         public int GetId(string userId)
         {
-            int? result;
+            int result;
             try
             {
                 result = _db.AppUsers
@@ -78,7 +78,7 @@ namespace taskograph.EF.Repositories
                 return -1;
             }
             _logger.LogDebug($"Get: id {userId} Message: {DATABASE_OK}");
-            return -1;
+            return result;
         }
     }
 }

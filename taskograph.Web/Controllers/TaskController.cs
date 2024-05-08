@@ -129,15 +129,22 @@ namespace taskograph.Web.Controllers
         public IActionResult AddGroup(TaskViewModel taskVM)
         {
             string _userId = GetIdentityUserId();
+
+            int tempUserId = _appUserRepository.GetId(_userId);
+
             Group group = new Group()
             {
                 Name = taskVM.Name,
-                ColorId = taskVM.ColorId
+                ColorId = taskVM.ColorId,
+                AppUserId = _appUserRepository.GetId(_userId)
             };
             _groupRepository.Add(group);
-            Task task = _taskRepository.Get((int)taskVM.TaskId);
-            task.GroupId = group.Id;
-            _taskRepository.Edit(task);
+            if (taskVM.TaskId != null)
+            {
+                Task task = _taskRepository.Get((int)taskVM.TaskId);
+                task.GroupId = group.Id;
+                _taskRepository.Edit(task);
+            }
             return ConfigTasks();
         }
 

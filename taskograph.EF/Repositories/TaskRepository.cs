@@ -158,6 +158,8 @@ namespace taskograph.EF.Repositories
                 int currentAppUserId = _db.AppUsers.Where(n => n.UserId == userId).Select(n => n.Id).FirstOrDefault();
                 List<Task> tasks = _db.Tasks.ToList();
                 tasks.ForEach(n => n.AppUserId = currentAppUserId);
+                List<Group> groups = _db.Groups.ToList();
+                groups.ForEach(n => n.AppUserId = currentAppUserId);
                 List<Quote> quotes = _db.Quotes.ToList();
                 quotes.ForEach(n => n.AppUserId = currentAppUserId);
                 List<Setting> settings = _db.Settings.ToList();
