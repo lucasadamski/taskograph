@@ -11,6 +11,7 @@ using Task = taskograph.Models.Tables.Task;
 using static taskograph.Helpers.Messages;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Threading.Tasks;
 
 namespace taskograph.Web.Controllers
 {
@@ -145,6 +146,30 @@ namespace taskograph.Web.Controllers
                 task.GroupId = group.Id;
                 _taskRepository.Edit(task);
             }
+            return ConfigTasks();
+        }
+
+        public IActionResult EditTask(int id)
+        {
+            TaskViewModel task = new TaskViewModel();
+            task.Task = _taskRepository.Get(id);
+            task.EditTask = true;
+            task.IsFormForTask = true;
+            task.Name = task.Task.Name;
+            task.TaskId = id;
+            ReadColorsSelectedItems(task);
+            ReadGroupsSelectedItems(task);
+            return View("AddTask", task);
+        }
+
+        [HttpPost]
+        public IActionResult EditTask(TaskViewModel task)
+        {
+            Task taskToEdit = _taskRepository.Get((int)task.TaskId);
+            taskToEdit.Name = task.Name;
+            taskToEdit.GroupId = task.GroupId;
+            taskToEdit.ColorId = task.ColorId;
+            _taskRepository.Edit(taskToEdit);
             return ConfigTasks();
         }
 

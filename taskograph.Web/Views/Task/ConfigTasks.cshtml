@@ -25,11 +25,14 @@
                     <td>@task.Name</td>
                     <td>@task.Group</td>
                     <td>
-                        <button onclick="" class="btn btn-primary">Edit</button>
+                        <form asp-controller="Task" asp-action="EditTask" asp-route-id="@task.Id" method="GET">
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </form>
                     </td>
                     <td>
                         <button onclick="deleteTask(@task.Id)" class="btn btn-primary">Delete</button>
                     </td>
+
                 </tr>
             }
         }

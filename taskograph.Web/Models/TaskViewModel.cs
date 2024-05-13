@@ -21,6 +21,7 @@ namespace taskograph.Web.Models
         public List<SelectListItem> TasksSI { get; set; }
         public string Name { get; set; } = "";
         public bool IsFormForTask { get; set; }
+        public bool EditTask { get; set; } = false;
 
     }
 }
