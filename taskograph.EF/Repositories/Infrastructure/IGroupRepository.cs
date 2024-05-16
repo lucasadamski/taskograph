@@ -12,7 +12,5 @@ namespace taskograph.EF.Repositories.Infrastructure
         bool Delete(Group group);
         public IEnumerable<Group> GetAll(string userId);
         public Group Get(int id);
-        public IEnumerable<Task> GetTasks(int groupId);
-        public IEnumerable<int> GetAssignedTasksIds(int groupId);
     }
 }

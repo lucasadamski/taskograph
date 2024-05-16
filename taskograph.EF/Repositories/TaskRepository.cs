@@ -47,6 +47,8 @@ namespace taskograph.EF.Repositories
             try
             {
                 task.Deleted = DateTime.Now;
+                task.ColorId = null;
+                task.GroupId = null;
                 _db.Tasks.Update(task);
                 _db.SaveChanges();
                 _logger.LogDebug($"TaskRepository: Delete {task.Name}: Message: {DATABASE_OK}");
@@ -198,6 +200,69 @@ namespace taskograph.EF.Repositories
             }
             _logger.LogDebug($"Get ids: Message: {DATABASE_OK}");
             return result;
+        }
+
+        public IEnumerable<Task> GetTasksAssignedToGroup(int groupId)
+        {
+            List<Task> result;
+            try
+            {
+                result = _db.Tasks
+                    .Where(n => n.GroupId == groupId)
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Get: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new List<Task>();
+            }
+            if (result == null)
+            {
+                _logger.LogError($"Get: Message: {EMPTY_VARIABLE}");
+                return new List<Task>();
+            }
+            _logger.LogDebug($"Get: Message: {DATABASE_OK}");
+            return result;
+        }
+
+        public IEnumerable<int> GetTasksIdsAssignedToGroup(int groupId) => GetTasksAssignedToGroup(groupId).Select(n => n.Id);
+
+        public bool DisconnectTasksFromGroup(int groupId)
+        {
+            List<Task> result = GetTasksAssignedToGroup(groupId).ToList();
+            try
+            {
+                for (int i = 0; i < result.Count(); i++)
+                {
+                    result[i].GroupId = null;
+                    Edit(result[i]);
+                }
+            }
+            catch (Exception)
+            {
+                _logger.LogError($"DisconnectTasksFromGroup");
+                return false;
+            }
+            _logger.LogDebug($"DisconnectTasksFromGroup: Message: {DATABASE_OK}");
+            return true;
+        }
+
+        public bool DisconnectTaskFromGroup(int taskId)
+        {
+            Task result = new Task();
+            try
+            {
+                result = Get(taskId);
+                result.GroupId = null;
+                Edit(result);
+            }
+            catch (Exception)
+            {
+                _logger.LogError($"DisconnectTaskFromGroup");
+                return false;
+            }
+            _logger.LogDebug($"DisconnectTaskFromGroup: Message: {DATABASE_OK}");
+            return true;
         }
 
         public bool DEBUG_ONLY_AssignUserIdToAllTables(string userId)

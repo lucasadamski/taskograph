@@ -18,8 +18,6 @@
     }
     else if(!Model.IsFormForTask) //Group version
     {
-        @using(Html.BeginForm("EditGroup", "Task"))
-        {
             foreach (var task in Model.TasksSI)
             {
                 <div class="checkbox">
@@ -35,15 +33,12 @@
                     </label>
                 </div>
             }
-
             <div>
                 <label asp-for="@Model.ColorId">Colors</label>
                 <select asp-for="@Model.ColorId" asp-items="@Model.Colors">
                     <option disabled selected>--- Select Color ---</option>
                 </select>
             </div>
-            <input type="submit" class="btn btn-primary" value="Edit" />
-        }
     }
-   
+    <input type="submit" class="btn btn-primary" value="@(Model.IsFormForAdd ? "Add" : "Edit") @(Model.IsFormForTask ? "Task" : "Group")" />
 </form>

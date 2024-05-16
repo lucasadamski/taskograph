@@ -76,7 +76,7 @@
                         </form>
                     </td>
                     <td>
-                        <button onclick="" class="btn btn-primary">Delete</button>
+                        <button onclick="deleteGroup(@group.Id)" class="btn btn-primary">Delete</button>
                     </td>
                 </tr>
             }
@@ -99,6 +99,20 @@
                 },
                 success: function (res) {
                     console.log(`Deleted task id ${taskId}`);
+                    location.reload();
+                }
+            });
+        }
+
+        function deleteGroup(groupId) {
+            $.ajax({
+                url: "@Url.Action("DeleteGroup", "Task")",
+                type: 'GET',
+                data: {
+                    id: groupId
+                },
+                success: function (res) {
+                    console.log(`Deleted group id ${groupId}`);
                     location.reload();
                 }
             });

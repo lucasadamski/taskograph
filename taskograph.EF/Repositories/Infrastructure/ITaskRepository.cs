@@ -18,7 +18,10 @@ namespace taskograph.EF.Repositories.Infrastructure
         public Task Get(int id);
         public List<Task> Get(List<int> ids);
         public IEnumerable<TaskDTO> GetAllTaskDTOs(string userId);
-
+        public IEnumerable<Task> GetTasksAssignedToGroup(int groupId);
+        public IEnumerable<int> GetTasksIdsAssignedToGroup(int groupId);
+        public bool DisconnectTasksFromGroup(int groupId);
+        public bool DisconnectTaskFromGroup(int taskId);
 
         //Debug only
         public bool DEBUG_ONLY_AssignUserIdToAllTables(string userId);

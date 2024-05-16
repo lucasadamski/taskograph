@@ -121,29 +121,6 @@ namespace taskograph.EF.Repositories
             return result;
         }
 
-        public IEnumerable<Task> GetTasks(int groupId)
-        {
-            List<Task> result;
-            try
-            {
-                result = _db.Tasks
-                    .Where(n => n.GroupId == groupId)
-                    .ToList();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Get: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new List<Task>();
-            }
-            if (result == null)
-            {
-                _logger.LogError($"Get: Message: {EMPTY_VARIABLE}");
-                return new List<Task>();
-            }
-            _logger.LogDebug($"Get: Message: {DATABASE_OK}");
-            return result;
-        }
-
-        public IEnumerable<int> GetAssignedTasksIds(int groupId) => GetTasks(groupId).Select(n => n.Id);
+        
     }
 }

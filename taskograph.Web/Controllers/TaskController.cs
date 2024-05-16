@@ -93,6 +93,7 @@ namespace taskograph.Web.Controllers
         {
             string _userId = GetIdentityUserId();
             TaskViewModel taskVM = new TaskViewModel();
+            taskVM.IsFormForAdd = true;
             ReadGroupsSelectedItems(taskVM);
             ReadColorsSelectedItems(taskVM);
             taskVM.IsFormForTask = true;
@@ -120,6 +121,7 @@ namespace taskograph.Web.Controllers
         {
             string _userId = GetIdentityUserId();
             TaskViewModel taskVM = new TaskViewModel();
+            taskVM.IsFormForAdd = true;
             ReadColorsSelectedItems(taskVM);
             ReadUnnasignedTasksSelectedItems(taskVM);
             taskVM.IsFormForTask = false;
@@ -155,7 +157,7 @@ namespace taskograph.Web.Controllers
         {
             TaskViewModel task = new TaskViewModel();
             task.Task = _taskRepository.Get(id);
-            task.EditTask = true;
+            task.IsFormForAdd = false;
             task.IsFormForTask = true;
             task.Name = task.Task.Name;
             task.TaskId = id;
@@ -169,7 +171,7 @@ namespace taskograph.Web.Controllers
         {
             Task taskToEdit = _taskRepository.Get((int)task.TaskId);
             taskToEdit.Name = task.Name;
-            taskToEdit.GroupId = task.GroupId;
+            taskToEdit.GroupId = task.GroupId == 0 ? null : task.GroupId; //Unassigned will return Id value 0
             taskToEdit.ColorId = task.ColorId;
             _taskRepository.Edit(taskToEdit);
             return ConfigTasks();
@@ -183,8 +185,8 @@ namespace taskograph.Web.Controllers
             task.TaskId = id; //group Id
             task.ColorId = group.ColorId;
             task.IsFormForTask = false;
-            task.EditGroup = true;
-            task.TasksIdsAssignedToGroup = _groupRepository.GetAssignedTasksIds(id).ToList();  //View will check those Ids against TasksSI to determine if checkbox will be checked
+            task.IsFormForAdd = false;
+            task.TasksIdsAssignedToGroup = _taskRepository.GetTasksIdsAssignedToGroup(id).ToList();  //View will check those Ids against TasksSI to determine if checkbox will be checked
             ReadUnnasignedTasksSelectedItems(task);
             task.TasksSI.AddRange(GetAssignedTasks(id));    //Add assigned tasks to group, thier checkboxes should be checked in view
             ReadColorsSelectedItems(task);
@@ -198,7 +200,7 @@ namespace taskograph.Web.Controllers
             groupToEdit.Name = task.Name;
             groupToEdit.ColorId = task.ColorId;
 
-            task.TasksIdsAssignedToGroup = _groupRepository.GetAssignedTasksIds((int)task.TaskId).ToList();
+            task.TasksIdsAssignedToGroup = _taskRepository.GetTasksIdsAssignedToGroup((int)task.TaskId).ToList();
             
             //check tasksIdsAssigned against AddedTasksIds, if contains then do nothing and remove it from Added,
             //if don't contain remove GroupId from that Task.
@@ -253,7 +255,7 @@ namespace taskograph.Web.Controllers
 
         private List<SelectListItem> GetAssignedTasks(int groupId)
         {
-            return _groupRepository.GetTasks(groupId)
+            return _taskRepository.GetTasksAssignedToGroup(groupId)
                 .Select(n => new SelectListItem()
                 {
                     Text = n.Name,
@@ -272,14 +274,20 @@ namespace taskograph.Web.Controllers
                     Value = n.Id.ToString()
                 })
                 .ToList();
-            task.TasksSI.Add(new SelectListItem() { Text = UNASSIGNED, Value = UNASSIGNED_INT.ToString() });
-
         }
 
         public void DeleteTask(int id)
         {
             Task task = _taskRepository.Get(id);
+            _taskRepository.DisconnectTasksFromGroup(id);
             _taskRepository.Delete(task);
         }
+        public void DeleteGroup(int id)
+        {
+            Group group = _groupRepository.Get(id);
+            _taskRepository.DisconnectTasksFromGroup(id);
+            _groupRepository.Delete(group);
+        }
+
     }
 }
