@@ -14,7 +14,9 @@ namespace taskograph.EF.Repositories.Infrastructure
         bool Delete(Task task);
 
         public IEnumerable<Task> GetAll(string userId);
+        public IEnumerable<Task> GetAllUnassigned(string userId);
         public Task Get(int id);
+        public List<Task> Get(List<int> ids);
         public IEnumerable<TaskDTO> GetAllTaskDTOs(string userId);
 
 

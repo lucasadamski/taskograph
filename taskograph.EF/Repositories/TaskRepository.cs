@@ -98,6 +98,29 @@ namespace taskograph.EF.Repositories
 
             return result;
         }
+        public IEnumerable<Task> GetAllUnassigned(string userId)
+        {
+            IEnumerable<Task> result;
+            try
+            {
+                result = _db.Tasks.Include(n => n.Group) //TODO add UserId column
+                    .Include(n => n.Color)
+                    .Include(n => n.AppUser)
+                    .Where(n => n.GroupId == null)
+                    .Where(n => n.Deleted == null)
+                    .Where(n => n.AppUser.UserId == userId)
+                    .ToList();
+                _logger.LogDebug($"TaskRepository: GetAllTasks: UserID {userId} Message: {DATABASE_OK}");
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"TaskRepository: GetAllTasks: UserID {userId} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new List<Task>();
+            }
+
+            return result;
+        }
 
         public IEnumerable<TaskDTO> GetAllTaskDTOs(string userId)
         {
@@ -149,6 +172,31 @@ namespace taskograph.EF.Repositories
                 return new Task();
             }
             _logger.LogDebug($"TaskRepository: Get: id {id} Message: {DATABASE_OK}");
+            return result;
+        }
+
+        public List<Task> Get(List<int> ids)
+        {
+            List<Task> result;
+            try
+            {
+                result = _db.Tasks
+                    .Where(n => ids.Contains(n.Id))
+                    .Include(n => n.Group)
+                    .Include(n => n.Color)
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Get ids: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                return new List<Task>();
+            }
+            if (result == null)
+            {
+                _logger.LogError($"Get ids: Message: {EMPTY_VARIABLE}");
+                return new List<Task>();
+            }
+            _logger.LogDebug($"Get ids: Message: {DATABASE_OK}");
             return result;
         }
 

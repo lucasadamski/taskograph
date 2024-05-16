@@ -78,8 +78,8 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Groups
+                    .Include(n => n.Color)
                     .Where(n => n.Id == id)
-                    .Include(n => n.Color.Name)
                     .FirstOrDefault();
             }
             catch (Exception e)
@@ -143,5 +143,7 @@ namespace taskograph.EF.Repositories
             _logger.LogDebug($"Get: Message: {DATABASE_OK}");
             return result;
         }
+
+        public IEnumerable<int> GetAssignedTasksIds(int groupId) => GetTasks(groupId).Select(n => n.Id);
     }
 }

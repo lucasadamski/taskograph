@@ -71,7 +71,9 @@
                     }
                     </td>
                     <td>
-                        <button onclick="" class="btn btn-primary">Edit</button>
+                        <form asp-controller="Task" asp-action="EditGroup" asp-route-id="@group.Id" method="GET">
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </form>
                     </td>
                     <td>
                         <button onclick="" class="btn btn-primary">Delete</button>

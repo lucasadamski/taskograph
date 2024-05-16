@@ -121,10 +121,12 @@ namespace taskograph.Web.Controllers
             string _userId = GetIdentityUserId();
             TaskViewModel taskVM = new TaskViewModel();
             ReadColorsSelectedItems(taskVM);
-            ReadTasksSelectedItems(taskVM);
+            ReadUnnasignedTasksSelectedItems(taskVM);
             taskVM.IsFormForTask = false;
             return View("AddTask", taskVM);
         }
+
+  
 
         [HttpPost]
         public IActionResult AddGroup(TaskViewModel taskVM)
@@ -172,6 +174,57 @@ namespace taskograph.Web.Controllers
             _taskRepository.Edit(taskToEdit);
             return ConfigTasks();
         }
+        public IActionResult EditGroup(int id)
+        {
+            TaskViewModel task = new TaskViewModel();
+            Group group = new Group();
+            group = _groupRepository.Get(id);
+            task.Name = group.Name;
+            task.TaskId = id; //group Id
+            task.ColorId = group.ColorId;
+            task.IsFormForTask = false;
+            task.EditGroup = true;
+            task.TasksIdsAssignedToGroup = _groupRepository.GetAssignedTasksIds(id).ToList();  //View will check those Ids against TasksSI to determine if checkbox will be checked
+            ReadUnnasignedTasksSelectedItems(task);
+            task.TasksSI.AddRange(GetAssignedTasks(id));    //Add assigned tasks to group, thier checkboxes should be checked in view
+            ReadColorsSelectedItems(task);
+            return View("AddTask", task);
+        }
+
+        [HttpPost]
+        public IActionResult EditGroup(TaskViewModel task)
+        {
+            Group groupToEdit = _groupRepository.Get((int)task.TaskId);
+            groupToEdit.Name = task.Name;
+            groupToEdit.ColorId = task.ColorId;
+
+            task.TasksIdsAssignedToGroup = _groupRepository.GetAssignedTasksIds((int)task.TaskId).ToList();
+            
+            //check tasksIdsAssigned against AddedTasksIds, if contains then do nothing and remove it from Added,
+            //if don't contain remove GroupId from that Task.
+            foreach (int taskId in task.TasksIdsAssignedToGroup)
+            {
+                if (task.AddedTasksIdsToGroup.Contains(taskId))
+                {
+                    task.AddedTasksIdsToGroup.Remove(taskId);
+                }
+                else
+                {
+                    Task taskToRemoveGroupIdFrom = _taskRepository.Get(taskId);
+                    taskToRemoveGroupIdFrom.GroupId = null;
+                    _taskRepository.Edit(taskToRemoveGroupIdFrom);
+                }
+            }
+            //for all remaining TaskIds in AddedTasksIdsToGroup, add them to Group
+            foreach (int taskId in task.AddedTasksIdsToGroup)
+            {
+                Task taskToAddeGroupIdTo = _taskRepository.Get(taskId);
+                taskToAddeGroupIdTo.GroupId = task.TaskId;
+                _taskRepository.Edit(taskToAddeGroupIdTo);
+            }
+            
+            return ConfigTasks();
+        }
 
         private void ReadGroupsSelectedItems(TaskViewModel task)
         {
@@ -198,10 +251,21 @@ namespace taskograph.Web.Controllers
                 .ToList();
         }
 
-        private void ReadTasksSelectedItems(TaskViewModel task)
+        private List<SelectListItem> GetAssignedTasks(int groupId)
+        {
+            return _groupRepository.GetTasks(groupId)
+                .Select(n => new SelectListItem()
+                {
+                    Text = n.Name,
+                    Value = n.Id.ToString()
+                })
+                .ToList();
+        }
+
+        private void ReadUnnasignedTasksSelectedItems(TaskViewModel task)
         {
             string _userId = GetIdentityUserId();
-            task.TasksSI = _taskRepository.GetAll(_userId)
+            task.TasksSI = _taskRepository.GetAllUnassigned(_userId)
                 .Select(n => new SelectListItem()
                 {
                     Text = n.Name,
