@@ -16,13 +16,16 @@ namespace taskograph.EF.Repositories
         private readonly ILogger<TaskRepository> _logger;
         private readonly IMapper _mapper;
         private IEntryRepository _entryRepository;
+        private IGroupRepository _groupRepository;
 
-        public TaskRepository(TasksContext db, ILogger<TaskRepository> logger, IMapper mapper, IEntryRepository entryRepository)
+        public TaskRepository(TasksContext db, ILogger<TaskRepository> logger, IMapper mapper, IEntryRepository entryRepository,
+            IGroupRepository groupRepository)
         {
             _db = db;
             _logger = logger;
             _mapper = mapper;
             _entryRepository = entryRepository;
+            _groupRepository = groupRepository;
         }
 
         public bool Add(Task task)
@@ -227,16 +230,21 @@ namespace taskograph.EF.Repositories
 
         public IEnumerable<int> GetTasksIdsAssignedToGroup(int groupId) => GetTasksAssignedToGroup(groupId).Select(n => n.Id);
 
-        public bool DisconnectTasksFromGroup(int groupId)
+        public bool DisconnectGroupFromTasks(int groupId)
         {
             List<Task> result = GetTasksAssignedToGroup(groupId).ToList();
             try
             {
                 for (int i = 0; i < result.Count(); i++)
                 {
+                    
                     result[i].GroupId = null;
-                    Edit(result[i]);
+                    _db.SaveChanges();
+                    //Edit(result[i]);
                 }
+                Group group = _groupRepository.Get(groupId);
+                group.Tasks = null;
+                _groupRepository.Edit(group);
             }
             catch (Exception)
             {

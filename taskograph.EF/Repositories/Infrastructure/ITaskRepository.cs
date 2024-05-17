@@ -20,7 +20,7 @@ namespace taskograph.EF.Repositories.Infrastructure
         public IEnumerable<TaskDTO> GetAllTaskDTOs(string userId);
         public IEnumerable<Task> GetTasksAssignedToGroup(int groupId);
         public IEnumerable<int> GetTasksIdsAssignedToGroup(int groupId);
-        public bool DisconnectTasksFromGroup(int groupId);
+        public bool DisconnectGroupFromTasks(int groupId);
         public bool DisconnectTaskFromGroup(int taskId);
 
         //Debug only

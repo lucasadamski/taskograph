@@ -279,13 +279,14 @@ namespace taskograph.Web.Controllers
         public void DeleteTask(int id)
         {
             Task task = _taskRepository.Get(id);
-            _taskRepository.DisconnectTasksFromGroup(id);
+            _taskRepository.DisconnectTaskFromGroup(id);
             _taskRepository.Delete(task);
         }
         public void DeleteGroup(int id)
         {
             Group group = _groupRepository.Get(id);
-            _taskRepository.DisconnectTasksFromGroup(id);
+            List<Task> tasksToUpdate = _taskRepository.GetTasksAssignedToGroup(id).ToList();
+            _taskRepository.DisconnectGroupFromTasks(id);
             _groupRepository.Delete(group);
         }
 
