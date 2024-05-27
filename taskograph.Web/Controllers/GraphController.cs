@@ -22,6 +22,7 @@ namespace taskograph.Web.Controllers
         private readonly ILogger<GraphController> _logger;
         private IConfiguration _configuration;
 
+        string _userId;
 
         public GraphController(ITaskRepository taskRepository, IEntryRepository entryRepository,
             IDurationRepository durationRepository, ILogger<GraphController> logger, IConfiguration configuration)
@@ -35,7 +36,7 @@ namespace taskograph.Web.Controllers
         }
         public IActionResult Index()
         {
-            string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             GraphViewModel graphVM = new GraphViewModel();
 

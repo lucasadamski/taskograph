@@ -25,6 +25,8 @@ namespace taskograph.Web.Controllers
         private readonly ILogger<TaskController> _logger;
         private IConfiguration _configuration;
 
+        private string _userId;
+
 
         public TaskController(ITaskRepository taskRepository, IEntryRepository entryRepository, 
             IDurationRepository durationRepository, IGroupRepository groupRepository, IColorRepository colorRepository,
@@ -47,7 +49,7 @@ namespace taskograph.Web.Controllers
 
         public IActionResult Index()
         {
-            string _userId = GetIdentityUserId();
+            _userId = GetIdentityUserId();
 
             if (_configuration.GetValue<bool?>("ConnectUserIdWithExistingTaskEntries") ?? false)
             {
@@ -66,7 +68,7 @@ namespace taskograph.Web.Controllers
 
         public IActionResult AddEntry(int taskId, long minutes)
         {
-            string _userId = GetIdentityUserId();
+            _userId = GetIdentityUserId();
 
             _entryRepository.Add(taskId, minutes, DateTime.Now);
 
@@ -78,7 +80,7 @@ namespace taskograph.Web.Controllers
 
         public IActionResult ConfigTasks()
         {
-            string _userId = GetIdentityUserId();
+            _userId = GetIdentityUserId();
             ConfigTasksViewModel configTasksVM = new ConfigTasksViewModel();
             configTasksVM.Tasks = _taskRepository.GetAllTaskDTOs(_userId).ToList();
             configTasksVM.Groups = _groupRepository.GetAll(_userId).ToList();
@@ -88,7 +90,7 @@ namespace taskograph.Web.Controllers
 
         public IActionResult AddTask()
         {
-            string _userId = GetIdentityUserId();
+            _userId = GetIdentityUserId();
             TaskViewModel taskVM = new TaskViewModel();
             taskVM.IsFormForAdd = true;
             ReadGroupsSelectedItems(taskVM);
@@ -102,7 +104,7 @@ namespace taskograph.Web.Controllers
         [HttpPost]
         public IActionResult AddTask(TaskViewModel taskVM)
         {
-            string _userId = GetIdentityUserId();
+            _userId = GetIdentityUserId();
             Task task = new Task()
             {
                 Name = taskVM.Name,
@@ -129,7 +131,7 @@ namespace taskograph.Web.Controllers
         [HttpPost]
         public IActionResult AddGroup(TaskViewModel taskVM)
         {
-            string _userId = GetIdentityUserId();
+            _userId = GetIdentityUserId();
             Group group = new Group()
             {
                 Name = taskVM.Name,
@@ -216,7 +218,7 @@ namespace taskograph.Web.Controllers
 
         private void ReadGroupsSelectedItems(TaskViewModel task)
         {
-            string _userId = GetIdentityUserId();
+            _userId = GetIdentityUserId();
             task.Groups = _groupRepository.GetAll(_userId)
                 .Select(n => new SelectListItem()
                 {
@@ -251,7 +253,7 @@ namespace taskograph.Web.Controllers
 
         private void ReadUnnasignedTasksSelectedItems(TaskViewModel task)
         {
-            string _userId = GetIdentityUserId();
+            _userId = GetIdentityUserId();
             task.TasksSI = _taskRepository.GetAllUnassigned(_userId)
                 .Select(n => new SelectListItem()
                 {

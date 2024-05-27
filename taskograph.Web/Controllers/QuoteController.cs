@@ -19,6 +19,8 @@ namespace taskograph.Web.Controllers
         private readonly ILogger<QuoteController> _logger;
         private IConfiguration _configuration;
 
+        string _userId;
+
         public QuoteController(IQuoteRepository quoteRepository, ILogger<QuoteController> logger, IConfiguration configuration)
         {
             _quoteRepository = quoteRepository;
@@ -29,7 +31,7 @@ namespace taskograph.Web.Controllers
 
         public IActionResult Index()
         {
-            string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             QuoteViewModel quoteVM = new QuoteViewModel();
             quoteVM.Quotes = _quoteRepository.GetAll(_userId).Select(n => n.Name).ToList();
             return View(quoteVM);

@@ -18,6 +18,8 @@ namespace taskograph.Web.Controllers
         private readonly ILogger<TargetController> _logger;
         private IConfiguration _configuration;
 
+        string _userId;
+
 
         public TargetController(IPreciseTargetRepository preciseTargetRepository, IRegularTargetRepository regularTargetRepository,
             ILogger<TargetController> logger, IConfiguration configuration)
@@ -31,7 +33,7 @@ namespace taskograph.Web.Controllers
         }
         public IActionResult Index()
         {
-            string _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             TargetViewModel targetVM = new TargetViewModel();
 
