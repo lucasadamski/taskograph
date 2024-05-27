@@ -137,12 +137,6 @@ namespace taskograph.Web.Controllers
                 AppUserId = _appUserRepository.GetId(_userId)
             };
             _groupRepository.Add(group);
-            if (taskVM.TaskId != null && taskVM.TaskId != UNASSIGNED_INT)
-            {
-                Task task = _taskRepository.Get((int)taskVM.TaskId);
-                task.GroupId = group.Id;
-                _taskRepository.Edit(task);
-            }
             return ConfigTasks();
         }
 
