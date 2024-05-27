@@ -69,7 +69,6 @@ namespace taskograph.Web.Controllers
                 Id = n.Id,
                 Name = n.Name,
                 Group = n.Group?.Name ?? NULL_VALUE,
-                Color = n.Color?.Name ?? NULL_VALUE,
                 TotalDurationToday = (_entryRepository.GetTotalDurationForTask(n.Id, date))
             })
                 .ToList();

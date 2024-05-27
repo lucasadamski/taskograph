@@ -16,7 +16,6 @@ namespace taskograph.Models.Tables
         [Column(TypeName = "varchar(30)")]
         public string Name { get; set; }
         public int? GroupId { get; set; }
-        public int? ColorId { get; set; }
         public DateTime Created { get; set; }
         public DateTime? LastUpdated { get; set; }
         public DateTime? Deleted { get; set; }
@@ -24,7 +23,6 @@ namespace taskograph.Models.Tables
 
         public AppUser AppUser { get; set; }
         public Group Group { get; set; }
-        public Color Color { get; set; }
 
         public ICollection<Entry> Entries { get; set; }
         public ICollection<PreciseTarget> PreciseTargets { get; set; }

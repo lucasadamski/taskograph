@@ -15,7 +15,6 @@ namespace taskograph.Models.Tables
         [Column(TypeName = "varchar(15)")]
         public string Name { get; set; }
 
-        public ICollection<Task> Tasks { get; set; }
         public ICollection<Group> Groups { get; set; }
 
     }

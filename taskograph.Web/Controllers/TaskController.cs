@@ -109,7 +109,6 @@ namespace taskograph.Web.Controllers
             {
                 Name = taskVM.Name,
                 GroupId = (taskVM.GroupId == UNASSIGNED_INT ? null : taskVM.GroupId),
-                ColorId = taskVM.ColorId,
                 AppUserId = _appUserRepository.GetId(_userId)
             };
             _taskRepository.Add(task);
@@ -161,7 +160,6 @@ namespace taskograph.Web.Controllers
             Task taskToEdit = _taskRepository.Get((int)task.TaskId);
             taskToEdit.Name = task.Name;
             taskToEdit.GroupId = task.GroupId == 0 ? null : task.GroupId; //Unassigned will return Id value 0
-            taskToEdit.ColorId = task.ColorId;
             _taskRepository.Edit(taskToEdit);
             return ConfigTasks();
         }

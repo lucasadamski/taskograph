@@ -50,7 +50,6 @@ namespace taskograph.EF.Repositories
             try
             {
                 task.Deleted = DateTime.Now;
-                task.ColorId = null;
                 task.GroupId = null;
                 _db.Tasks.Update(task);
                 _db.SaveChanges();
@@ -87,7 +86,6 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Tasks.Include(n => n.Group) //TODO add UserId column
-                    .Include(n => n.Color)
                     .Include(n => n.AppUser)
                     .Where(n => n.Deleted == null)
                     .Where(n => n.AppUser.UserId == userId)
@@ -109,7 +107,6 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Tasks.Include(n => n.Group) //TODO add UserId column
-                    .Include(n => n.Color)
                     .Include(n => n.AppUser)
                     .Where(n => n.GroupId == null)
                     .Where(n => n.Deleted == null)
@@ -139,7 +136,6 @@ namespace taskograph.EF.Repositories
                         Id = n.Id,
                         Name = n.Name,
                         Group = n.Group?.Name ?? NULL_VALUE,
-                        Color = n.Color?.Name ?? NULL_VALUE,
                         TotalDurationToday = (_entryRepository.GetTotalDurationForTask(n.Id, DateTime.Now))
                     })
                  .ToList();
@@ -163,7 +159,6 @@ namespace taskograph.EF.Repositories
                 result = _db.Tasks
                     .Where(n => n.Id == id)
                     .Include(n => n.Group)
-                    .Include(n => n.Color)
                     .FirstOrDefault();
             }
             catch (Exception e)
@@ -188,7 +183,6 @@ namespace taskograph.EF.Repositories
                 result = _db.Tasks
                     .Where(n => ids.Contains(n.Id))
                     .Include(n => n.Group)
-                    .Include(n => n.Color)
                     .ToList();
             }
             catch (Exception e)
