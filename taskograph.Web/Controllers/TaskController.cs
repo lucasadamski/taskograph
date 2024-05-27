@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Drawing.Text;
 using System.Security.Claims;
-using taskograph.EF.Repositories;
 using taskograph.EF.Repositories.Infrastructure;
 using taskograph.Models.Tables;
 using taskograph.Web.Models;
@@ -11,7 +9,6 @@ using Task = taskograph.Models.Tables.Task;
 using static taskograph.Helpers.Messages;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Threading.Tasks;
 
 namespace taskograph.Web.Controllers
 {
@@ -119,7 +116,6 @@ namespace taskograph.Web.Controllers
 
         public IActionResult AddGroup()
         {
-            string _userId = GetIdentityUserId();
             TaskViewModel taskVM = new TaskViewModel();
             taskVM.IsFormForAdd = true;
             ReadColorsSelectedItems(taskVM);
@@ -134,9 +130,6 @@ namespace taskograph.Web.Controllers
         public IActionResult AddGroup(TaskViewModel taskVM)
         {
             string _userId = GetIdentityUserId();
-
-            int tempUserId = _appUserRepository.GetId(_userId);
-
             Group group = new Group()
             {
                 Name = taskVM.Name,
@@ -179,8 +172,7 @@ namespace taskograph.Web.Controllers
         public IActionResult EditGroup(int id)
         {
             TaskViewModel task = new TaskViewModel();
-            Group group = new Group();
-            group = _groupRepository.Get(id);
+            Group group = _groupRepository.Get(id);
             task.Name = group.Name;
             task.TaskId = id; //group Id
             task.ColorId = group.ColorId;
@@ -243,7 +235,6 @@ namespace taskograph.Web.Controllers
         }
         private void ReadColorsSelectedItems(TaskViewModel task)
         {
-            string _userId = GetIdentityUserId();
             task.Colors = _colorRepository.GetAll()
                 .Select(n => new SelectListItem()
                 {
