@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using taskograph.Models;
 using taskograph.Models.Tables;
 using Task = taskograph.Models.Tables.Task;
@@ -18,7 +20,6 @@ namespace taskograph.EF.DataAccess
         public DbSet<RegularTarget> RegularTargets { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Setting> Settings { get; set; }
-        public new DbSet<AppUser> AppUsers { get; set; }
 
         public TasksContext(DbContextOptions<TasksContext> options) : base(options) { }
 
@@ -58,11 +59,30 @@ namespace taskograph.EF.DataAccess
                .WithMany(n => n.PreciseTargets)
                .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<ApplicationUser>().HasMany(n => n.Tasks)
+                .WithOne(n => n.ApplicationUser)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ApplicationUser>().HasMany(n => n.Groups)
+                .WithOne(n => n.ApplicationUser)
+               .OnDelete(DeleteBehavior.NoAction);
+
             DateTime dayToday = DateTime.Today;
 
-            modelBuilder.Entity<AppUser>().HasData(
-                    new AppUser { Id = 1, UserId = "123123123123"}
-                    );
+            //a hasher to hash the password before seeding the user to the db
+            var hasher = new PasswordHasher<ApplicationUser>();
+
+            modelBuilder.Entity<ApplicationUser>().HasData(
+                new ApplicationUser()
+                {
+                    Id = "none",
+                    UserName = "none",
+                    NormalizedUserName = "NONE",
+                    PasswordHash = hasher.HashPassword(null, "Pa$$w0rd"),
+                    FirstName = "none",
+                    LastName = "none"
+                }
+                );
 
             modelBuilder.Entity<Color>().HasData(
                 new Color { Id = 1, Name = "Red" },
@@ -115,27 +135,30 @@ namespace taskograph.EF.DataAccess
 
 
             modelBuilder.Entity<Quote>().HasData(
-                 new Quote { Id = 1, Name = "What you have to do today is insignificant, but is very important that you do it.", AppUserId = 1 },
-                 new Quote { Id = 2, Name = "It's about the marathon, not the sprint.", AppUserId = 1 },
-                 new Quote { Id = 3, Name = "Don't feel bad because you don't know something and feel like you can't do anything. Do what you can do and then improve.", AppUserId = 1 }
+                 new Quote { Id = 1, Name = "What you have to do today is insignificant, but is very important that you do it.", ApplicationUserId = "none" },
+                 new Quote { Id = 2, Name = "It's about the marathon, not the sprint.", ApplicationUserId = "none" },
+                 new Quote { Id = 3, Name = "Don't feel bad because you don't know something and feel like you can't do anything. Do what you can do and then improve.", ApplicationUserId = "none" }
                  );
+
+            //TODO stworz uzytkownia w AspNetUsers z id "none"
+
             modelBuilder.Entity<Models.Tables.Group>().HasData(
-                new Models.Tables.Group { Id = 1, Name = "Health", Created = dayToday, AppUserId = 1 },
-                new Models.Tables.Group { Id = 2, Name = "Education", Created = dayToday, AppUserId = 1 },
-                new Models.Tables.Group { Id = 3, Name = "FriendsAndFamily", Created = dayToday, AppUserId = 1 },
-                new Models.Tables.Group { Id = 4, Name = "Sport", Created = dayToday, AppUserId = 1 },
-                new Models.Tables.Group { Id = 5, Name = "Work", Created = dayToday, AppUserId = 1 },
-                new Models.Tables.Group { Id = 6, Name = "Hobby", Created = dayToday, AppUserId = 1 },
-                new Models.Tables.Group { Id = 7, Name = "Relaxation", Created = dayToday, AppUserId = 1 },
-                new Models.Tables.Group { Id = 8, Name = "Entertaiment", Created = dayToday, AppUserId = 1 },
-                new Models.Tables.Group { Id = 9, Name = "Finance", Created = dayToday, AppUserId = 1 }
+                new Models.Tables.Group { Id = 1, Name = "Health", Created = dayToday, ApplicationUserId = "none" },
+                new Models.Tables.Group { Id = 2, Name = "Education", Created = dayToday , ApplicationUserId = "none"},
+                new Models.Tables.Group { Id = 3, Name = "FriendsAndFamily", Created = dayToday, ApplicationUserId = "none" },
+                new Models.Tables.Group { Id = 4, Name = "Sport", Created = dayToday, ApplicationUserId = "none" },
+                new Models.Tables.Group { Id = 5, Name = "Work", Created = dayToday, ApplicationUserId = "none" },
+                new Models.Tables.Group { Id = 6, Name = "Hobby", Created = dayToday, ApplicationUserId = "none" },
+                new Models.Tables.Group { Id = 7, Name = "Relaxation", Created = dayToday , ApplicationUserId = "none"},
+                new Models.Tables.Group { Id = 8, Name = "Entertaiment", Created = dayToday , ApplicationUserId = "none"},
+                new Models.Tables.Group { Id = 9, Name = "Finance", Created = dayToday, ApplicationUserId = "none" }
                 );
 
             modelBuilder.Entity<Task>().HasData(
-              new Task { Id = 1, Name = "Running", GroupId = 4, AppUserId = 1, Created = dayToday },
-              new Task { Id = 2, Name = "Reading", GroupId = 2, AppUserId = 1, Created = dayToday },
-              new Task { Id = 3, Name = "Cooking", GroupId = 1, AppUserId = 1, Created = dayToday },
-              new Task { Id = 4, Name = "Dancing", GroupId = 7, AppUserId = 1, Created = dayToday }
+              new Task { Id = 1, Name = "Running", GroupId = 4,   Created = dayToday, ApplicationUserId = "none" },
+              new Task { Id = 2, Name = "Reading", GroupId = 2,   Created = dayToday , ApplicationUserId = "none"},
+              new Task { Id = 3, Name = "Cooking", GroupId = 1,   Created = dayToday , ApplicationUserId = "none"},
+              new Task { Id = 4, Name = "Dancing", GroupId = 7,   Created = dayToday , ApplicationUserId = "none"}
               );
 
             modelBuilder.Entity<PreciseTarget>().HasData(
@@ -149,8 +172,10 @@ namespace taskograph.EF.DataAccess
               );
 
             modelBuilder.Entity<Setting>().HasData(
-              new Setting { Id = 1, Name = "AlarmClock" , Value = "Off", AppUserId = 1 }
+              new Setting { Id = 1, Name = "AlarmClock" , Value = "Off", ApplicationUserId = "none" }
               );
+
+            ///modyfy quote, update database, chceck if AspNetUsers are wired correctly
 
 
         }

@@ -19,9 +19,9 @@ namespace taskograph.Models.Tables
         public DateTime Created { get; set; }
         public DateTime? LastUpdated { get; set; }
         public DateTime? Deleted { get; set; }
-        public int AppUserId { get; set; }
+        public string ApplicationUserId { get; set; }
 
-        public AppUser AppUser { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
         public Group Group { get; set; }
 
         public ICollection<Entry> Entries { get; set; }

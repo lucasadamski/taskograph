@@ -106,8 +106,8 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.PreciseTargets
-                    .Include(n => n.Task.AppUser)
-                    .Where(n => n.Task.AppUser.UserId == userId)
+                    .Include(n => n.Task.ApplicationUser)
+                    .Where(n => n.Task.ApplicationUserId == userId)
                     .Where(n => (n.DateDue.Date >= from.Date) && (n.DateDue.Date <= to.Date))
                     .ToList();
             }
@@ -126,9 +126,9 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.PreciseTargets
-                    .Include(n => n.Task.AppUser)
+                    .Include(n => n.Task.ApplicationUser)
                     .Where(n => n.Deleted == null)
-                    .Where(n => n.Task.AppUser.UserId == userId)
+                    .Where(n => n.Task.ApplicationUserId == userId)
                     .ToList();
             }
             catch (Exception e)

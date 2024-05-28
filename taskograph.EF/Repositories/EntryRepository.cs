@@ -145,8 +145,8 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Entries
-                    .Include(n => n.Task.AppUser)
-                    .Where(n => n.Task.AppUser.UserId == userId)
+                    .Include(n => n.Task.ApplicationUser)
+                    .Where(n => n.Task.ApplicationUserId == userId)
                     .Where(n => (n.Created.Date >= from.Date) && (n.Created.Date <= to.Date))
                     .ToList();
             }
@@ -165,8 +165,8 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Entries
-                    .Include(n => n.Task.AppUser)
-                    .Where(n => n.Task.AppUser.UserId == userId)
+                    .Include(n => n.Task.ApplicationUser)
+                    .Where(n => n.Task.ApplicationUserId == userId)
                     .ToList();
             }
             catch (Exception e)
@@ -184,8 +184,8 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Entries
-                    .Include(n => n.Task.AppUser)
-                    .Where(n => n.Task.AppUser.UserId == userId)
+                    .Include(n => n.Task.ApplicationUser)
+                    .Where(n => n.Task.ApplicationUserId == userId)
                     .Where(n => n.Task.GroupId == groupId)
                     .ToList();
             }
@@ -204,8 +204,8 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Entries
-                   .Include(n => n.Task.AppUser)
-                    .Where(n => n.Task.AppUser.UserId == userId)
+                   .Include(n => n.Task.ApplicationUser)
+                    .Where(n => n.Task.ApplicationUserId == userId)
                     .Where(n => n.TaskId == taskId)
                     .ToList();
             }
@@ -288,8 +288,8 @@ namespace taskograph.EF.Repositories
             {
                 durationsList = _db.Entries
                     .Include(n => n.Duration)
-                    .Include(n => n.Task.AppUser)
-                    .Where(n => n.Task.AppUser.UserId == userId)
+                    .Include(n => n.Task.ApplicationUser)
+                    .Where(n => n.Task.ApplicationUserId == userId)
                     .Where(n => n.Created.Date == date.Date)
                     .Select(n => n.Duration)
                     .ToList();

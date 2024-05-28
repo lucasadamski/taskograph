@@ -86,9 +86,9 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Tasks.Include(n => n.Group) //TODO add UserId column
-                    .Include(n => n.AppUser)
+                    .Include(n => n.ApplicationUser)
                     .Where(n => n.Deleted == null)
-                    .Where(n => n.AppUser.UserId == userId)
+                    .Where(n => n.ApplicationUserId == userId)
                     .ToList();
                 _logger.LogDebug($"TaskRepository: GetAllTasks: UserID {userId} Message: {DATABASE_OK}");
 
@@ -107,10 +107,10 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Tasks.Include(n => n.Group) //TODO add UserId column
-                    .Include(n => n.AppUser)
+                    .Include(n => n.ApplicationUser)
                     .Where(n => n.GroupId == null)
                     .Where(n => n.Deleted == null)
-                    .Where(n => n.AppUser.UserId == userId)
+                    .Where(n => n.ApplicationUserId == userId)
                     .ToList();
                 _logger.LogDebug($"TaskRepository: GetAllTasks: UserID {userId} Message: {DATABASE_OK}");
 
@@ -271,15 +271,15 @@ namespace taskograph.EF.Repositories
         {
             try
             {
-                int currentAppUserId = _db.AppUsers.Where(n => n.UserId == userId).Select(n => n.Id).FirstOrDefault();
+                string currentAppUserId = userId;
                 List<Task> tasks = _db.Tasks.ToList();
-                tasks.ForEach(n => n.AppUserId = currentAppUserId);
+                tasks.ForEach(n => n.ApplicationUserId = currentAppUserId);
                 List<Group> groups = _db.Groups.ToList();
-                groups.ForEach(n => n.AppUserId = currentAppUserId);
+                groups.ForEach(n => n.ApplicationUserId = currentAppUserId);
                 List<Quote> quotes = _db.Quotes.ToList();
-                quotes.ForEach(n => n.AppUserId = currentAppUserId);
+                quotes.ForEach(n => n.ApplicationUserId = currentAppUserId);
                 List<Setting> settings = _db.Settings.ToList();
-                settings.ForEach(n => n.AppUserId = currentAppUserId);
+                settings.ForEach(n => n.ApplicationUserId = currentAppUserId);
                 _db.SaveChanges();
                 _logger.LogDebug($"TaskRepository: DEBUG_ONLY_TakeAllTasksAndAssignToCurrentUser: UserID {userId} Message: {DATABASE_OK}");
 

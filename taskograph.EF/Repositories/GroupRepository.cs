@@ -12,13 +12,11 @@ namespace taskograph.EF.Repositories
     {
         private readonly TasksContext _db;
         private readonly ILogger<GroupRepository> _logger;
-        private readonly IAppUserRepository _appUserRepository;
 
-        public GroupRepository(TasksContext db, ILogger<GroupRepository> logger, IAppUserRepository appUserRepository)
+        public GroupRepository(TasksContext db, ILogger<GroupRepository> logger)
         {
             _db = db;
             _logger = logger;
-            _appUserRepository = appUserRepository;
         }
 
         public bool Add(Group group)
@@ -103,7 +101,7 @@ namespace taskograph.EF.Repositories
             {
                 result = _db.Groups
                     .Include(n => n.Tasks)
-                    .Where(n => n.AppUserId == _appUserRepository.GetId(userId))
+                    .Where(n => n.ApplicationUserId == userId)
                     .Where(n => n.Deleted == null)
                     .ToList();
             }
