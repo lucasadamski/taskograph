@@ -100,7 +100,7 @@ namespace taskograph.EF.Repositories
             {
                 result = _db.Quotes
                     .Include(n => n.AppUser)
-                    .Where(n => n.AppUser.UserId == userId).ToList();
+                    .Where(n => n.AppUserId == userId).ToList();
             }
             catch (Exception e)
             {

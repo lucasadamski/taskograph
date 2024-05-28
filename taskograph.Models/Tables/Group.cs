@@ -15,14 +15,14 @@ namespace taskograph.Models.Tables
         [Column(TypeName = "varchar(30)")]
         public string Name { get; set; }
         public int? ColorId { get; set; }
-        public int AppUserId { get; set; }
+        public string AppUserId { get; set; }
         public DateTime Created { get; set; }
         public DateTime? LastUpdated { get; set; }
         public DateTime? Deleted { get; set; }
 
 
         public Color Color { get; set; }
-        public AppUser AppUser { get; set; }
+        public virtual ApplicationUser AppUser { get; set; }
         public ICollection<Task> Tasks { get; set; }
     }
 }

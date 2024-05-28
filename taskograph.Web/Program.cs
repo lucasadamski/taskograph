@@ -34,7 +34,6 @@ namespace taskograph.Web
                 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
                 builder.Services.AddScoped<IColorRepository, ColorRepository>();
                 builder.Services.AddControllersWithViews();
-                builder.Services.AddScoped<IAppUserRepository, AppUserRepository>();
                 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
                 // NLog: Setup NLog for Dependency injection
