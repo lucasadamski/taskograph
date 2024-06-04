@@ -43,11 +43,11 @@ namespace taskograph.EF.DataAccess
                 .WithMany(n => n.Entries)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<RegularTarget>().HasOne(n => n.TargetDuration)
+            modelBuilder.Entity<RegularTarget>().HasOne(n => n.TimeDedicatedToPerformTarget)
                 .WithMany(n => n.TargetRegularTargets)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<RegularTarget>().HasOne(n => n.PerTimeframeDuration)
+            modelBuilder.Entity<RegularTarget>().HasOne(n => n.RegularTimeIntervalToAchieveTarget)
                 .WithMany(n => n.PerTimeframeRegularTargets)
                 .OnDelete(DeleteBehavior.NoAction);
 
@@ -167,8 +167,8 @@ namespace taskograph.EF.DataAccess
                     );
 
             modelBuilder.Entity<RegularTarget>().HasData(
-              new RegularTarget { Id = 1, TaskId = 1, TargetDurationId = 3, PerTimeframeDurationId =  13, Created = dayToday },
-              new RegularTarget { Id = 2, TaskId = 2, TargetDurationId = 4, PerTimeframeDurationId = 14,  Created = dayToday  }
+              new RegularTarget { Id = 1, TaskId = 1, TimeDedicatedToPerformTargetId = 3, RegularTimeIntervalToAchieveTargetId =  13, Created = dayToday },
+              new RegularTarget { Id = 2, TaskId = 2, TimeDedicatedToPerformTargetId = 4, RegularTimeIntervalToAchieveTargetId = 14,  Created = dayToday  }
               );
 
             modelBuilder.Entity<Setting>().HasData(

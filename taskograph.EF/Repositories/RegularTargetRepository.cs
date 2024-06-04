@@ -81,8 +81,8 @@ namespace taskograph.EF.Repositories
                     .Where(n => n.Id == id)
                     .Include(n => n.Task)           //nullable
                     .Include(n => n.Task.Group)
-                    .Include(n => n.TargetDuration)
-                    .Include(n => n.PerTimeframeDuration)
+                    .Include(n => n.TimeDedicatedToPerformTarget)
+                    .Include(n => n.RegularTimeIntervalToAchieveTarget)
                     .Where(n => n.Deleted == null)
                     .FirstOrDefault();
             }

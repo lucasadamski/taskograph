@@ -12,9 +12,9 @@ namespace taskograph.Models.Tables
         public int Id { get; set; }
         public long Minutes { get; set; }
         public ICollection<Entry> Entries { get; set; }
-        [InverseProperty(nameof(RegularTarget.TargetDuration))]
+        [InverseProperty(nameof(RegularTarget.TimeDedicatedToPerformTarget))]
         public ICollection<RegularTarget> TargetRegularTargets { get; set; }
-        [InverseProperty(nameof(RegularTarget.PerTimeframeDuration))]
+        [InverseProperty(nameof(RegularTarget.RegularTimeIntervalToAchieveTarget))]
         public ICollection<RegularTarget> PerTimeframeRegularTargets { get; set; }
 
 
