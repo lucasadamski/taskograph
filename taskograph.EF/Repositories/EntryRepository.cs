@@ -35,7 +35,6 @@ namespace taskograph.EF.Repositories
                 entry.Created = DateTime.Now;
                 _db.Entries.Add(entry);
                 _db.SaveChanges();
-                _logger.LogDebug($"Add: EntryId {entry.Id} Message: {DATABASE_OK}");
                
             }
             catch (Exception e)
@@ -89,7 +88,6 @@ namespace taskograph.EF.Repositories
                 entry.Deleted = DateTime.Now;
                 _db.Entries.Update(entry);
                 _db.SaveChanges();
-                _logger.LogDebug($"EntryRepository: Delete EntryId: {entry.Id} Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -106,7 +104,6 @@ namespace taskograph.EF.Repositories
                 entry.LastUpdated = DateTime.Now;
                 _db.Entries.Update(entry);
                 _db.SaveChanges();
-                _logger.LogDebug($"EntryRepository: Delete EntryId: {entry.Id} Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -135,7 +132,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"EntryRepository: Get EntryId: {id} Message: {EMPTY_VARIABLE}");
                 return new Entry();
             }
-            _logger.LogDebug($"EntryRepository: Get EntryId: {id} Message: {DATABASE_OK}");
             return result;
         }
 
@@ -155,7 +151,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"EntryRepository: Get from {from} to {to} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new List<Entry>();
             }
-            _logger.LogDebug($"EntryRepository: Get Get from {from} to {to} Message: {DATABASE_OK}");
             return result;
         }
 
@@ -174,7 +169,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"EntryRepository: GetAll Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new List<Entry>();
             }
-            _logger.LogDebug($"EntryRepository: GetAll Message: {DATABASE_OK}");
             return result;
         }
 
@@ -194,7 +188,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"EntryRepository: GetAllByGroup groupId:{groupId} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new List<Entry>();
             }
-            _logger.LogDebug($"EntryRepository: GetAllByGroup groupId:{groupId} Message: {DATABASE_OK}");
             return result;
         }
 
@@ -214,7 +207,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"EntryRepository: GetAllByTask taskId:{taskId} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new List<Entry>();
             }
-            _logger.LogDebug($"EntryRepository: GetAllByTask taskId:{taskId} Message: {DATABASE_OK}");
             return result;
         }
 
@@ -234,7 +226,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"EntryRepository: GetByGroup from {from} to {to} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new List<Entry>();
             }
-            _logger.LogDebug($"EntryRepository: GetByGroup from {from} to {to} Message: {DATABASE_OK}");
             return result;
         }
 
@@ -253,7 +244,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"EntryRepository: GetByTask from {from} to {to} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new List<Entry>();
             }
-            _logger.LogDebug($"EntryRepository: GetByTask from {from} to {to} Message: {DATABASE_OK}");
             return result;
         }
 
@@ -277,7 +267,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"EntryRepository: GetTotalDurationForTask taskId {taskId} date {date} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new Duration();
             }
-            _logger.LogDebug($"EntryRepository: GetTotalDurationForTask taskId {taskId} date {date} Message: {DATABASE_OK}");
             return durationTotal;
         }
         public Duration GetTotalDurationForAllTasks(string userId, DateTime date)
@@ -301,7 +290,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"EntryRepository: GetTotalDurationForAllTasks date {date} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new Duration();
             }
-            _logger.LogDebug($"EntryRepository: GetTotalDurationForAllTasks date {date} Message: {DATABASE_OK}");
             return durationTotal;
         }
         public Duration GetTotalDurationForTask(int taskId, DateTime dateFrom, DateTime dateTo)
@@ -321,7 +309,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"EntryRepository: GetTotalDurationForTask taskId {taskId} date {dateFrom} - {dateTo} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new Duration();
             }
-            _logger.LogDebug($"EntryRepository: GetTotalDurationForTask taskId {taskId} date {dateFrom} - {dateTo} Message: {DATABASE_OK}");
             return result;
         }
 

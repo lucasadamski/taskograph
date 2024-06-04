@@ -26,7 +26,6 @@ namespace taskograph.EF.Repositories
                 group.Created = DateTime.Now;
                 _db.Groups.Add(group);
                 _db.SaveChanges();
-                _logger.LogDebug($"TaskRepository: Add {group.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -43,7 +42,6 @@ namespace taskograph.EF.Repositories
                 group.Deleted = DateTime.Now;
                 _db.Groups.Update(group);
                 _db.SaveChanges();
-                _logger.LogDebug($"Delete {group.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -60,7 +58,6 @@ namespace taskograph.EF.Repositories
                 group.LastUpdated = DateTime.Now;
                 _db.Groups.Update(group);
                 _db.SaveChanges();
-                _logger.LogDebug($"Edit {group.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -90,7 +87,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"Get: id {id} Message: {EMPTY_VARIABLE}");
                 return new Group();
             }
-            _logger.LogDebug($"Get: id {id} Message: {DATABASE_OK}");
             return result;
         }
 
@@ -115,7 +111,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"Get: Message: {EMPTY_VARIABLE}");
                 return new List<Group>();
             }
-            _logger.LogDebug($"Get: Message: {DATABASE_OK}");
             return result;
         }
 

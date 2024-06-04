@@ -35,7 +35,6 @@ namespace taskograph.EF.Repositories
                 task.Created = DateTime.Now;
                 _db.Tasks.Add(task);
                 _db.SaveChanges();
-                _logger.LogDebug($"TaskRepository: Add {task.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -53,7 +52,6 @@ namespace taskograph.EF.Repositories
                 task.GroupId = null;
                 _db.Tasks.Update(task);
                 _db.SaveChanges();
-                _logger.LogDebug($"TaskRepository: Delete {task.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -70,7 +68,6 @@ namespace taskograph.EF.Repositories
                 task.LastUpdated = DateTime.Now;
                 _db.Tasks.Update(task);
                 _db.SaveChanges();
-                _logger.LogDebug($"TaskRepository: Edit {task.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -90,8 +87,6 @@ namespace taskograph.EF.Repositories
                     .Where(n => n.Deleted == null)
                     .Where(n => n.ApplicationUserId == userId)
                     .ToList();
-                _logger.LogDebug($"TaskRepository: GetAllTasks: UserID {userId} Message: {DATABASE_OK}");
-
             }
             catch (Exception e)
             {
@@ -112,8 +107,6 @@ namespace taskograph.EF.Repositories
                     .Where(n => n.Deleted == null)
                     .Where(n => n.ApplicationUserId == userId)
                     .ToList();
-                _logger.LogDebug($"TaskRepository: GetAllTasks: UserID {userId} Message: {DATABASE_OK}");
-
             }
             catch (Exception e)
             {
@@ -139,8 +132,6 @@ namespace taskograph.EF.Repositories
                         TotalDurationToday = (_entryRepository.GetTotalDurationForTask(n.Id, DateTime.Now))
                     })
                  .ToList();
-                _logger.LogDebug($"GetAllTaskDTOs: UserID {userId} Message: {DATABASE_OK}");
-
             }
             catch (Exception e)
             {
@@ -171,7 +162,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"TaskRepository: Get: id {id} Message: {EMPTY_VARIABLE}");
                 return new Task();
             }
-            _logger.LogDebug($"TaskRepository: Get: id {id} Message: {DATABASE_OK}");
             return result;
         }
 
@@ -195,7 +185,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"Get ids: Message: {EMPTY_VARIABLE}");
                 return new List<Task>();
             }
-            _logger.LogDebug($"Get ids: Message: {DATABASE_OK}");
             return result;
         }
 
@@ -218,7 +207,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"Get: Message: {EMPTY_VARIABLE}");
                 return new List<Task>();
             }
-            _logger.LogDebug($"Get: Message: {DATABASE_OK}");
             return result;
         }
 
@@ -245,7 +233,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"DisconnectTasksFromGroup");
                 return false;
             }
-            _logger.LogDebug($"DisconnectTasksFromGroup: Message: {DATABASE_OK}");
             return true;
         }
 
@@ -263,7 +250,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"DisconnectTaskFromGroup");
                 return false;
             }
-            _logger.LogDebug($"DisconnectTaskFromGroup: Message: {DATABASE_OK}");
             return true;
         }
 

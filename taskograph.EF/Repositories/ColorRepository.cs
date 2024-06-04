@@ -30,7 +30,6 @@ namespace taskograph.EF.Repositories
             {
                 _db.Colors.Add(color);
                 _db.SaveChanges();
-                _logger.LogDebug($"Add {color.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -46,7 +45,6 @@ namespace taskograph.EF.Repositories
             {
                 _db.Colors.Remove(color);
                 _db.SaveChanges();
-                _logger.LogDebug($"Delete {color.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -62,7 +60,6 @@ namespace taskograph.EF.Repositories
             {
                 _db.Colors.Update(color);
                 _db.SaveChanges();
-                _logger.LogDebug($"Edit {color.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -91,7 +88,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"Get: id {id} Message: {EMPTY_VARIABLE}");
                 return new Color();
             }
-            _logger.LogDebug($"Get: id {id} Message: {DATABASE_OK}");
             return result;
         }
 
@@ -112,7 +108,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"GetAll: Message: {EMPTY_VARIABLE}");
                 return new List<Color>();
             }
-            _logger.LogDebug($"GetAll: Message: {DATABASE_OK}");
             return result;
         }
     }
