@@ -9,6 +9,7 @@ using Task = taskograph.Models.Tables.Task;
 using static taskograph.Helpers.Messages;
 using taskograph.Web.Models.DTOs;
 using taskograph.Models.Tables;
+using Microsoft.IdentityModel.Tokens;
 
 namespace taskograph.Web.Controllers
 {
@@ -76,8 +77,16 @@ namespace taskograph.Web.Controllers
 
         private Duration GetTotalDurationFromTasks(List<TaskDTO> input)
         {
-            List<Duration> durations = input.Select(n => n.TotalDurationToday).ToList();
-            return durations.Aggregate((a, b) => a + b);
+            if (input.IsNullOrEmpty() == true)
+            {
+                return new Duration();
+            }
+            else
+            {
+                List<Duration> durations = input.Select(n => n.TotalDurationToday).ToList();
+                return durations.Aggregate((a, b) => a + b);
+            }
+
         }
 
         
