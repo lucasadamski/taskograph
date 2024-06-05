@@ -109,13 +109,14 @@ namespace taskograph.Web.Controllers
                 ApplicationUserId = _userId
             };
             _taskRepository.Add(task);
-            return ConfigTasks();
+      
+            return RedirectToAction("ConfigTasks");
         }
 
         public IActionResult AddGroup()
         {
             TaskViewModel taskVM = new TaskViewModel();
-            taskVM.IsFormForAdd = true;
+            taskVM.IsFormForGroup = true;
             ReadColorsSelectedItems(taskVM);
             ReadUnnasignedTasksSelectedItems(taskVM);
             taskVM.IsFormForTask = false;
@@ -135,7 +136,7 @@ namespace taskograph.Web.Controllers
                 ApplicationUserId = _userId
             };
             _groupRepository.Add(group);
-            return ConfigTasks();
+            return RedirectToAction("ConfigTasks");
         }
 
         public IActionResult EditTask(int id)
