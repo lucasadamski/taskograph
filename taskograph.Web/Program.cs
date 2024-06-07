@@ -32,6 +32,7 @@ namespace taskograph.Web
                 builder.Services.AddScoped<IRegularTargetRepository, RegularTargetRepository>();
                 builder.Services.AddScoped<IQuoteRepository, QuoteRepository>();
                 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+                builder.Services.AddScoped<IColorRepository, ColorRepository>();
                 builder.Services.AddControllersWithViews();
                 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

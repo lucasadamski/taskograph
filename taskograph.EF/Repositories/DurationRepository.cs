@@ -33,7 +33,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"DurationRepository: GetAll Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new List<Duration>();
             }
-            _logger.LogDebug($"DurationRepository: GetAll Message: {DATABASE_OK}");
             return result;
         }
 
@@ -51,7 +50,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"DurationRepository: GetAll Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new List<Duration>();
             }
-            _logger.LogDebug($"DurationRepository: GetAll Message: {DATABASE_OK}");
             return result;
         }
         public Duration Get(int id)
@@ -66,7 +64,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"Get Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new Duration();
             }
-            _logger.LogDebug($"Get Message: {DATABASE_OK}");
             return result;
         }
         public Duration Add(Duration duration)
@@ -81,7 +78,6 @@ namespace taskograph.EF.Repositories
             {                
                 _db.Durations.Add(duration);
                 _db.SaveChanges();
-                _logger.LogDebug($"Add: Added new Duration Id {duration.Id} Message: {DATABASE_OK}");
                 return duration;
             }
         }

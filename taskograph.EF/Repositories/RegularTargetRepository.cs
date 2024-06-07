@@ -31,7 +31,6 @@ namespace taskograph.EF.Repositories
                 regularTarget.Created = DateTime.Now;
                 _db.RegularTargets.Add(regularTarget);
                 _db.SaveChanges();
-                _logger.LogDebug($"RegularTargetRepository: Add TargetID: {regularTarget.Id}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -48,7 +47,6 @@ namespace taskograph.EF.Repositories
                 regularTarget.Deleted = DateTime.Now;
                 _db.Update(regularTarget);
                 _db.SaveChanges();
-                _logger.LogDebug($"RegularTargetRepository: Delete TargetID: {regularTarget.Id}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -65,7 +63,6 @@ namespace taskograph.EF.Repositories
                 regularTarget.LastUpdated = DateTime.Now;
                 _db.RegularTargets.Update(regularTarget);
                 _db.SaveChanges();
-                _logger.LogDebug($"RegularTargetRepository: Edit TargetID: {regularTarget.Id}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -84,8 +81,8 @@ namespace taskograph.EF.Repositories
                     .Where(n => n.Id == id)
                     .Include(n => n.Task)           //nullable
                     .Include(n => n.Task.Group)
-                    .Include(n => n.TargetDuration)
-                    .Include(n => n.PerTimeframeDuration)
+                    .Include(n => n.TimeDedicatedToPerformTarget)
+                    .Include(n => n.RegularTimeIntervalToAchieveTarget)
                     .Where(n => n.Deleted == null)
                     .FirstOrDefault();
             }
@@ -99,7 +96,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"RegularTargetRepository: Get: id {id} Message: {EMPTY_VARIABLE}");
                 return new RegularTarget();
             }
-            _logger.LogDebug($"RegularTargetRepository: Get: id {id} Message: {DATABASE_OK}");
             return result;
         }
 
@@ -111,7 +107,9 @@ namespace taskograph.EF.Repositories
             try
             {
                 spOutput = _db.Database.SqlQueryRaw<RegularTargetSP>(query).ToList();
-                result = spOutput.Select(n => new RegularTargetDTO()
+                result = spOutput
+                    .Where(n => n.Deleted == null)
+                    .Select(n => new RegularTargetDTO()
                 {
                     Id = n.Id,
                     TaskName = n.TaskName,
@@ -127,7 +125,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"RegularTargetRepository: Get from {(from ?? new DateTime())} to {(to ?? new DateTime())} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new List<RegularTargetDTO>();
             }
-            _logger.LogDebug($"RegularTargetRepository: Get Get from {(from ?? new DateTime())} to {(to ?? new DateTime())} Message: {DATABASE_OK}");
             return result;
         }
     }

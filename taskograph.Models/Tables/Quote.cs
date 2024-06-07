@@ -14,6 +14,9 @@ namespace taskograph.Models.Tables
         [MaxLength(256)]
         [Column(TypeName = "varchar(256)")]
         public string Name { get; set; }
-        public string UserId { get; set; }
+        public string ApplicationUserId { get; set; }
+
+        public virtual ApplicationUser ApplicationUser { get; set; }
+
     }
 }

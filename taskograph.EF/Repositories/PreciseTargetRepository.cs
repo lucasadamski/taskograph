@@ -29,7 +29,6 @@ namespace taskograph.EF.Repositories
                 preciseTarget.Created = DateTime.Now;
                 _db.PreciseTargets.Add(preciseTarget);
                 _db.SaveChanges();
-                _logger.LogDebug($"PreciseTargetRepository: Add {preciseTarget.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -46,7 +45,6 @@ namespace taskograph.EF.Repositories
                 preciseTarget.Deleted = DateTime.Now;
                 _db.PreciseTargets.Update(preciseTarget);
                 _db.SaveChanges();
-                _logger.LogDebug($"PreciseTargetRepository: Delete {preciseTarget.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -63,7 +61,6 @@ namespace taskograph.EF.Repositories
                 preciseTarget.LastUpdated = DateTime.Now;
                 _db.PreciseTargets.Update(preciseTarget);
                 _db.SaveChanges();
-                _logger.LogDebug($"PreciseTargetRepository: Edit {preciseTarget.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -94,7 +91,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"PreciseTargetRepository: Get: id {id} Message: {EMPTY_VARIABLE}");
                 return new PreciseTarget();
             }
-            _logger.LogDebug($"PreciseTargetRepository: Get: id {id} Message: {DATABASE_OK}");
             return result;
         }
 
@@ -106,8 +102,8 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.PreciseTargets
-                    .Include(n => n.Task)
-                    .Where(n => n.Task.UserId == userId)
+                    .Include(n => n.Task.ApplicationUser)
+                    .Where(n => n.Task.ApplicationUserId == userId)
                     .Where(n => (n.DateDue.Date >= from.Date) && (n.DateDue.Date <= to.Date))
                     .ToList();
             }
@@ -116,7 +112,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"PreciseTargetRepository: Get from {from} to {to} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new List<PreciseTarget>();
             }
-            _logger.LogDebug($"PreciseTargetRepository: Get Get from {from} to {to} Message: {DATABASE_OK}");
             return result;
         }
 
@@ -126,8 +121,9 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.PreciseTargets
-                    .Include(n => n.Task)
-                    .Where(n => n.Task.UserId == userId)
+                    .Include(n => n.Task.ApplicationUser)
+                    .Where(n => n.Deleted == null)
+                    .Where(n => n.Task.ApplicationUserId == userId)
                     .ToList();
             }
             catch (Exception e)
@@ -135,7 +131,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"PreciseTargetRepository: GetAll from Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new List<PreciseTarget>();
             }
-            _logger.LogDebug($"PreciseTargetRepository: Get GetAll from Message: {DATABASE_OK}");
             return result;
         }
     }

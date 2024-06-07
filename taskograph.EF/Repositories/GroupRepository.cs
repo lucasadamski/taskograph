@@ -26,7 +26,6 @@ namespace taskograph.EF.Repositories
                 group.Created = DateTime.Now;
                 _db.Groups.Add(group);
                 _db.SaveChanges();
-                _logger.LogDebug($"TaskRepository: Add {group.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -43,7 +42,6 @@ namespace taskograph.EF.Repositories
                 group.Deleted = DateTime.Now;
                 _db.Groups.Update(group);
                 _db.SaveChanges();
-                _logger.LogDebug($"Delete {group.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -60,7 +58,6 @@ namespace taskograph.EF.Repositories
                 group.LastUpdated = DateTime.Now;
                 _db.Groups.Update(group);
                 _db.SaveChanges();
-                _logger.LogDebug($"Edit {group.Name}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -76,8 +73,8 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Groups
+                    .Include(n => n.Color)
                     .Where(n => n.Id == id)
-                    .Include(n => n.Color.Name)
                     .FirstOrDefault();
             }
             catch (Exception e)
@@ -90,7 +87,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"Get: id {id} Message: {EMPTY_VARIABLE}");
                 return new Group();
             }
-            _logger.LogDebug($"Get: id {id} Message: {DATABASE_OK}");
             return result;
         }
 
@@ -99,12 +95,10 @@ namespace taskograph.EF.Repositories
             List<Group> result;
             try
             {
-                result = _db.Tasks
-                    .Where(n => n.UserId == userId)
-                    .Include(n => n.Group)
-                    .Include(n => n.Group.Color)
-                    .Select(n => n.Group)
-                    .Distinct()
+                result = _db.Groups
+                    .Include(n => n.Tasks)
+                    .Where(n => n.ApplicationUserId == userId)
+                    .Where(n => n.Deleted == null)
                     .ToList();
             }
             catch (Exception e)
@@ -117,31 +111,9 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"Get: Message: {EMPTY_VARIABLE}");
                 return new List<Group>();
             }
-            _logger.LogDebug($"Get: Message: {DATABASE_OK}");
             return result;
         }
 
-        public IEnumerable<Task> GetTasks(int groupId)
-        {
-            List<Task> result;
-            try
-            {
-                result = _db.Tasks
-                    .Where(n => n.GroupId == groupId)
-                    .ToList();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Get: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new List<Task>();
-            }
-            if (result == null)
-            {
-                _logger.LogError($"Get: Message: {EMPTY_VARIABLE}");
-                return new List<Task>();
-            }
-            _logger.LogDebug($"Get: Message: {DATABASE_OK}");
-            return result;
-        }
+        
     }
 }

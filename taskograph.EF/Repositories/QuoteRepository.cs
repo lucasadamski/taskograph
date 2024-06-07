@@ -28,7 +28,6 @@ namespace taskograph.EF.Repositories
             {
                 _db.Quotes.Add(quote);
                 _db.SaveChanges();
-                _logger.LogDebug($"QuoteRepository: Add quoteId: {quote.Id}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -44,7 +43,6 @@ namespace taskograph.EF.Repositories
             { 
                 _db.Remove(quote);
                 _db.SaveChanges();
-                _logger.LogDebug($"QuoteRepository: Delete quoteId: {quote.Id}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -60,7 +58,6 @@ namespace taskograph.EF.Repositories
             {
                 _db.Quotes.Update(quote);
                 _db.SaveChanges();
-                _logger.LogDebug($"QuoteRepository: Edit quoteId: {quote.Id}: Message: {DATABASE_OK}");
             }
             catch (Exception e)
             {
@@ -89,7 +86,6 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"QuoteRepository: Get: id {id} Message: {EMPTY_VARIABLE}");
                 return new Quote();
             }
-            _logger.LogDebug($"QuoteRepository: Get: id {id} Message: {DATABASE_OK}");
             return result;
         }
 
@@ -99,15 +95,14 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Quotes
-                    .Where(n => n.UserId == userId)
-                    .ToList();
+                    .Include(n => n.ApplicationUser)
+                    .Where(n => n.ApplicationUserId == userId).ToList();
             }
             catch (Exception e)
             {
                 _logger.LogError($"QuoteRepository: GetAll from Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
                 return new List<Quote>();
             }
-            _logger.LogDebug($"QuoteRepository: Get GetAll from Message: {DATABASE_OK}");
             return result;
         }
     }
