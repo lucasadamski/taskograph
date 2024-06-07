@@ -39,12 +39,21 @@ namespace taskograph.Web.Controllers
         {
             _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            if (_userId.IsNullOrEmpty())
+            {
+                return View("CustomErrorPage", ERROR_NO_USER);
+            }
+
             GraphViewModel graphVM = new GraphViewModel();
 
             //fixed for 7 days
             //load 7 days of tasks
             List<Task> tasks = new List<Task>();
             tasks = _taskRepository.GetAll(_userId).ToList();
+            if (tasks.IsNullOrEmpty())
+            {
+                return View("CustomErrorPage", ERROR_NO_TASKS);
+            }
             DateTime day = DateTime.Now.AddDays(-7);
 
             TextGraphOneCellDTO temp = new TextGraphOneCellDTO();
