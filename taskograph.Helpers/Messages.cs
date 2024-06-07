@@ -27,5 +27,10 @@
 
         //Task 
         public const string NULL_VALUE = "N/A";
+
+        //Error messages
+        public const string ERROR_NO_TASKS = "There are no tasks present. Please add at least one task before you continue.";
+        public const string ERROR_NO_USER = "No user is signed in. Please sign in.";
+
     }
 }

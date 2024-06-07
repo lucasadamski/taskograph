@@ -45,6 +45,10 @@ namespace taskograph.Web.Controllers
             //load 7 days of tasks
             List<Task> tasks = new List<Task>();
             tasks = _taskRepository.GetAll(_userId).ToList();
+            if (tasks.IsNullOrEmpty())
+            {
+                return View("CustomErrorPage", ERROR_NO_TASKS);
+            }
             DateTime day = DateTime.Now.AddDays(-7);
 
             TextGraphOneCellDTO temp = new TextGraphOneCellDTO();
