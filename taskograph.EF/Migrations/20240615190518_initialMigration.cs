@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace taskograph.EF.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -340,8 +340,8 @@ namespace taskograph.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TaskId = table.Column<int>(type: "int", nullable: false),
-                    TargetDurationId = table.Column<int>(type: "int", nullable: false),
-                    PerTimeframeDurationId = table.Column<int>(type: "int", nullable: false),
+                    TimeDedicatedToPerformTargetId = table.Column<int>(type: "int", nullable: false),
+                    RegularTimeIntervalToAchieveTargetId = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -350,13 +350,13 @@ namespace taskograph.EF.Migrations
                 {
                     table.PrimaryKey("PK_RegularTargets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RegularTargets_Durations_PerTimeframeDurationId",
-                        column: x => x.PerTimeframeDurationId,
+                        name: "FK_RegularTargets_Durations_RegularTimeIntervalToAchieveTargetId",
+                        column: x => x.RegularTimeIntervalToAchieveTargetId,
                         principalTable: "Durations",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RegularTargets_Durations_TargetDurationId",
-                        column: x => x.TargetDurationId,
+                        name: "FK_RegularTargets_Durations_TimeDedicatedToPerformTargetId",
+                        column: x => x.TimeDedicatedToPerformTargetId,
                         principalTable: "Durations",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -369,7 +369,7 @@ namespace taskograph.EF.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "none", 0, "412fff5a-c2db-4441-b5c1-fbb7dc1ce130", null, false, "none", "none", false, null, null, "NONE", "AQAAAAIAAYagAAAAEKLmmZxU1+Mroqu0YbS9lRCXAsVawd9fJoFbFuhYDWwKq97WCkXDx+O77+TBgiLPQw==", null, false, "f82f0bb1-c580-494e-b528-fd6def0a2b25", false, "none" });
+                values: new object[] { "none", 0, "f08679cf-7f15-41a3-b1bf-d4a0095417ad", null, false, "none", "none", false, null, null, "NONE", "AQAAAAIAAYagAAAAEDqJMyQ/1yqVqRG6l2j/9kvmr0jYFHlxKcM4othi2vzvC5Fskm0x1VWqBoXj/wx4aA==", null, false, "0e1af1b1-ad42-4bfb-9c9d-261f8ac58996", false, "none" });
 
             migrationBuilder.InsertData(
                 table: "Colors",
@@ -433,15 +433,15 @@ namespace taskograph.EF.Migrations
                 columns: new[] { "Id", "ApplicationUserId", "ColorId", "Created", "Deleted", "LastUpdated", "Name" },
                 values: new object[,]
                 {
-                    { 1, "none", null, new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Health" },
-                    { 2, "none", null, new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Education" },
-                    { 3, "none", null, new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, null, "FriendsAndFamily" },
-                    { 4, "none", null, new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Sport" },
-                    { 5, "none", null, new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Work" },
-                    { 6, "none", null, new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Hobby" },
-                    { 7, "none", null, new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Relaxation" },
-                    { 8, "none", null, new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Entertaiment" },
-                    { 9, "none", null, new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Finance" }
+                    { 1, "none", null, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Health" },
+                    { 2, "none", null, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Education" },
+                    { 3, "none", null, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, null, "FriendsAndFamily" },
+                    { 4, "none", null, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Sport" },
+                    { 5, "none", null, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Work" },
+                    { 6, "none", null, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Hobby" },
+                    { 7, "none", null, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Relaxation" },
+                    { 8, "none", null, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Entertaiment" },
+                    { 9, "none", null, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, null, "Finance" }
                 });
 
             migrationBuilder.InsertData(
@@ -464,10 +464,10 @@ namespace taskograph.EF.Migrations
                 columns: new[] { "Id", "ApplicationUserId", "Created", "Deleted", "GroupId", "LastUpdated", "Name" },
                 values: new object[,]
                 {
-                    { 1, "none", new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, 4, null, "Running" },
-                    { 2, "none", new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, 2, null, "Reading" },
-                    { 3, "none", new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, 1, null, "Cooking" },
-                    { 4, "none", new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, 7, null, "Dancing" }
+                    { 1, "none", new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, 4, null, "Running" },
+                    { 2, "none", new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, 2, null, "Reading" },
+                    { 3, "none", new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, 1, null, "Cooking" },
+                    { 4, "none", new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, 7, null, "Dancing" }
                 });
 
             migrationBuilder.InsertData(
@@ -475,17 +475,17 @@ namespace taskograph.EF.Migrations
                 columns: new[] { "Id", "Created", "DateDue", "Deleted", "LastUpdated", "Name", "TaskId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Read Little Prince", 1 },
-                    { 2, new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2024, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Run 10 km", 2 }
+                    { 1, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Read Little Prince", 1 },
+                    { 2, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2024, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "Run 10 km", 2 }
                 });
 
             migrationBuilder.InsertData(
                 table: "RegularTargets",
-                columns: new[] { "Id", "Created", "Deleted", "LastUpdated", "PerTimeframeDurationId", "TargetDurationId", "TaskId" },
+                columns: new[] { "Id", "Created", "Deleted", "LastUpdated", "RegularTimeIntervalToAchieveTargetId", "TaskId", "TimeDedicatedToPerformTargetId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, null, 13, 3, 1 },
-                    { 2, new DateTime(2024, 6, 4, 0, 0, 0, 0, DateTimeKind.Local), null, null, 14, 4, 2 }
+                    { 1, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, null, 13, 1, 3 },
+                    { 2, new DateTime(2024, 6, 15, 0, 0, 0, 0, DateTimeKind.Local), null, null, 14, 2, 4 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -558,19 +558,19 @@ namespace taskograph.EF.Migrations
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RegularTargets_PerTimeframeDurationId",
+                name: "IX_RegularTargets_RegularTimeIntervalToAchieveTargetId",
                 table: "RegularTargets",
-                column: "PerTimeframeDurationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RegularTargets_TargetDurationId",
-                table: "RegularTargets",
-                column: "TargetDurationId");
+                column: "RegularTimeIntervalToAchieveTargetId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RegularTargets_TaskId",
                 table: "RegularTargets",
                 column: "TaskId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RegularTargets_TimeDedicatedToPerformTargetId",
+                table: "RegularTargets",
+                column: "TimeDedicatedToPerformTargetId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Settings_ApplicationUserId",
