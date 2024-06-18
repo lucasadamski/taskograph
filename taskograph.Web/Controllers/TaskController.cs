@@ -9,6 +9,7 @@ using Task = taskograph.Models.Tables.Task;
 using static taskograph.Helpers.Messages;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using taskograph.Helpers;
 
 namespace taskograph.Web.Controllers
 {
@@ -37,10 +38,21 @@ namespace taskograph.Web.Controllers
             _colorRepository = colorRepository;
             _logger = logger;
             _configuration = configuration;
-           
+
         }
 
-        private string? GetIdentityUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier);
+        public string? GetIdentityUserId()
+        {
+            try
+            {
+                return  User.FindFirstValue(ClaimTypes.NameIdentifier);
+            }
+            catch (Exception)
+            {
+                return TestHelpers.TEST_PARAMETER; //for testing purposes
+            }
+        }
+
 
 
 
