@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using taskograph.Models;
 
 namespace taskograph.EF.Repositories
 {
@@ -18,14 +19,11 @@ namespace taskograph.EF.Repositories
         private readonly TasksContext _db;
         private readonly ILogger<EntryRepository> _logger;
         private readonly IMapper _mapper;
-        private readonly IDurationRepository _durationRepository;
-        public EntryRepository(TasksContext db, ILogger<EntryRepository> logger, IMapper mapper, 
-            IDurationRepository durationRepository)
+        public EntryRepository(TasksContext db, ILogger<EntryRepository> logger, IMapper mapper)
         {
             _db = db;
             _logger = logger;
             _mapper = mapper;
-            _durationRepository = durationRepository;
         }
 
         private bool Add(Entry entry)
@@ -44,35 +42,24 @@ namespace taskograph.EF.Repositories
             }
             return true;
         }
-        public bool Add(int taskId, long minutes, DateTime date)
+        public bool Add(int taskId, Duration duration, DateTime date)
         {
             try
             {
                 Entry? existingEntry = GetExistingEntry(taskId, date);
                 if (existingEntry != null)
                 {
-                    Duration? existingDuration = _durationRepository.GetExistingDuration(existingEntry.Duration.Minutes + minutes);
-                    if (existingDuration == null)
-                    {
-                        existingDuration = _durationRepository.Add(new Duration() { Minutes = existingEntry.Duration.Minutes + minutes });
-                    }
-                    existingEntry.DurationId = existingDuration.Id;
+                    existingEntry.Duration += duration.Minutes;
                     Edit(existingEntry);
                 }
                 else
                 {
                     Entry newEntry = new Entry();
-                    Duration? existingDuration = _durationRepository.GetExistingDuration(minutes);
-                    if (existingDuration == null)
-                    {
-                        existingDuration = _durationRepository.Add(new Duration() { Minutes = minutes });
-                    }
-                    newEntry.DurationId = existingDuration.Id;
+                    newEntry.Duration = duration.Minutes;
                     newEntry.TaskId = taskId;
                     Add(newEntry);
                 }
                 return true;
-
             }
             catch (Exception e)
             {
@@ -247,14 +234,13 @@ namespace taskograph.EF.Repositories
             return result;
         }
 
-        public Duration GetTotalDurationForTask(int taskId, DateTime date)
+        public long GetTotalDurationForTask(int taskId, DateTime date)
         {
-            List<Duration> durationsList = new List<Duration>();
-            Duration durationTotal = new Duration();
+            List<long> durationsList = new List<long>();
+            long durationTotal = 0;
             try
             {
                 durationsList = _db.Entries
-                    .Include(n => n.Duration)
                     .Where(n => n.TaskId == taskId)
                     .Where(n => n.Created.Date == date.Date)
                     .Select(n => n.Duration)
@@ -265,14 +251,14 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"EntryRepository: GetTotalDurationForTask taskId {taskId} date {date} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new Duration();
+                return 0;
             }
             return durationTotal;
         }
-        public Duration GetTotalDurationForAllTasks(string userId, DateTime date)
+        public long GetTotalDurationForAllTasks(string userId, DateTime date)
         {
-            List<Duration> durationsList = new List<Duration>();
-            Duration durationTotal = new Duration();
+            List<long> durationsList = new List<long>();
+            long durationTotal = 0;
             try
             {
                 durationsList = _db.Entries
@@ -288,13 +274,13 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"EntryRepository: GetTotalDurationForAllTasks date {date} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new Duration();
+                return 0;
             }
             return durationTotal;
         }
-        public Duration GetTotalDurationForTask(int taskId, DateTime dateFrom, DateTime dateTo)
+        public long GetTotalDurationForTask(int taskId, DateTime dateFrom, DateTime dateTo)
         {
-            Duration result;
+            long result = 0;
             try
             {
                 result = _db.Entries
@@ -307,7 +293,7 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"EntryRepository: GetTotalDurationForTask taskId {taskId} date {dateFrom} - {dateTo} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new Duration();
+                return 0;
             }
             return result;
         }
@@ -326,7 +312,6 @@ namespace taskograph.EF.Repositories
             {
                 return null;
             }
-            result.Duration = _durationRepository.Get(result.DurationId);
             return result;
         }
 

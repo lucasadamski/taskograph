@@ -27,7 +27,6 @@ namespace taskograph.Web
                     .AddEntityFrameworkStores<TasksContext>();
                 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
                 builder.Services.AddScoped<IEntryRepository, EntryRepository>();
-                builder.Services.AddScoped<IDurationRepository, DurationRepository>();
                 builder.Services.AddScoped<IPreciseTargetRepository, PreciseTargetRepository>();
                 builder.Services.AddScoped<IRegularTargetRepository, RegularTargetRepository>();
                 builder.Services.AddScoped<IQuoteRepository, QuoteRepository>();

@@ -9,6 +9,6 @@ namespace taskograph.Web.Models.DTOs
     {
         public string Description { get; set; }
         public List<TaskDTO> Tasks { get; set; } = new List<TaskDTO>();
-        public Duration TotalDuration { get; set; }
+        public long TotalDuration { get; set; }
     }
 }

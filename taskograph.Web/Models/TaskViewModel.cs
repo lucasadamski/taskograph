@@ -9,7 +9,7 @@ namespace taskograph.Web.Models
     public class TaskViewModel
     {
         public List<TaskDTO> Tasks { get; set; } = new List<TaskDTO>();
-        public List<Duration> Durations { get; set; } = new List<Duration>();
+        public List<long> Durations { get; set; } = new List<long>();
         public Task Task { get; set; }
         public Group MyProperty { get; set; }
         public int? GroupId { get; set; }

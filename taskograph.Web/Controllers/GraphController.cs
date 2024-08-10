@@ -18,19 +18,16 @@ namespace taskograph.Web.Controllers
     {
         private ITaskRepository _taskRepository;
         private IEntryRepository _entryRepository;
-        private IDurationRepository _durationRepository;
 
         private readonly ILogger<GraphController> _logger;
         private IConfiguration _configuration;
 
         string _userId;
 
-        public GraphController(ITaskRepository taskRepository, IEntryRepository entryRepository,
-            IDurationRepository durationRepository, ILogger<GraphController> logger, IConfiguration configuration)
+        public GraphController(ITaskRepository taskRepository, IEntryRepository entryRepository, ILogger<GraphController> logger, IConfiguration configuration)
         {
             _taskRepository = taskRepository;
             _entryRepository = entryRepository;
-            _durationRepository = durationRepository;
             _logger = logger;
             _configuration = configuration;
 
@@ -84,15 +81,15 @@ namespace taskograph.Web.Controllers
                 .ToList();
         }
 
-        private Duration GetTotalDurationFromTasks(List<TaskDTO> input)
+        private long GetTotalDurationFromTasks(List<TaskDTO> input)
         {
             if (input.IsNullOrEmpty() == true)
             {
-                return new Duration();
+                return 0;
             }
             else
             {
-                List<Duration> durations = input.Select(n => n.TotalDurationToday).ToList();
+                List<long> durations = input.Select(n => n.TotalDurationToday).ToList();
                 return durations.Aggregate((a, b) => a + b);
             }
 

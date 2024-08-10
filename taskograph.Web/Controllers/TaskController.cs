@@ -9,6 +9,7 @@ using Task = taskograph.Models.Tables.Task;
 using static taskograph.Helpers.Messages;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using taskograph.Models;
 
 namespace taskograph.Web.Controllers
 {
@@ -17,7 +18,6 @@ namespace taskograph.Web.Controllers
     {
         private ITaskRepository _taskRepository;
         private IEntryRepository _entryRepository;
-        private IDurationRepository _durationRepository;
         private IGroupRepository _groupRepository;
         private IColorRepository _colorRepository;
         private readonly ILogger<TaskController> _logger;
@@ -27,12 +27,11 @@ namespace taskograph.Web.Controllers
 
 
         public TaskController(ITaskRepository taskRepository, IEntryRepository entryRepository, 
-            IDurationRepository durationRepository, IGroupRepository groupRepository, IColorRepository colorRepository,
+            IGroupRepository groupRepository, IColorRepository colorRepository,
             ILogger<TaskController> logger, IConfiguration configuration)
         {
             _taskRepository = taskRepository;
             _entryRepository = entryRepository;
-            _durationRepository = durationRepository;
             _groupRepository = groupRepository;
             _colorRepository = colorRepository;
             _logger = logger;
@@ -58,16 +57,16 @@ namespace taskograph.Web.Controllers
             taskVM.Tasks = _taskRepository.GetAllTaskDTOs(_userId).ToList();
 
             //used for populating Views DropDown with predefined times eg: 00:10, 00:30, 01:00
-            taskVM.Durations = _durationRepository.GetFirst(15).ToList();
+            taskVM.Durations = new List<long>() { 5, 10, 15, 30, 60, 120, 180, 240 };
 
             return View(taskVM);
         }
 
-        public IActionResult AddEntry(int taskId, long minutes)
+        public IActionResult AddEntry(int taskId, Duration duration)
         {
             _userId = GetIdentityUserId();
 
-            _entryRepository.Add(taskId, minutes, DateTime.Now);
+            _entryRepository.Add(taskId, duration, DateTime.Now);
 
             TaskViewModel taskVM = new TaskViewModel();
             taskVM.Tasks = _taskRepository.GetAllTaskDTOs(_userId).ToList();
