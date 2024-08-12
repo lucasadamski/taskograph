@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis.Options;
+using taskograph.Models;
 using taskograph.Models.Tables;
 
 namespace taskograph.Web.Models.DTOs
@@ -9,6 +10,6 @@ namespace taskograph.Web.Models.DTOs
     {
         public string Description { get; set; }
         public List<TaskDTO> Tasks { get; set; } = new List<TaskDTO>();
-        public long TotalDuration { get; set; }
+        public Duration TotalDuration { get; set; }
     }
 }

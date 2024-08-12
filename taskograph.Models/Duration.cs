@@ -12,6 +12,12 @@ namespace taskograph.Models
     public class Duration
     {
         public long Minutes { get; set; }
+        public Duration(long minutes)
+        {
+            Minutes = minutes;
+        }
+
+        public Duration() { }
 
         public override string ToString()
         {

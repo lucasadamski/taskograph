@@ -10,6 +10,7 @@ using static taskograph.Helpers.Messages;
 using taskograph.Web.Models.DTOs;
 using taskograph.Models.Tables;
 using Microsoft.IdentityModel.Tokens;
+using taskograph.Models;
 
 namespace taskograph.Web.Controllers
 {
@@ -60,7 +61,7 @@ namespace taskograph.Web.Controllers
                 {
                     Description = $"{day.AddDays(i + 1).DayOfWeek} {day.AddDays(i + 1).Date.ToString("dd-MM-yy")}",
                     Tasks = ConvertTasksToDTO(tasks, day.AddDays(i + 1)),
-                    TotalDuration = GetTotalDurationFromTasks(ConvertTasksToDTO(tasks, day.AddDays(i + 1)))
+                    TotalDuration = new Duration(GetTotalDurationFromTasks(ConvertTasksToDTO(tasks, day.AddDays(i + 1))))
                 };
                 graphVM.TextGraphCell.Add(temp);
             }
@@ -76,7 +77,7 @@ namespace taskograph.Web.Controllers
                 Id = n.Id,
                 Name = n.Name,
                 Group = n.Group?.Name ?? NULL_VALUE,
-                TotalDurationToday = (_entryRepository.GetTotalDurationForTask(n.Id, date))
+                TotalDurationToday = new Duration(_entryRepository.GetTotalDurationForTask(n.Id, date))
             })
                 .ToList();
         }
@@ -89,7 +90,7 @@ namespace taskograph.Web.Controllers
             }
             else
             {
-                List<long> durations = input.Select(n => n.TotalDurationToday).ToList();
+                List<long> durations = input.Select(n => n.TotalDurationToday.Minutes).ToList();
                 return durations.Aggregate((a, b) => a + b);
             }
 
