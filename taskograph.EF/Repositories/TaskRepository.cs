@@ -7,6 +7,7 @@ using static taskograph.Helpers.Messages;
 using Microsoft.EntityFrameworkCore;
 using taskograph.Models.Tables;
 using taskograph.Web.Models.DTOs;
+using taskograph.Models;
 
 namespace taskograph.EF.Repositories
 {
@@ -129,7 +130,7 @@ namespace taskograph.EF.Repositories
                         Id = n.Id,
                         Name = n.Name,
                         Group = n.Group?.Name ?? NULL_VALUE,
-                        TotalDurationToday = (_entryRepository.GetTotalDurationForTask(n.Id, DateTime.Now))
+                        TotalDurationToday = new Duration(_entryRepository.GetTotalDurationForTask(n.Id, DateTime.Now))
                     })
                  .ToList();
             }

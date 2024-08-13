@@ -39,7 +39,9 @@
     </tbody>
 </table>
 <div>
-    <button class="btn btn-primary" onclick="window.location= '@Url.Action( "AddTask", "Task")'">Add Task</button>
+    <a href="AddTask">
+        <input class="btn btn-primary" type="button" value="Add Task" />
+    </a>
 </div>
 
 
@@ -84,12 +86,14 @@
     </tbody>
 </table>
 <div>
-    <button class="btn btn-primary" onclick="window.location= '@Url.Action( "AddGroup", "Task")'">Add Group</button>
+    <a href="AddGroup">
+        <input class="btn btn-primary" type="button" value="Add Group" />
+    </a>
 </div>
 
 @section scripts {
     <script type="text/javascript">
-       
+
         function deleteTask(taskId) {
             $.ajax({
                 url: "@Url.Action("DeleteTask", "Task")",
@@ -97,6 +101,7 @@
                 data: {
                     id: taskId
                 },
+                cache: false,
                 success: function (res) {
                     console.log(`Deleted task id ${taskId}`);
                     location.reload();
@@ -111,6 +116,7 @@
                 data: {
                     id: groupId
                 },
+                cache: false,
                 success: function (res) {
                     console.log(`Deleted group id ${groupId}`);
                     location.reload();

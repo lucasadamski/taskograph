@@ -113,8 +113,8 @@ namespace taskograph.EF.Repositories
                 {
                     Id = n.Id,
                     TaskName = n.TaskName,
-                    TargetDuration = new Duration() { Minutes = n.TargetDuration},
-                    PerTimeframeDuration = new Duration() { Minutes = n.PerTimeframeDuration},
+                    TargetDuration =  n.TargetDuration,
+                    PerTimeframeDuration = n.PerTimeframeDuration,
                     Created = n.Created,
                     LastUpdated = n.LastUpdated,
                     Deleted = n.Deleted

@@ -15,18 +15,12 @@ namespace taskograph.Models.Tables
     {
         public int Id { get; set; }
         public int TaskId { get; set; }
-        public int TimeDedicatedToPerformTargetId { get; set; }  //eg 30 minutes         TimeDedicatedToPerformTarget
-        public int RegularTimeIntervalToAchieveTargetId { get; set; } //per every 1 week RegularTimeIntervalToAchieveTarget
+        public long TimeDedicatedToPerformTarget { get; set; }  //eg 30 minutes         TimeDedicatedToPerformTarget
+        public long RegularTimeIntervalToAchieveTarget { get; set; } //per every 1 week RegularTimeIntervalToAchieveTarget
         public DateTime Created { get; set; }
         public DateTime? LastUpdated { get; set; }
         public DateTime? Deleted { get; set; }
 
-
         public Task Task { get; set; }
-        [ForeignKey("TimeDedicatedToPerformTargetId")]
-        public Duration TimeDedicatedToPerformTarget { get; set; }
-        [ForeignKey("RegularTimeIntervalToAchieveTargetId")]
-        public Duration RegularTimeIntervalToAchieveTarget { get; set; }
-
     }
 }

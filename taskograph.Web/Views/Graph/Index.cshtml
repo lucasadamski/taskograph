@@ -31,7 +31,7 @@
                         
                         if (Model.TextGraphCell.ElementAt(j).Tasks.ElementAt(i).TotalDurationToday.ToString() != "")
                         {
-                            <td>@Model.TextGraphCell.ElementAt(j).Tasks.ElementAt(i).Name @Model.TextGraphCell.ElementAt(j).Tasks.ElementAt(i).TotalDurationToday</td>
+                            <td>@Model.TextGraphCell.ElementAt(j).Tasks.ElementAt(i).Name @Model.TextGraphCell.ElementAt(j).Tasks.ElementAt(i).TotalDurationToday.ToString()</td>
                         }
                         else
                         {
@@ -45,7 +45,7 @@
             @{
                 foreach (TextGraphOneCellDTO cell in Model.TextGraphCell)
                 {
-                    <td>TotalTasksTime @cell.TotalDuration</td>
+                    <td>TotalTasksTime @cell.TotalDuration.ToString()</td>
                 }
             }
         </tr>

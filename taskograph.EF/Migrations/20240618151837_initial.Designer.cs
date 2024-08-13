@@ -12,8 +12,8 @@ using taskograph.EF.DataAccess;
 namespace taskograph.EF.Migrations
 {
     [DbContext(typeof(TasksContext))]
-    [Migration("20240528151351_noColorIdInTask")]
-    partial class noColorIdInTask
+    [Migration("20240618151837_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,6 +235,24 @@ namespace taskograph.EF.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "none",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "7f8566cb-99d7-40b9-812e-e8dc86dcbf12",
+                            EmailConfirmed = false,
+                            FirstName = "none",
+                            LastName = "none",
+                            LockoutEnabled = false,
+                            NormalizedUserName = "NONE",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOUuN0E/fEZoptP8zsWvcATEuyEIdvNA6uL8iTcxMs1TlpEp2PENj4BCLuUF7KSnNg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "cc59c71f-d41f-400b-9da8-7f3120207c83",
+                            TwoFactorEnabled = false,
+                            UserName = "none"
+                        });
                 });
 
             modelBuilder.Entity("taskograph.Models.Tables.Color", b =>
@@ -307,189 +325,6 @@ namespace taskograph.EF.Migrations
                         });
                 });
 
-            modelBuilder.Entity("taskograph.Models.Tables.Duration", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<long>("Minutes")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Durations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Minutes = 5L
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Minutes = 10L
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Minutes = 15L
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Minutes = 30L
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Minutes = 45L
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Minutes = 60L
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Minutes = 75L
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Minutes = 90L
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Minutes = 105L
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Minutes = 120L
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Minutes = 135L
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Minutes = 150L
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Minutes = 165L
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Minutes = 180L
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Minutes = 195L
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Minutes = 210L
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Minutes = 225L
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Minutes = 240L
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Minutes = 300L
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Minutes = 360L
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Minutes = 420L
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Minutes = 480L
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Minutes = 720L
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Minutes = 1440L
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Minutes = 2880L
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Minutes = 4320L
-                        },
-                        new
-                        {
-                            Id = 27,
-                            Minutes = 5760L
-                        },
-                        new
-                        {
-                            Id = 28,
-                            Minutes = 7200L
-                        },
-                        new
-                        {
-                            Id = 29,
-                            Minutes = 8640L
-                        },
-                        new
-                        {
-                            Id = 30,
-                            Minutes = 10080L
-                        },
-                        new
-                        {
-                            Id = 31,
-                            Minutes = 20160L
-                        },
-                        new
-                        {
-                            Id = 32,
-                            Minutes = 30240L
-                        },
-                        new
-                        {
-                            Id = 33,
-                            Minutes = 40320L
-                        });
-                });
-
             modelBuilder.Entity("taskograph.Models.Tables.Entry", b =>
                 {
                     b.Property<int>("Id")
@@ -504,8 +339,8 @@ namespace taskograph.EF.Migrations
                     b.Property<DateTime?>("Deleted")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DurationId")
-                        .HasColumnType("int");
+                    b.Property<long>("Duration")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("LastUpdated")
                         .HasColumnType("datetime2");
@@ -514,8 +349,6 @@ namespace taskograph.EF.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DurationId");
 
                     b.HasIndex("TaskId");
 
@@ -530,7 +363,7 @@ namespace taskograph.EF.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AppUserId")
+                    b.Property<string>("ApplicationUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -553,7 +386,7 @@ namespace taskograph.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("ColorId");
 
@@ -563,64 +396,64 @@ namespace taskograph.EF.Migrations
                         new
                         {
                             Id = 1,
-                            AppUserId = "none",
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            ApplicationUserId = "none",
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             Name = "Health"
                         },
                         new
                         {
                             Id = 2,
-                            AppUserId = "none",
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            ApplicationUserId = "none",
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             Name = "Education"
                         },
                         new
                         {
                             Id = 3,
-                            AppUserId = "none",
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            ApplicationUserId = "none",
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             Name = "FriendsAndFamily"
                         },
                         new
                         {
                             Id = 4,
-                            AppUserId = "none",
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            ApplicationUserId = "none",
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             Name = "Sport"
                         },
                         new
                         {
                             Id = 5,
-                            AppUserId = "none",
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            ApplicationUserId = "none",
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             Name = "Work"
                         },
                         new
                         {
                             Id = 6,
-                            AppUserId = "none",
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            ApplicationUserId = "none",
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             Name = "Hobby"
                         },
                         new
                         {
                             Id = 7,
-                            AppUserId = "none",
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            ApplicationUserId = "none",
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             Name = "Relaxation"
                         },
                         new
                         {
                             Id = 8,
-                            AppUserId = "none",
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            ApplicationUserId = "none",
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             Name = "Entertaiment"
                         },
                         new
                         {
                             Id = 9,
-                            AppUserId = "none",
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            ApplicationUserId = "none",
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             Name = "Finance"
                         });
                 });
@@ -663,7 +496,7 @@ namespace taskograph.EF.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             DateDue = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Read Little Prince",
                             TaskId = 1
@@ -671,7 +504,7 @@ namespace taskograph.EF.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             DateDue = new DateTime(2024, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Run 10 km",
                             TaskId = 2
@@ -686,7 +519,7 @@ namespace taskograph.EF.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AppUserId")
+                    b.Property<string>("ApplicationUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -697,7 +530,7 @@ namespace taskograph.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Quotes");
 
@@ -705,19 +538,19 @@ namespace taskograph.EF.Migrations
                         new
                         {
                             Id = 1,
-                            AppUserId = "none",
+                            ApplicationUserId = "none",
                             Name = "What you have to do today is insignificant, but is very important that you do it."
                         },
                         new
                         {
                             Id = 2,
-                            AppUserId = "none",
+                            ApplicationUserId = "none",
                             Name = "It's about the marathon, not the sprint."
                         },
                         new
                         {
                             Id = 3,
-                            AppUserId = "none",
+                            ApplicationUserId = "none",
                             Name = "Don't feel bad because you don't know something and feel like you can't do anything. Do what you can do and then improve."
                         });
                 });
@@ -739,20 +572,16 @@ namespace taskograph.EF.Migrations
                     b.Property<DateTime?>("LastUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PerTimeframeDurationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TargetDurationId")
-                        .HasColumnType("int");
+                    b.Property<long>("RegularTimeIntervalToAchieveTarget")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("TaskId")
                         .HasColumnType("int");
 
+                    b.Property<long>("TimeDedicatedToPerformTarget")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
-
-                    b.HasIndex("PerTimeframeDurationId");
-
-                    b.HasIndex("TargetDurationId");
 
                     b.HasIndex("TaskId");
 
@@ -762,18 +591,18 @@ namespace taskograph.EF.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            PerTimeframeDurationId = 13,
-                            TargetDurationId = 3,
-                            TaskId = 1
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
+                            RegularTimeIntervalToAchieveTarget = 60L,
+                            TaskId = 1,
+                            TimeDedicatedToPerformTarget = 10L
                         },
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
-                            PerTimeframeDurationId = 14,
-                            TargetDurationId = 4,
-                            TaskId = 2
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
+                            RegularTimeIntervalToAchieveTarget = 60L,
+                            TaskId = 2,
+                            TimeDedicatedToPerformTarget = 5L
                         });
                 });
 
@@ -785,7 +614,7 @@ namespace taskograph.EF.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AppUserId")
+                    b.Property<string>("ApplicationUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -801,7 +630,7 @@ namespace taskograph.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Settings");
 
@@ -809,7 +638,7 @@ namespace taskograph.EF.Migrations
                         new
                         {
                             Id = 1,
-                            AppUserId = "none",
+                            ApplicationUserId = "none",
                             Name = "AlarmClock",
                             Value = "Off"
                         });
@@ -823,7 +652,7 @@ namespace taskograph.EF.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AppUserId")
+                    b.Property<string>("ApplicationUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -846,7 +675,7 @@ namespace taskograph.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("GroupId");
 
@@ -856,32 +685,32 @@ namespace taskograph.EF.Migrations
                         new
                         {
                             Id = 1,
-                            AppUserId = "none",
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            ApplicationUserId = "none",
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             GroupId = 4,
                             Name = "Running"
                         },
                         new
                         {
                             Id = 2,
-                            AppUserId = "none",
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            ApplicationUserId = "none",
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             GroupId = 2,
                             Name = "Reading"
                         },
                         new
                         {
                             Id = 3,
-                            AppUserId = "none",
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            ApplicationUserId = "none",
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             GroupId = 1,
                             Name = "Cooking"
                         },
                         new
                         {
                             Id = 4,
-                            AppUserId = "none",
-                            Created = new DateTime(2024, 5, 28, 0, 0, 0, 0, DateTimeKind.Local),
+                            ApplicationUserId = "none",
+                            Created = new DateTime(2024, 6, 18, 0, 0, 0, 0, DateTimeKind.Local),
                             GroupId = 7,
                             Name = "Dancing"
                         });
@@ -940,36 +769,28 @@ namespace taskograph.EF.Migrations
 
             modelBuilder.Entity("taskograph.Models.Tables.Entry", b =>
                 {
-                    b.HasOne("taskograph.Models.Tables.Duration", "Duration")
-                        .WithMany("Entries")
-                        .HasForeignKey("DurationId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("taskograph.Models.Tables.Task", "Task")
                         .WithMany("Entries")
                         .HasForeignKey("TaskId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Duration");
-
                     b.Navigation("Task");
                 });
 
             modelBuilder.Entity("taskograph.Models.Tables.Group", b =>
                 {
-                    b.HasOne("taskograph.Models.ApplicationUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("taskograph.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Groups")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("taskograph.Models.Tables.Color", "Color")
                         .WithMany("Groups")
                         .HasForeignKey("ColorId");
 
-                    b.Navigation("AppUser");
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Color");
                 });
@@ -987,82 +808,68 @@ namespace taskograph.EF.Migrations
 
             modelBuilder.Entity("taskograph.Models.Tables.Quote", b =>
                 {
-                    b.HasOne("taskograph.Models.ApplicationUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
+                    b.HasOne("taskograph.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Quotes")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AppUser");
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("taskograph.Models.Tables.RegularTarget", b =>
                 {
-                    b.HasOne("taskograph.Models.Tables.Duration", "PerTimeframeDuration")
-                        .WithMany("PerTimeframeRegularTargets")
-                        .HasForeignKey("PerTimeframeDurationId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("taskograph.Models.Tables.Duration", "TargetDuration")
-                        .WithMany("TargetRegularTargets")
-                        .HasForeignKey("TargetDurationId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("taskograph.Models.Tables.Task", "Task")
                         .WithMany("RegularTargets")
                         .HasForeignKey("TaskId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("PerTimeframeDuration");
-
-                    b.Navigation("TargetDuration");
-
                     b.Navigation("Task");
                 });
 
             modelBuilder.Entity("taskograph.Models.Tables.Setting", b =>
                 {
-                    b.HasOne("taskograph.Models.ApplicationUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
+                    b.HasOne("taskograph.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Settings")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AppUser");
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("taskograph.Models.Tables.Task", b =>
                 {
-                    b.HasOne("taskograph.Models.ApplicationUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("taskograph.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Tasks")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("taskograph.Models.Tables.Group", "Group")
                         .WithMany("Tasks")
                         .HasForeignKey("GroupId");
 
-                    b.Navigation("AppUser");
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("taskograph.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Groups");
+
+                    b.Navigation("Quotes");
+
+                    b.Navigation("Settings");
+
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("taskograph.Models.Tables.Color", b =>
                 {
                     b.Navigation("Groups");
-                });
-
-            modelBuilder.Entity("taskograph.Models.Tables.Duration", b =>
-                {
-                    b.Navigation("Entries");
-
-                    b.Navigation("PerTimeframeRegularTargets");
-
-                    b.Navigation("TargetRegularTargets");
                 });
 
             modelBuilder.Entity("taskograph.Models.Tables.Group", b =>

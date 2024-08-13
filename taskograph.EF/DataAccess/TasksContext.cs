@@ -12,7 +12,6 @@ namespace taskograph.EF.DataAccess
    public class TasksContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Color> Colors { get; set; }
-        public DbSet<Duration> Durations { get; set; }
         public DbSet<Entry> Entries { get; set; }
         public DbSet<Models.Tables.Group> Groups { get; set; }
         public DbSet<PreciseTarget> PreciseTargets { get; set; }
@@ -35,20 +34,8 @@ namespace taskograph.EF.DataAccess
                 .Property(n => n.LastName)
                 .HasMaxLength(25);
 
-            modelBuilder.Entity<Entry>().HasOne(n => n.Duration)
-                .WithMany(n => n.Entries)
-                .OnDelete(DeleteBehavior.NoAction);
-
             modelBuilder.Entity<Entry>().HasOne(n => n.Task)
                 .WithMany(n => n.Entries)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<RegularTarget>().HasOne(n => n.TimeDedicatedToPerformTarget)
-                .WithMany(n => n.TargetRegularTargets)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<RegularTarget>().HasOne(n => n.RegularTimeIntervalToAchieveTarget)
-                .WithMany(n => n.PerTimeframeRegularTargets)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<RegularTarget>().HasOne(n => n.Task)
@@ -96,43 +83,7 @@ namespace taskograph.EF.DataAccess
                 new Color { Id = 9, Name = "Purple" },
                 new Color { Id = 10, Name = "Beige" }
                 );
-
-            modelBuilder.Entity<Duration>().HasData(
-               new Duration { Id = 1, Minutes = 5 },
-               new Duration { Id = 2, Minutes = 10 },
-               new Duration { Id = 3, Minutes = 15  },
-               new Duration { Id = 4, Minutes = 30  },
-               new Duration { Id = 5, Minutes = 45  },  
-               new Duration { Id = 6, Minutes = 60 },     //1:00
-               new Duration { Id = 7, Minutes = 75 },     //1:15
-               new Duration { Id = 8, Minutes = 90 },     //1:30
-               new Duration { Id = 9, Minutes = 105 },    //1:45
-               new Duration { Id = 10, Minutes = 120 },   //2:00
-               new Duration { Id = 11, Minutes = 135 },   //2:15
-               new Duration { Id = 12, Minutes = 150 },   //2:30
-               new Duration { Id = 13, Minutes = 165 },   //2:45
-               new Duration { Id = 14, Minutes = 180 },   //3:00
-               new Duration { Id = 15, Minutes = 195 },   //3:15
-               new Duration { Id = 16, Minutes = 210 },   //3:30
-               new Duration { Id = 17, Minutes = 225 },   //3:45
-               new Duration { Id = 18, Minutes = 240 },   //4:00
-               new Duration { Id = 19, Minutes = 300 },   //5:00
-               new Duration { Id = 20, Minutes = 360 },   //6:00
-               new Duration { Id = 21, Minutes = 420 },   //7:00
-               new Duration { Id = 22, Minutes = 480 },   //8:00
-               new Duration { Id = 23, Minutes = 720 },   //12:00
-               new Duration { Id = 24, Minutes = 1440 },   //1 day
-               new Duration { Id = 25, Minutes = 2880 },   //2 days
-               new Duration { Id = 26, Minutes = 4320 },   //3 days
-               new Duration { Id = 27, Minutes = 5760 },   //4 days
-               new Duration { Id = 28, Minutes = 7200 },   //5 days
-               new Duration { Id = 29, Minutes = 8640 },   //6 days
-               new Duration { Id = 30, Minutes = 10080 },   //1 week
-               new Duration { Id = 31, Minutes = 20160 },   //2 weeks
-               new Duration { Id = 32, Minutes = 30240 },   //3 weeks
-               new Duration { Id = 33, Minutes = 40320 }     //1 month
-               );
-
+  
 
             modelBuilder.Entity<Quote>().HasData(
                  new Quote { Id = 1, Name = "What you have to do today is insignificant, but is very important that you do it.", ApplicationUserId = "none" },
@@ -167,16 +118,13 @@ namespace taskograph.EF.DataAccess
                     );
 
             modelBuilder.Entity<RegularTarget>().HasData(
-              new RegularTarget { Id = 1, TaskId = 1, TimeDedicatedToPerformTargetId = 3, RegularTimeIntervalToAchieveTargetId =  13, Created = dayToday },
-              new RegularTarget { Id = 2, TaskId = 2, TimeDedicatedToPerformTargetId = 4, RegularTimeIntervalToAchieveTargetId = 14,  Created = dayToday  }
+              new RegularTarget { Id = 1, TaskId = 1, TimeDedicatedToPerformTarget = 10, RegularTimeIntervalToAchieveTarget =  60, Created = dayToday },
+              new RegularTarget { Id = 2, TaskId = 2, TimeDedicatedToPerformTarget = 5, RegularTimeIntervalToAchieveTarget = 60,  Created = dayToday  }
               );
 
             modelBuilder.Entity<Setting>().HasData(
               new Setting { Id = 1, Name = "AlarmClock" , Value = "Off", ApplicationUserId = "none" }
               );
-
-            ///modyfy quote, update database, chceck if AspNetUsers are wired correctly
-
 
         }
     }

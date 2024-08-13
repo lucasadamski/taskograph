@@ -2,6 +2,8 @@
 
 <form method="post">
     <input hidden asp-for="@Model.TaskId" />
+    <input hidden asp-for="@Model.IsFormForTask" />
+    <input hidden asp-for="@Model.IsFormForGroup" />
     <div class="form-group">
         <label asp-for="@Model.Name">@(Model.IsFormForTask ? "Task" : "Group")</label>
         <input asp-for="@Model.Name">

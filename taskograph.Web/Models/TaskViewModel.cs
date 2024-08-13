@@ -9,7 +9,7 @@ namespace taskograph.Web.Models
     public class TaskViewModel
     {
         public List<TaskDTO> Tasks { get; set; } = new List<TaskDTO>();
-        public List<Duration> Durations { get; set; } = new List<Duration>();
+        public List<long> Durations { get; set; } = new List<long>();
         public Task Task { get; set; }
         public Group MyProperty { get; set; }
         public int? GroupId { get; set; }
@@ -19,7 +19,8 @@ namespace taskograph.Web.Models
         public List<SelectListItem> Colors { get; set; }
         public List<SelectListItem> TasksSI { get; set; }
         public string Name { get; set; } = "";
-        public bool IsFormForTask { get; set; } //true -> task, false -> group
+        public bool IsFormForTask { get; set; }
+        public bool IsFormForGroup { get; set; } 
         public bool IsFormForAdd { get; set; } //true -> add, fasle -> edit
 
         public List<int> TasksIdsAssignedToGroup { get; set; } = new List<int>(); //AddTask.cshtml returns selected Tasks for certain Group (list might be empty)

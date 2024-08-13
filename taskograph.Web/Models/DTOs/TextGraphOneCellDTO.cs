@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis.Options;
+using taskograph.Models;
 using taskograph.Models.Tables;
 
 namespace taskograph.Web.Models.DTOs
