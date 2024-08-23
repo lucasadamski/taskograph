@@ -1,6 +1,6 @@
 namespace taskograph.DBTests
 {
-    public class UnitTest1
+    public class TaskRepositoryTests
     {
         [Fact]
         public void Test1()
