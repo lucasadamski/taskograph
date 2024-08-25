@@ -3,6 +3,7 @@ using FakeItEasy;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
 using taskograph.EF.DataAccess;
 using taskograph.EF.Repositories;
 using taskograph.EF.Repositories.Infrastructure;
@@ -51,8 +52,8 @@ namespace taskograph.DBTests
         public async void TasksRepository_Add_ReturnsTrue()
         {
             //Arrange
-            var task = new Task {Name = "Testing", GroupId = 4, Created = DateTime.Now, ApplicationUserId = "none" };
-            
+            var task = new Task { Name = "Testing", GroupId = 4, Created = DateTime.Now, ApplicationUserId = "none" };
+
             var dbContext = await GetDbContext();
             var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
             //Act
@@ -60,5 +61,45 @@ namespace taskograph.DBTests
             //Assert
             result.Should().BeTrue();
         }
+
+        [Fact]
+        public async void TaskRepository_Add_ReturnsFalse()
+        {
+            //Arrange
+            var task = new Task { Name = null, GroupId = 4, Created = DateTime.Now, ApplicationUserId = "none" };
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.Add(task);
+            //Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public async void TaskRepository_Delete_ReturnsTrue()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            var task = taskRepository.Get(1);
+            //Act
+            var result = taskRepository.Delete(task);
+            //Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public async void TaskRepository_Delete_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            Task task = null;
+            //Act
+            var result = taskRepository.Delete(task);
+            //Assert
+            result.Should().BeFalse();
+        }
+
     }
 }
