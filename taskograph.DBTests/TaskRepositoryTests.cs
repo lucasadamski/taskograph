@@ -7,6 +7,7 @@ using Microsoft.Identity.Client;
 using taskograph.EF.DataAccess;
 using taskograph.EF.Repositories;
 using taskograph.EF.Repositories.Infrastructure;
+using taskograph.Web.Models.DTOs;
 using Task = taskograph.Models.Tables.Task;
 
 namespace taskograph.DBTests
@@ -134,6 +135,83 @@ namespace taskograph.DBTests
             result.Should().BeFalse();
         }
 
-      
+        [Fact]
+        public async void TaskRepository_GetAll_ReturnsThreeElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.GetAll(_userId);
+            //Assert
+            result.Should().HaveCount(3);
+        }
+
+        [Fact]
+        public async void TaskRepository_GetAll_ReturnsZeroElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.GetAll("someRandomUserId!@%!@#$");
+            //Assert
+            result.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public async void TaskRepository_GetAll_TakesNull_ReturnsZeroElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.GetAll(null);
+            //Assert
+            result.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public async void TaskRepository_GetAllUnassigned_ReturnsOneElement()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            var task = new Task { Name = "NoGroupAssignedTask", GroupId = null, Created = DateTime.Now, ApplicationUserId = _userId };
+            taskRepository.Add(task);
+            //Act
+            var result = taskRepository.GetAllUnassigned(_userId);
+            //Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public async void TaskRepository_GetAllUnassigned_ReturnsZeroElement()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.GetAllUnassigned(_userId);
+            //Assert
+            result.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public async void TaskRepository_GetAllTaskDTOs_ReturnsThreeElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.GetAllTaskDTOs(_userId);
+            //Assert
+            result.Should().HaveCount(3);
+            result.ElementAt(0).Should().BeOfType(typeof(TaskDTO));
+        }
+
+
+
+
     }
 }
