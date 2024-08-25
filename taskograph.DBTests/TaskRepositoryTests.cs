@@ -18,6 +18,7 @@ namespace taskograph.DBTests
         private readonly IMapper _mapper;
         private IEntryRepository _entryRepository;
         private IGroupRepository _groupRepository;
+        private string _userId = "testUserId";
 
         public TaskRepositoryTests()
         {
@@ -39,12 +40,17 @@ namespace taskograph.DBTests
             //filling with seed data
             if (await dbContext.Tasks.CountAsync() < 0)
             {
-                dbContext.Tasks.Add(new Task { Id = 1, Name = "Running", GroupId = 4, Created = DateTime.Now, ApplicationUserId = "none" });
-                dbContext.Tasks.Add(new Task { Id = 2, Name = "Cooking", GroupId = 4, Created = DateTime.Now, ApplicationUserId = "none" });
-                dbContext.Tasks.Add(new Task { Id = 3, Name = "Reading", GroupId = 4, Created = DateTime.Now, ApplicationUserId = "none" });
+                dbContext.Tasks.Add(new Task { Id = 1, Name = "Running", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId });
+                dbContext.Tasks.Add(new Task { Id = 2, Name = "Cooking", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId });
+                dbContext.Tasks.Add(new Task { Id = 3, Name = "Reading", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId });
                 await dbContext.SaveChangesAsync();
             }
             return dbContext;
+        }
+
+        private void ResetDbContext(TasksContext dbContext)
+        {
+            dbContext.Database.EnsureDeleted();
         }
 
 
@@ -52,7 +58,7 @@ namespace taskograph.DBTests
         public async void TasksRepository_Add_ReturnsTrue()
         {
             //Arrange
-            var task = new Task { Name = "Testing", GroupId = 4, Created = DateTime.Now, ApplicationUserId = "none" };
+            var task = new Task { Name = "Testing", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId };
 
             var dbContext = await GetDbContext();
             var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
@@ -66,7 +72,7 @@ namespace taskograph.DBTests
         public async void TaskRepository_Add_ReturnsFalse()
         {
             //Arrange
-            var task = new Task { Name = null, GroupId = 4, Created = DateTime.Now, ApplicationUserId = "none" };
+            var task = new Task { Name = null, GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId };
             var dbContext = await GetDbContext();
             var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
             //Act
@@ -101,5 +107,33 @@ namespace taskograph.DBTests
             result.Should().BeFalse();
         }
 
+        [Fact]
+        public async void TaskRepository_Edit_ReturnsTrue()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            var task = taskRepository.Get(1);
+            task.Name = "Edited Name";
+            //Act
+            var result = taskRepository.Edit(task);
+            //Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public async void TaskRepository_Edit_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            Task task = null;
+            //Act
+            var result = taskRepository.Edit(task);
+            //Assert
+            result.Should().BeFalse();
+        }
+
+      
     }
 }
