@@ -161,7 +161,7 @@ namespace taskograph.EF.Repositories
 
         public List<Task> Get(List<int> ids)
         {
-            List<Task> result;
+            List<Task> result = new List<Task>();
             try
             {
                 result = _db.Tasks
@@ -179,7 +179,7 @@ namespace taskograph.EF.Repositories
 
         public IEnumerable<Task> GetTasksAssignedToGroup(int groupId)
         {
-            List<Task> result;
+            IEnumerable<Task> result = new List<Task>();
             try
             {
                 result = _db.Tasks
@@ -196,10 +196,12 @@ namespace taskograph.EF.Repositories
         }
 
         public IEnumerable<int> GetTasksIdsAssignedToGroup(int groupId) => GetTasksAssignedToGroup(groupId).Select(n => n.Id);
+        
 
         public bool DisconnectGroupFromTasks(int groupId)
         {
             List<Task> result = GetTasksAssignedToGroup(groupId).ToList();
+            if (result.Count() == 0) return false;
             try
             {
                 for (int i = 0; i < result.Count(); i++)

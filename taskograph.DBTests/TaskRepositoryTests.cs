@@ -237,17 +237,164 @@ namespace taskograph.DBTests
         }
 
         [Fact]
-        public async void TaskRepository_Get_TakesListOfAllIds_ReturnsListWithThreeElements()
+        public async void TaskRepository_Get_TakesListOfThreeIds_ReturnsListWithThreeElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            List<int> ids = new List<int>() { 1, 2, 3 };
+            //Act
+            var result = taskRepository.Get(ids);
+            //Assert
+            result.Should().BeOfType(typeof(List<Task>));
+            result.Should().HaveCount(3);
+        }
+
+        [Fact]
+        public async void TaskRepository_Get_TakesNull_ReturnsEmptyList()
         {
             //Arrange
             var dbContext = await GetDbContext();
             var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
             //Act
-            var result = taskRepository.Get(3421);
+            var result = taskRepository.Get(null);
             //Assert
-            result.Should().BeOfType(typeof(Task));
-            result?.Id.Should().Be(0);
+            result.Should().BeOfType(typeof(List<Task>));
+            result.Should().HaveCount(0);
         }
+
+        [Fact]
+        public async void TaskRepository_Get_TakesTooManyIds_ReturnsListWithThreeElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            List<int> ids = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 123 };
+            //Act
+            var result = taskRepository.Get(ids);
+            //Assert
+            result.Should().BeOfType(typeof(List<Task>));
+            result.Should().HaveCount(3);
+        }
+
+        [Fact]
+        public async void TaskRepository_Get_TakesTwoIds_ReturnsListWithTwoElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            List<int> ids = new List<int>() { 1, 2 };
+            //Act
+            var result = taskRepository.Get(ids);
+            //Assert
+            result.Should().BeOfType(typeof(List<Task>));
+            result.Should().HaveCount(2);
+        }
+
+        [Fact]
+        public async void TaskRepository_GetTasksAssignedToGroup_TakesGroupId_ReturnsListWithThreeElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.GetTasksAssignedToGroup(4);
+            //Assert
+            result.Should().BeOfType(typeof(List<Task>));
+            result.Should().HaveCount(3);
+        }
+
+        [Fact]
+        public async void TaskRepository_GetTasksAssignedToGroup_TakesGroupId_ReturnsListWithOneElement()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            var task = new Task { Name = "Testing", GroupId = 34, Created = DateTime.Now, ApplicationUserId = _userId };
+            //Act
+            taskRepository.Add(task);
+            var result = taskRepository.GetTasksAssignedToGroup(34);
+            //Assert
+            result.Should().BeOfType(typeof(List<Task>));
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public async void TaskRepository_GetTasksAssignedToGroup_TakesGroupId_ReturnsEmpty()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.GetTasksAssignedToGroup(3314);
+            //Assert
+            result.Should().BeOfType(typeof(List<Task>));
+            result.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public async void TaskRepository_GetTasksIdsAssignedToGroup_TakesGroupId_ReturnsListWithThreeElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.GetTasksIdsAssignedToGroup(4).ToList();
+            //Assert
+            result.Should().BeOfType(typeof(List<int>));
+            result.Should().HaveCount(3);
+        }
+
+        [Fact]
+        public async void TaskRepository_GetTasksIdsAssignedToGroup_TakesGroupId_ReturnsEmptyList()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.GetTasksIdsAssignedToGroup(432).ToList();
+            //Assert
+            result.Should().BeOfType(typeof(List<int>));
+            result.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public async void TaskRepository_DisconnectGroupFromTasks_TakesGroupId_ReturnsTrue()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.DisconnectGroupFromTasks(4);
+            //Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public async void TaskRepository_DisconnectGroupFromTasks_TakesGroupId_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.DisconnectGroupFromTasks(434);
+            //Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public async void TaskRepository_DisconnectGroupFromTasks_TakesNegativeGroupId_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.DisconnectGroupFromTasks(-434);
+            //Assert
+            result.Should().BeFalse();
+        }
+
+        
 
 
 
