@@ -83,8 +83,7 @@ namespace taskograph.EF.Repositories
             IEnumerable<Task> result;
             try
             {
-                result = _db.Tasks.Include(n => n.Group) //TODO add UserId column
-                    .Include(n => n.ApplicationUser)
+                result = _db.Tasks
                     .Where(n => n.Deleted == null)
                     .Where(n => n.ApplicationUserId == userId)
                     .ToList();
@@ -102,8 +101,7 @@ namespace taskograph.EF.Repositories
             IEnumerable<Task> result;
             try
             {
-                result = _db.Tasks.Include(n => n.Group) //TODO add UserId column
-                    .Include(n => n.ApplicationUser)
+                result = _db.Tasks
                     .Where(n => n.GroupId == null)
                     .Where(n => n.Deleted == null)
                     .Where(n => n.ApplicationUserId == userId)

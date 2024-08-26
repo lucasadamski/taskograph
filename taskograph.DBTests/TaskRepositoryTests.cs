@@ -36,10 +36,10 @@ namespace taskograph.DBTests
                 .Options;
             //creating DBcontext from mock
             var dbContext = new TasksContext(options);
-            dbContext.Database.EnsureCreated();
+            dbContext.Database.EnsureDeleted();
 
             //filling with seed data
-            if (await dbContext.Tasks.CountAsync() < 0)
+            if (await dbContext.Tasks.CountAsync() == 0)
             {
                 dbContext.Tasks.Add(new Task { Id = 1, Name = "Running", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId });
                 dbContext.Tasks.Add(new Task { Id = 2, Name = "Cooking", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId });
