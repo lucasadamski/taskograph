@@ -149,7 +149,7 @@ namespace taskograph.EF.Repositories
                 result = _db.Tasks
                     .Where(n => n.Id == id)
                     .Include(n => n.Group)
-                    .FirstOrDefault();
+                    .First();
             }
             catch (Exception e)
             {

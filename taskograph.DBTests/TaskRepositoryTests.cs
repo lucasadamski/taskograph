@@ -210,6 +210,44 @@ namespace taskograph.DBTests
             result.ElementAt(0).Should().BeOfType(typeof(TaskDTO));
         }
 
+        [Fact]
+        public async void TaskRepository_Get_ReturnsValidObjectId1()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.Get(1);
+            //Assert
+            result.Should().BeOfType(typeof(Task));
+            result.Id.Should().Be(1);
+        }
+
+        [Fact]
+        public async void TaskRepository_Get_TakesNonExistingId_ReturnsEmptyElement()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.Get(3421);
+            //Assert
+            result.Should().BeOfType(typeof(Task));
+            result?.Id.Should().Be(0);
+        }
+
+        [Fact]
+        public async void TaskRepository_Get_TakesListOfAllIds_ReturnsListWithThreeElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.Get(3421);
+            //Assert
+            result.Should().BeOfType(typeof(Task));
+            result?.Id.Should().Be(0);
+        }
 
 
 
