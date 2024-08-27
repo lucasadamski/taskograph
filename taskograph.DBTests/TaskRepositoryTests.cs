@@ -366,8 +366,13 @@ namespace taskograph.DBTests
             var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
             //Act
             var result = taskRepository.DisconnectGroupFromTasks(4);
+            var allTasks = taskRepository.GetAll(_userId);
             //Assert
             result.Should().BeTrue();
+            foreach (var element in allTasks)
+            {
+                element.GroupId?.Should().Be(null);
+            }
         }
 
         [Fact]
@@ -394,7 +399,23 @@ namespace taskograph.DBTests
             result.Should().BeFalse();
         }
 
-        
+        [Fact]
+        public async void TaskRepository_DisconnectTaskFromGroup_TakesTaskId_ReturnsTrue()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var taskRepository = new TaskRepository(dbContext, _logger, _mapper, _entryRepository, _groupRepository);
+            //Act
+            var result = taskRepository.DisconnectTaskFromGroup(1);
+            var allElements = taskRepository.GetTasksAssignedToGroup(4);
+            var disconnectedTask = taskRepository.Get(1);
+            //Assert
+            result.Should().BeTrue();
+            allElements.Should().HaveCount(2);
+            disconnectedTask.GroupId?.Should().Be(null);  
+        }
+
+
 
 
 
