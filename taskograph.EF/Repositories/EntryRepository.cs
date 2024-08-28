@@ -46,7 +46,10 @@ namespace taskograph.EF.Repositories
         {
             try
             {
+                //if task doesn't exist throw exception and return false
+                Task task = _db.Tasks.Where(n => n.Id == taskId).First();
                 Entry? existingEntry = GetExistingEntry(taskId, date);
+               
                 if (existingEntry != null)
                 {
                     existingEntry.Duration += duration.Minutes;

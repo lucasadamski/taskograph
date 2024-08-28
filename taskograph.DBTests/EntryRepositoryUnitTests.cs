@@ -67,13 +67,27 @@ namespace taskograph.DBTests
             //Arrange
             var dbContext = await GetDbContext();
             var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
-            var validEntry = new Entry {  TaskId = 5, Duration = _duration, Created = _created, LastUpdated = null, Deleted = null };
             //Act
-            var result = entryRepository.Add(4, _durationObject, _created);
+            var result = entryRepository.Add(5, _durationObject, _created);
             //Assert
             dbContext.Entries.Should().HaveCount(4);
             result.Should().BeTrue();
         }
+
+        [Fact]
+        public async void Add_TakesInvalidParams_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = entryRepository.Add(23, _durationObject, _created);
+            //Assert
+            dbContext.Entries.Should().HaveCount(3);
+            result.Should().BeFalse();
+        }
+
+
 
 
 
