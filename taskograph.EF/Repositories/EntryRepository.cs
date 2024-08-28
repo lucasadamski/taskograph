@@ -37,7 +37,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"EntryRepository: Add: EntryId {entry.Id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -66,7 +66,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"Add: TaskId {taskId} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
         }
@@ -81,7 +81,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"EntryRepository: Delete EntryId: {entry.Id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -97,7 +97,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"EntryRepository: Delete EntryId: {entry.Id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -110,16 +110,11 @@ namespace taskograph.EF.Repositories
             {
                 result = _db.Entries
                     .Where(n => n.Id == id)
-                    .FirstOrDefault();
+                    .First();
             }
             catch (Exception e)
             {
-                _logger.LogError($"EntryRepository: Get EntryId: {id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new Entry();
-            }
-            if (result == null)
-            {
-                _logger.LogError($"EntryRepository: Get EntryId: {id} Message: {EMPTY_VARIABLE}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new Entry();
             }
             return result;
@@ -138,7 +133,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"EntryRepository: Get from {from} to {to} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new List<Entry>();
             }
             return result;
@@ -156,7 +151,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"EntryRepository: GetAll Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new List<Entry>();
             }
             return result;
@@ -175,7 +170,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"EntryRepository: GetAllByGroup groupId:{groupId} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new List<Entry>();
             }
             return result;
@@ -194,7 +189,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"EntryRepository: GetAllByTask taskId:{taskId} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new List<Entry>();
             }
             return result;
@@ -213,7 +208,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"EntryRepository: GetByGroup from {from} to {to} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new List<Entry>();
             }
             return result;
@@ -231,7 +226,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"EntryRepository: GetByTask from {from} to {to} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new List<Entry>();
             }
             return result;
@@ -253,7 +248,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"EntryRepository: GetTotalDurationForTask taskId {taskId} date {date} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return 0;
             }
             return durationTotal;
@@ -276,7 +271,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"EntryRepository: GetTotalDurationForAllTasks date {date} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return 0;
             }
             return durationTotal;
@@ -295,7 +290,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"EntryRepository: GetTotalDurationForTask taskId {taskId} date {dateFrom} - {dateTo} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return 0;
             }
             return result;
@@ -313,6 +308,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return null;
             }
             return result;
