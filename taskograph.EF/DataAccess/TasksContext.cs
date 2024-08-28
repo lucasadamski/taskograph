@@ -34,10 +34,6 @@ namespace taskograph.EF.DataAccess
                 .Property(n => n.LastName)
                 .HasMaxLength(25);
 
-            modelBuilder.Entity<Entry>().HasOne(n => n.Task)
-                .WithMany(n => n.Entries)
-                .OnDelete(DeleteBehavior.NoAction);
-
             modelBuilder.Entity<RegularTarget>().HasOne(n => n.Task)
                .WithMany(n => n.RegularTargets)
                .OnDelete(DeleteBehavior.NoAction);
