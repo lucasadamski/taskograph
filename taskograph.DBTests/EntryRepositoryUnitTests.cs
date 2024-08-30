@@ -128,6 +128,33 @@ namespace taskograph.DBTests
             result.Should().BeFalse();
         }
 
+        [Fact]
+        public async void Edit_TakesValidEntry_ReturnsTrue_EditedElementSaved()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            var entry = entryRepository.Get(1);
+            entry.Duration = 9999L;
+            //Act
+            var result = entryRepository.Edit(entry);
+            //Assert
+            dbContext.Entries.Should().HaveCount(3);
+            result.Should().Be(true);
+            entryRepository.Get(1).Duration.Should().Be(9999L);
+        }
+
+        [Fact]
+        public async void Edit_TakesNull_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = entryRepository.Edit(null);
+            //Assert
+            result.Should().Be(false);
+        }
 
 
 
