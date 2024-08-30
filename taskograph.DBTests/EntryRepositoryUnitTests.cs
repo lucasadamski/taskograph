@@ -49,9 +49,9 @@ namespace taskograph.DBTests
             dbContext.Entries.AsNoTracking();
 
             
-            dbContext.Tasks.Add(new Task { Id = 1, Name = "Running", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId });
-            dbContext.Tasks.Add(new Task { Id = 2, Name = "Cooking", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId });
-            dbContext.Tasks.Add(new Task { Id = 3, Name = "Reading", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId });
+            dbContext.Tasks.Add(new Task { Id = 1, Name = "RunningId1", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId });
+            dbContext.Tasks.Add(new Task { Id = 2, Name = "CookingId2", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId });
+            dbContext.Tasks.Add(new Task { Id = 3, Name = "ReadingId3", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId });
 
             dbContext.Entries.Add(new Entry { Id = _entryId_1, TaskId = _taskId_1, Duration = _duration, Created = _created, LastUpdated = null, Deleted = null });
             dbContext.Entries.Add(new Entry { Id = _entryId_2, TaskId = _taskId_2, Duration = _duration, Created = _created, LastUpdated = null, Deleted = null });
@@ -68,7 +68,7 @@ namespace taskograph.DBTests
             var dbContext = await GetDbContext();
             var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
             //Act
-            var result = entryRepository.Add(5, _durationObject, _created);
+            var result = entryRepository.Add(1, _durationObject, _created.AddDays(1));
             //Assert
             dbContext.Entries.Should().HaveCount(4);
             result.Should().BeTrue();
@@ -87,6 +87,46 @@ namespace taskograph.DBTests
             result.Should().BeFalse();
         }
 
+        [Fact]
+        public async void Add_TakesNullDuration_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = entryRepository.Add(1, null, _created);
+            //Assert
+            dbContext.Entries.Should().HaveCount(3);
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public async void Delete_TakesValidTask_ReturnsTrue()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            var entry = entryRepository.Get(1);
+            //Act
+            var result = entryRepository.Delete(entry);
+            //Assert
+            dbContext.Entries.Should().HaveCount(3);
+            entry.Deleted.Should().NotBe(null);
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public async void Delete_TakesNull_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = entryRepository.Delete(null);
+            //Assert
+            dbContext.Entries.Should().HaveCount(3);
+            result.Should().BeFalse();
+        }
 
 
 
