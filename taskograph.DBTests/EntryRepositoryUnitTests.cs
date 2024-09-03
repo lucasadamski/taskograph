@@ -28,7 +28,11 @@ namespace taskograph.DBTests
         private int _taskId_3 = 3;
         private long _duration = 100;
         private Duration _durationObject = new Duration(100L);
-        private DateTime _created = new DateTime(1999, 1, 1);
+
+        private DateTime _createdFirstEntry = new DateTime(2000, 1, 1);
+        private DateTime _createdSecondEntry = new DateTime(2000, 2, 1);
+        private DateTime _createdThirdEntry = new DateTime(2000, 3, 1);
+
         private DateTime? _lastUpdated = new DateTime(2020, 1, 1);
         private string _userId = "testUserId";
 
@@ -49,13 +53,13 @@ namespace taskograph.DBTests
             dbContext.Entries.AsNoTracking();
 
             
-            dbContext.Tasks.Add(new Task { Id = 1, Name = "RunningId1", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId });
-            dbContext.Tasks.Add(new Task { Id = 2, Name = "CookingId2", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId });
-            dbContext.Tasks.Add(new Task { Id = 3, Name = "ReadingId3", GroupId = 4, Created = DateTime.Now, ApplicationUserId = _userId });
+            dbContext.Tasks.Add(new Task { Id = 1, Name = "RunningId1", GroupId = 4, Created = _createdFirstEntry, ApplicationUserId = _userId });
+            dbContext.Tasks.Add(new Task { Id = 2, Name = "CookingId2", GroupId = 4, Created = _createdSecondEntry, ApplicationUserId = _userId });
+            dbContext.Tasks.Add(new Task { Id = 3, Name = "ReadingId3", GroupId = 4, Created = _createdThirdEntry, ApplicationUserId = _userId });
 
-            dbContext.Entries.Add(new Entry { Id = _entryId_1, TaskId = _taskId_1, Duration = _duration, Created = _created, LastUpdated = null, Deleted = null });
-            dbContext.Entries.Add(new Entry { Id = _entryId_2, TaskId = _taskId_2, Duration = _duration, Created = _created, LastUpdated = null, Deleted = null });
-            dbContext.Entries.Add(new Entry { Id = _entryId_3, TaskId = _taskId_3, Duration = _duration, Created = _created, LastUpdated = null, Deleted = null });
+            dbContext.Entries.Add(new Entry { Id = _entryId_1, TaskId = _taskId_1, Duration = _duration, Created = _createdFirstEntry, LastUpdated = null, Deleted = null });
+            dbContext.Entries.Add(new Entry { Id = _entryId_2, TaskId = _taskId_2, Duration = _duration, Created = _createdSecondEntry, LastUpdated = null, Deleted = null });
+            dbContext.Entries.Add(new Entry { Id = _entryId_3, TaskId = _taskId_3, Duration = _duration, Created = _createdThirdEntry, LastUpdated = null, Deleted = null });
             await dbContext.SaveChangesAsync();
             
             return dbContext;
@@ -68,7 +72,7 @@ namespace taskograph.DBTests
             var dbContext = await GetDbContext();
             var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
             //Act
-            var result = entryRepository.Add(1, _durationObject, _created.AddDays(1));
+            var result = entryRepository.Add(1, _durationObject, _createdFirstEntry.AddDays(1));
             //Assert
             dbContext.Entries.Should().HaveCount(4);
             result.Should().BeTrue();
@@ -81,7 +85,7 @@ namespace taskograph.DBTests
             var dbContext = await GetDbContext();
             var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
             //Act
-            var result = entryRepository.Add(23, _durationObject, _created);
+            var result = entryRepository.Add(23, _durationObject, _createdFirstEntry);
             //Assert
             dbContext.Entries.Should().HaveCount(3);
             result.Should().BeFalse();
@@ -94,7 +98,7 @@ namespace taskograph.DBTests
             var dbContext = await GetDbContext();
             var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
             //Act
-            var result = entryRepository.Add(1, null, _created);
+            var result = entryRepository.Add(1, null, _createdFirstEntry);
             //Assert
             dbContext.Entries.Should().HaveCount(3);
             result.Should().BeFalse();
@@ -155,6 +159,90 @@ namespace taskograph.DBTests
             //Assert
             result.Should().Be(false);
         }
+
+        [Fact]
+        public async void Get_TakesValidId_ReturnsValidEntry()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = entryRepository.Get(1);
+            //Assert
+            result.Should().BeOfType(typeof(Entry));
+            result.Id.Should().Be(1);
+        }
+
+        [Fact]
+        public async void Get_TakesInvalidId_ReturnsEmptyEntry()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = entryRepository.Get(1123);
+            //Assert
+            result.Should().BeOfType(typeof(Entry));
+            result.Id.Should().Be(0);
+        }
+
+        [Fact]
+        public async void Get_TakesUserId_ReturnsList()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = entryRepository.Get(_userId, _createdFirstEntry, _createdThirdEntry);
+            //Assert
+            result.Should().BeOfType(typeof(List<Entry>));
+            result.Count().Should().Be(3);
+        }
+
+        /*********black  hole*******/
+
+        [Fact]
+        public async void GetByGroup_TakesGroupId_ReturnsListWithThreeElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = entryRepository.GetByGroup(4, _createdFirstEntry, _createdThirdEntry);
+            //Assert
+            result.Should().BeOfType(typeof(List<Entry>));
+            result.Count().Should().Be(3);
+        }
+
+        [Fact]
+        public async void GetByGroup_TakesGroupId_ReturnsListWithZeroElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = entryRepository.GetByGroup(67, _createdFirstEntry, _createdThirdEntry);
+            //Assert
+            result.Should().BeOfType(typeof(List<Entry>));
+            result.Count().Should().Be(0);
+        }
+
+
+        [Fact]
+        public async void GetTotalDurationForTask_TakesTaskId_ReturnsLong()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            // Act
+            var result = entryRepository.GetTotalDurationForTask(_taskId_1, _createdFirstEntry);
+            // Assert
+            result.Should().BeOfType(typeof(long));
+            result.Should().Be(_duration);
+        }
+
+       
+
 
 
 

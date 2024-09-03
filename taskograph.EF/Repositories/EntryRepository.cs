@@ -126,8 +126,8 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Entries
-                    .Include(n => n.Task.ApplicationUser)
-                    .Where(n => n.Task.ApplicationUserId == userId)
+                    .Include(n => n.Task)
+                    .Where(n => n.Task.ApplicationUserId == userId).Select(n => n)
                     .Where(n => (n.Created.Date >= from.Date) && (n.Created.Date <= to.Date))
                     .ToList();
             }

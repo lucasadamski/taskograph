@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using taskograph.EF.DataAccess;
 
@@ -11,9 +12,11 @@ using taskograph.EF.DataAccess;
 namespace taskograph.EF.Migrations
 {
     [DbContext(typeof(TasksContext))]
-    partial class TasksContextModelSnapshot : ModelSnapshot
+    [Migration("20240903205720_new_2")]
+    partial class new_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,15 +241,15 @@ namespace taskograph.EF.Migrations
                         {
                             Id = "none",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "42df009e-a4b8-4a9d-94e2-7493f01b2533",
+                            ConcurrencyStamp = "89d24605-fc04-4b2a-bece-a23f5a5f18eb",
                             EmailConfirmed = false,
                             FirstName = "none",
                             LastName = "none",
                             LockoutEnabled = false,
                             NormalizedUserName = "NONE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJqKs+zIDI1GkNv1DnFlGNpw8xZK6KsGfVLZl69BoX7STeYPP42sipzyUnPZ2nGXEg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEN/R+KwoPgMOAvw6OT03yt0hGm0mZ4O760W6Phtj6w/zZ13YyYfs5Caeb9P3bv5Dg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "561c2109-7300-4677-9341-985bb605f8ea",
+                            SecurityStamp = "a0ba9919-d23b-4f6c-8005-40b80c950626",
                             TwoFactorEnabled = false,
                             UserName = "none"
                         });
@@ -767,7 +770,7 @@ namespace taskograph.EF.Migrations
             modelBuilder.Entity("taskograph.Models.Tables.Entry", b =>
                 {
                     b.HasOne("taskograph.Models.Tables.Task", "Task")
-                        .WithMany()
+                        .WithMany("Entries")
                         .HasForeignKey("TaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -876,6 +879,8 @@ namespace taskograph.EF.Migrations
 
             modelBuilder.Entity("taskograph.Models.Tables.Task", b =>
                 {
+                    b.Navigation("Entries");
+
                     b.Navigation("PreciseTargets");
 
                     b.Navigation("RegularTargets");
