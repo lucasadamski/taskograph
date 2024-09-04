@@ -23,8 +23,6 @@ namespace taskograph.Models.Tables
 
         public virtual ApplicationUser ApplicationUser { get; set; }
         public Group Group { get; set; }
-
-        public ICollection<Entry> Entries { get; set; }
         public ICollection<PreciseTarget> PreciseTargets { get; set; }
         public ICollection<RegularTarget> RegularTargets { get; set; }
 
