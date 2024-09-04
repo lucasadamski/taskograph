@@ -260,8 +260,7 @@ namespace taskograph.EF.Repositories
             try
             {
                 durationsList = _db.Entries
-                    .Include(n => n.Duration)
-                    .Include(n => n.Task.ApplicationUser)
+                    .Include(n => n.Task)
                     .Where(n => n.Task.ApplicationUserId == userId)
                     .Where(n => n.Created.Date == date.Date)
                     .Select(n => n.Duration)
@@ -282,11 +281,10 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.Entries
-                    .Include(n => n.Duration)
-                    .Where(n => n.TaskId == taskId) 
+                    .Where(n => n.TaskId == taskId)
                     .Where(n => (n.Created.Date >= dateFrom.Date) && (n.Created.Date <= dateTo.Date))
                     .Select(n => n.Duration)
-                    .Aggregate((a, b) => a + b);
+                    .Sum();
             }
             catch (Exception e)
             {
@@ -296,7 +294,7 @@ namespace taskograph.EF.Repositories
             return result;
         }
 
-        private Entry? GetExistingEntry(int taskId, DateTime day)
+        public Entry? GetExistingEntry(int taskId, DateTime day)
         {
             Entry? result;
             try

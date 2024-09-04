@@ -13,7 +13,7 @@ using taskograph.Models;
 
 namespace taskograph.DBTests
 {
-    public class EntryRepositoryUnitTests
+    public class EntryRepository_To_InMemoryDB_IntegrationTests
     {
         private readonly TasksContext _db;
         private readonly ILogger<EntryRepository> _logger;
@@ -36,7 +36,7 @@ namespace taskograph.DBTests
         private DateTime? _lastUpdated = new DateTime(2020, 1, 1);
         private string _userId = "testUserId";
 
-        public EntryRepositoryUnitTests()
+        public EntryRepository_To_InMemoryDB_IntegrationTests()
         {
             _logger = A.Fake<ILogger<EntryRepository>>();
             _mapper = A.Fake<IMapper>();
@@ -227,24 +227,73 @@ namespace taskograph.DBTests
             result.Count().Should().Be(0);
         }
 
-
-        [Fact]
-        public async void GetTotalDurationForTask_TakesTaskId_ReturnsLong()
+        [Theory]
+        [InlineData(1, 2000, 1, 1, 100)]
+        [InlineData(1234, 2000, 1, 1, 0)]
+        [InlineData(1, 2033, 1, 1, 0)]
+        public async void GetTotalDurationForTask_TakesTaskId_ReturnsLong(int taskId, int year, int month, int day, long expected)
         {
             // Arrange
             var dbContext = await GetDbContext();
             var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            var date = new DateTime(year, month, day);
             // Act
-            var result = entryRepository.GetTotalDurationForTask(_taskId_1, _createdFirstEntry);
+            var result = entryRepository.GetTotalDurationForTask(taskId, date);
             // Assert
             result.Should().BeOfType(typeof(long));
-            result.Should().Be(_duration);
+            result.Should().Be(expected);
         }
 
-       
+        [Theory]
+        [InlineData("testUserId", 2000, 1, 1, 100)]
+        [InlineData("testUserId", 2022, 1, 1, 0)]
+        [InlineData("invalidId", 2020, 1, 1, 0)]
+        public async void GetTotalDurationForAllTasks_TakesUserId_ReturnsLong(string userId, int year, int month, int day, long expected)
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            var date = new DateTime(year, month, day);
+            // Act
+            var result = entryRepository.GetTotalDurationForAllTasks(userId, date);
+            // Assert
+            result.Should().BeOfType(typeof(long));
+            result.Should().Be(expected);
+        }
 
+        [Theory]
+        [InlineData(1, 2000, 1, 1, 2000, 1, 1, 100)]
+        [InlineData(1, 2020, 1, 1, 2000, 1, 1, 0)]
+        [InlineData(1, 1999, 1, 1, 1999, 10, 1, 0)]
+        public async void GetTotalDurationForTask_TakesUserId_ReturnsLong(int taskId, int yearFrom, int monthFrom, int dayFrom,
+             int yearTo, int monthTo, int dayTo, long expected)
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            var dateFrom = new DateTime(yearFrom, monthFrom, dayFrom);
+            var dateTo = new DateTime(yearTo, monthTo, dayTo);
+            // Act
+            var result = entryRepository.GetTotalDurationForTask(taskId, dateFrom, dateTo);
+            // Assert
+            result.Should().BeOfType(typeof(long));
+            result.Should().Be(expected);
+        }
 
-
-
+        [Theory]
+        [InlineData(1, 2000, 1, 1, 100L)]
+        [InlineData(2, 2000, 2, 1, 100L)]
+        [InlineData(454, 2000, 1, 1, null)]
+        public async void GetExistingEntry_TakesTaskId_ReturnsEntry(int taskId, int year, int month, int day, long? expected)
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var entryRepository = new EntryRepository(dbContext, _logger, _mapper);
+            var date = new DateTime(year, month, day);
+            // Act
+            var result = entryRepository.GetExistingEntry(taskId, date);
+            // Assert
+            result?.Duration.Should().Be(expected);
+        }
     }
 }
