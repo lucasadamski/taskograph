@@ -12,7 +12,7 @@ using Task = taskograph.Models.Tables.Task;
 
 namespace taskograph.DBTests
 {
-    public class TaskRepositoryInMemoryDatabaseIntegrationTests
+    public class TaskRepositoryTests
     {
         private readonly TasksContext _db;
         private readonly ILogger<TaskRepository> _logger;
@@ -21,7 +21,7 @@ namespace taskograph.DBTests
         private IGroupRepository _groupRepository;
         private string _userId = "testUserId";
 
-        public TaskRepositoryInMemoryDatabaseIntegrationTests()
+        public TaskRepositoryTests()
         {
             _logger = A.Fake<ILogger<TaskRepository>>();
             _mapper = A.Fake<IMapper>();
