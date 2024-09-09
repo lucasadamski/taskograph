@@ -1,13 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
-using Task = taskograph.Models.Tables.Task;
-using Group = taskograph.Models.Tables.Group;
 using Color = taskograph.Models.Tables.Color;
 using static taskograph.Helpers.Messages;
 using taskograph.EF.DataAccess;
 using taskograph.EF.Repositories.Infrastructure;
-using taskograph.Models.Tables;
-using System.Drawing;
-using Microsoft.EntityFrameworkCore;
 
 namespace taskograph.EF.Repositories
 {
