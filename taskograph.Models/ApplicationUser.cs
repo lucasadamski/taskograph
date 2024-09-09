@@ -17,7 +17,6 @@ namespace taskograph.Models
 
         public ICollection<Group> Groups { get; set; }
         public ICollection<Task> Tasks { get; set; }
-        public ICollection<Quote> Quotes { get; set; }
         public ICollection<Setting> Settings { get; set; }
 
         //make migration, i connected the relations here 
