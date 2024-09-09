@@ -15,7 +15,6 @@ namespace taskograph.EF.DataAccess
         public DbSet<Entry> Entries { get; set; }
         public DbSet<Models.Tables.Group> Groups { get; set; }
         public DbSet<PreciseTarget> PreciseTargets { get; set; }
-        public DbSet<Quote> Quotes { get; set; }
         public DbSet<RegularTarget> RegularTargets { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Setting> Settings { get; set; }
@@ -79,13 +78,6 @@ namespace taskograph.EF.DataAccess
                 new Color { Id = 9, Name = "Purple" },
                 new Color { Id = 10, Name = "Beige" }
                 );
-  
-
-            modelBuilder.Entity<Quote>().HasData(
-                 new Quote { Id = 1, Name = "What you have to do today is insignificant, but is very important that you do it.", ApplicationUserId = "none" },
-                 new Quote { Id = 2, Name = "It's about the marathon, not the sprint.", ApplicationUserId = "none" },
-                 new Quote { Id = 3, Name = "Don't feel bad because you don't know something and feel like you can't do anything. Do what you can do and then improve.", ApplicationUserId = "none" }
-                 );
 
             //TODO stworz uzytkownia w AspNetUsers z id "none"
 
