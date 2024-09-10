@@ -28,7 +28,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"Add {color.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -43,7 +43,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"Delete {color.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -58,7 +58,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"Edit {color.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -75,12 +75,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"Get: id {id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new Color();
-            }
-            if (result == null)
-            {
-                _logger.LogError($"Get: id {id} Message: {EMPTY_VARIABLE}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new Color();
             }
             return result;
@@ -95,12 +90,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"GetAll: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new List<Color>();
-            }
-            if (result == null)
-            {
-                _logger.LogError($"GetAll: Message: {EMPTY_VARIABLE}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new List<Color>();
             }
             return result;

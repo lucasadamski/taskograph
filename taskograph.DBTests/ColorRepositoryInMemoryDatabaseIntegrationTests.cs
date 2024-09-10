@@ -22,7 +22,6 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
             _logger = A.Fake<ILogger<ColorRepository>>();
         }
 
-
         private async Task<TasksContext> GetDbContext()
         {
             var options = new DbContextOptionsBuilder<TasksContext>()
@@ -50,15 +49,56 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
         }
 
         [Fact]
-        public async void Add_TakesString_ReturnsBool()
+        public async void Add_TakesValidString_ReturnsBool()
         {
             //Arrange
             var dbContext = await GetDbContext();
             var colorRepository = new ColorRepository(dbContext, _logger);
             //Act
-
-
+            var result = colorRepository.Add("newColor");
             //Assert
+            result.Should().Be(true);
+            colorRepository.GetAll().Count().Should().Be(11);
+        }
+
+        [Fact]
+        public async void Add_TakesNullString_ReturnsBool()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var colorRepository = new ColorRepository(dbContext, _logger);
+            //Act
+            var result = colorRepository.Add(null);
+            //Assert
+            result.Should().Be(false);
+            colorRepository.GetAll().Count().Should().Be(10);
+        }
+
+        [Fact]
+        public async void Delete_TakesValidColor_ReturnsBool()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var colorRepository = new ColorRepository(dbContext, _logger);
+            //Act
+            var color = colorRepository.Get(1);
+            var result = colorRepository.Delete(color);
+            //Assert
+            result.Should().Be(true);
+            colorRepository.GetAll().Count().Should().Be(9);
+        }
+
+        [Fact]
+        public async void Delete_TakesInvalidColor_ReturnsBool()
+        {
+            //Arranger
+            var dbContext = await GetDbContext();
+            var colorRepository = new ColorRepository(dbContext, _logger);
+            //Act
+            var result = colorRepository.Delete(null);
+            //Assert
+            result.Should().Be(false);
+            colorRepository.GetAll().Count().Should().Be(10);
         }
     }
 }
