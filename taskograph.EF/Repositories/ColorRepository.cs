@@ -21,6 +21,7 @@ namespace taskograph.EF.Repositories
         public bool Add(string name)
         {
             Color color = new Color() { Name = name };
+            bool result = true;
             try
             {
                 _db.Colors.Add(color);
@@ -29,13 +30,14 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return false;
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public bool Delete(Color color)
         {
+            bool result = true;
             try
             {
                 _db.Colors.Remove(color);
@@ -44,13 +46,14 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return false;
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public bool Edit(Color color)
         {
+            bool result = true;
             try
             {
                 _db.Colors.Update(color);
@@ -59,14 +62,14 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return false;
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public Color Get(int id)
         {
-            Color? result;
+            Color? result = new Color();
             try
             {
                 result = _db.Colors
@@ -76,7 +79,6 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return new Color();
             }
             return result;
         }
@@ -91,7 +93,6 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return new List<Color>();
             }
             return result;
         }
