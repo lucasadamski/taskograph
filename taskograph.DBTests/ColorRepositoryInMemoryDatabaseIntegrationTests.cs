@@ -118,5 +118,36 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
             result.Should().Be(true);
             colorRepository.GetAll().ElementAt(0).Name.Should().Be(testColor);
         }
+
+        [Fact]
+        public async void Edit_TakesInvalidColor_ReturnBool()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var colorRepository = new ColorRepository(dbContext, _logger);
+            var testColor = "Test Color";
+
+            // Act
+            var colorItem = new Color();
+            colorItem.Name = testColor;
+            var result = colorRepository.Edit(colorItem);
+
+            // Assert
+            result.Should().Be(true);
+        }
+
+        [Fact]
+        public async void Edit_TakesNull_ReturnBool()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var colorRepository = new ColorRepository(dbContext, _logger);
+
+            // Act  
+            var result = colorRepository.Edit(null);
+
+            // Assert
+            result.Should().Be(false);
+        }
     }
 }
