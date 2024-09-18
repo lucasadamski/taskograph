@@ -149,5 +149,49 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
             // Assert
             result.Should().Be(false);
         }
+
+        [Fact]
+        public async void Get_TakesValidId_ReturnsColor()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var colorRepository = new ColorRepository(dbContext, _logger);
+
+            // Act  
+            var result = colorRepository.Get(1);
+
+            // Assert
+            result.Name.Should().Be("Red");
+        }
+
+        [Fact]
+        public async void Get_TakesInvalidId_ReturnsColor()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var colorRepository = new ColorRepository(dbContext, _logger);
+
+            // Act  
+            var result = colorRepository.Get(234);
+
+            // Assert
+            result?.Name.Should().Be(null);
+        }
+
+        [Fact]
+        public async void GetAll_NoArguments_ReturnsSequence()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var colorRepository = new ColorRepository(dbContext, _logger);
+
+            // Act  
+            var result = colorRepository.GetAll();
+
+            // Assert
+            result.Count().Should().Be(10);
+        }
+
+
     }
 }
