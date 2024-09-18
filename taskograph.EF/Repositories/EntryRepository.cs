@@ -38,7 +38,7 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return false;
+                return false; 
             }
             return true;
         }

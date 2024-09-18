@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "taskograph.Models", "taskog
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "taskograph.Helpers", "taskograph.Helpers\taskograph.Helpers.csproj", "{C3A41EB2-1265-465C-B014-87F7612D8254}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taskograph.DBTests", "taskograph.DBTests\taskograph.DBTests.csproj", "{3E7CED6A-21E9-4B2E-8678-482B1835FB0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taskograph.RepositoriesInMemoryDatabaseIntegrationTests", "taskograph.DBTests\taskograph.RepositoriesInMemoryDatabaseIntegrationTests.csproj", "{3E7CED6A-21E9-4B2E-8678-482B1835FB0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -11,9 +11,9 @@ using Task = taskograph.Models.Tables.Task;
 using taskograph.Models.Tables;
 using taskograph.Models;
 
-namespace taskograph.DBTests
+namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
 {
-    public class EntryRepository_To_InMemoryDB_IntegrationTests
+    public class EntryRepositoryInMemoryDatabaseIntegrationTests
     {
         private readonly TasksContext _db;
         private readonly ILogger<EntryRepository> _logger;
@@ -36,7 +36,7 @@ namespace taskograph.DBTests
         private DateTime? _lastUpdated = new DateTime(2020, 1, 1);
         private string _userId = "testUserId";
 
-        public EntryRepository_To_InMemoryDB_IntegrationTests()
+        public EntryRepositoryInMemoryDatabaseIntegrationTests()
         {
             _logger = A.Fake<ILogger<EntryRepository>>();
             _mapper = A.Fake<IMapper>();
