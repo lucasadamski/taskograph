@@ -133,7 +133,7 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
             var result = colorRepository.Edit(colorItem);
 
             // Assert
-            result.Should().Be(true);
+            result.Should().Be(false);
         }
 
         [Fact]

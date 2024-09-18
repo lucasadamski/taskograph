@@ -56,6 +56,8 @@ namespace taskograph.EF.Repositories
             bool result = true;
             try
             {
+                if (!_db.Colors.Contains(color))
+                    throw new Exception();
                 _db.Colors.Update(color);
                 _db.SaveChanges();
             }
