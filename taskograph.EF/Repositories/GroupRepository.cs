@@ -29,7 +29,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"Add {group.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -45,7 +45,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"Delete {group.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -61,7 +61,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"TEdit {group.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -79,12 +79,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"Get: id {id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new Group();
-            }
-            if (result == null)
-            {
-                _logger.LogError($"Get: id {id} Message: {EMPTY_VARIABLE}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new Group();
             }
             return result;
@@ -103,12 +98,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"Get: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new List<Group>();
-            }
-            if (result == null)
-            {
-                _logger.LogError($"Get: Message: {EMPTY_VARIABLE}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new List<Group>();
             }
             return result;

@@ -53,5 +53,50 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
             return dbContext;
         }
 
+        [Fact]
+        public async void Add_TakesValidGroup_ReturnTrue()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var groupRepository = new GroupRepository(dbContext, _logger);
+            var groupItem = new Group() {Id = 123,  Name = "New Group Item", ApplicationUserId = "NewTesUser" };
+            // Act
+            var result = groupRepository.Add(groupItem);
+
+            // Assert
+            result.Should().Be(true);
+            dbContext.Groups.Count().Should().Be(11);
+        }
+
+        [Fact]
+        public async void Add_TakesRepeatedIdGroup_ReturnFalse()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var groupRepository = new GroupRepository(dbContext, _logger);
+            var groupItem = new Group() { Id = 1, Name = "New Group Item", ApplicationUserId = "NewTesUser" };
+            // Act
+            var result = groupRepository.Add(groupItem);
+
+            // Assert
+            result.Should().Be(false);
+            dbContext.Groups.Count().Should().Be(10);
+        }
+
+        [Fact]
+        public async void Add_TakesNull_ReturnFalse()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var groupRepository = new GroupRepository(dbContext, _logger);
+            
+            // Act
+            var result = groupRepository.Add(null);
+
+            // Assert
+            result.Should().Be(false);
+            dbContext.Groups.Count().Should().Be(10);
+        }
+
     }
 }
