@@ -85,7 +85,7 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 result = new Group();
             }
-            return result;
+            return result ?? new Group();
         }
 
         public IEnumerable<Group> GetAll(string userId)
@@ -104,7 +104,7 @@ namespace taskograph.EF.Repositories
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 result = new List<Group>();
             }
-            return result;
+            return result ?? new List<Group>();
         }
 
         
