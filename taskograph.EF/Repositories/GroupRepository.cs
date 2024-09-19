@@ -21,6 +21,7 @@ namespace taskograph.EF.Repositories
 
         public bool Add(Group group)
         {
+            bool result = true;
             try
             {
                 group.Created = DateTime.Now;
@@ -30,13 +31,14 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return false;
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public bool Delete(Group group)
         {
+            bool result = true;
             try
             {
                 group.Deleted = DateTime.Now;
@@ -46,13 +48,14 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return false;
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public bool Edit(Group group)
         {
+            bool result = true;
             try
             {
                 group.LastUpdated = DateTime.Now;
@@ -62,9 +65,9 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return false;
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public Group Get(int id)
@@ -80,7 +83,7 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return new Group();
+                result = new Group();
             }
             return result;
         }
@@ -99,7 +102,7 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return new List<Group>();
+                result = new List<Group>();
             }
             return result;
         }
