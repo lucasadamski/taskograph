@@ -215,5 +215,50 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
             result.Name.Should().Be(null);
         }
 
+        [Fact]
+        public async void GetAll_TakesValidUserId_ReturnsCollection()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var groupRepository = new GroupRepository(dbContext, _logger);
+
+            // Act
+            var result = groupRepository.GetAll(_userIdOne);
+
+            // Assert
+            result.Should().BeOfType(typeof(List<Group>));
+            result.Count().Should().Be(5);
+        }
+
+        [Fact]
+        public async void GetAll_TakesNonExistingUserId_ReturnsEmptyCollection()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var groupRepository = new GroupRepository(dbContext, _logger);
+
+            // Act
+            var result = groupRepository.GetAll("Non existing user id");
+
+            // Assert
+            result.Should().BeOfType(typeof(List<Group>));
+            result.Count().Should().Be(0);
+        }
+
+        [Fact]
+        public async void GetAll_TakesNull_ReturnsEmptyCollection()
+        {
+            // Arrange
+            var dbContext = await GetDbContext();
+            var groupRepository = new GroupRepository(dbContext, _logger);
+
+            // Act
+            var result = groupRepository.GetAll(null);
+
+            // Assert
+            result.Should().BeOfType(typeof(List<Group>));
+            result.Count().Should().Be(0);
+        }
+
     }
 }
