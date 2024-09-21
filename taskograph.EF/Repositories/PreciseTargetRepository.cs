@@ -32,7 +32,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"PreciseTargetRepository: Add {preciseTarget.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -48,7 +48,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"PreciseTargetRepository: Delete {preciseTarget.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -64,7 +64,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"PreciseTargetRepository: Edit {preciseTarget.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -83,7 +83,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"PreciseTargetRepository: Get: id {id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new PreciseTarget();
             }
             if (result == null)
@@ -109,7 +109,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"PreciseTargetRepository: Get from {from} to {to} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new List<PreciseTarget>();
             }
             return result;
@@ -128,7 +128,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"PreciseTargetRepository: GetAll from Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new List<PreciseTarget>();
             }
             return result;
