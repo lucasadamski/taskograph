@@ -24,6 +24,7 @@ namespace taskograph.EF.Repositories
 
         public bool Add(PreciseTarget preciseTarget)
         {
+            bool result = true;
             try
             {
                 preciseTarget.Created = DateTime.Now;
@@ -33,13 +34,15 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return false;
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public bool Delete(PreciseTarget preciseTarget)
         {
+            bool result = true;
+
             try
             {
                 preciseTarget.Deleted = DateTime.Now;
@@ -49,13 +52,15 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return false;
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public bool Edit(PreciseTarget preciseTarget)
         {
+            bool result = true;
+
             try
             {
                 preciseTarget.LastUpdated = DateTime.Now;
@@ -65,9 +70,9 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return false;
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public PreciseTarget Get(int id)
@@ -84,14 +89,9 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return new PreciseTarget();
+                result = null;
             }
-            if (result == null)
-            {
-                _logger.LogError($"PreciseTargetRepository: Get: id {id} Message: {EMPTY_VARIABLE}");
-                return new PreciseTarget();
-            }
-            return result;
+            return result ?? new PreciseTarget();
         }
 
        
@@ -110,9 +110,9 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return new List<PreciseTarget>();
+                result = null;
             }
-            return result;
+            return result ?? new List<PreciseTarget>();
         }
 
         public IEnumerable<PreciseTarget> GetAll(string userId)
@@ -129,9 +129,9 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return new List<PreciseTarget>();
+                result = null;
             }
-            return result;
+            return result ?? new List<PreciseTarget>();
         }
     }
 }
