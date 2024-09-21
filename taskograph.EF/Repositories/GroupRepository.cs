@@ -21,6 +21,7 @@ namespace taskograph.EF.Repositories
 
         public bool Add(Group group)
         {
+            bool result = true;
             try
             {
                 group.Created = DateTime.Now;
@@ -29,14 +30,15 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"Add {group.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return false;
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public bool Delete(Group group)
         {
+            bool result = true;
             try
             {
                 group.Deleted = DateTime.Now;
@@ -45,14 +47,15 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"Delete {group.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return false;
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public bool Edit(Group group)
         {
+            bool result = true;
             try
             {
                 group.LastUpdated = DateTime.Now;
@@ -61,10 +64,10 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"TEdit {group.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return false;
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public Group Get(int id)
@@ -79,15 +82,10 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"Get: id {id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new Group();
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
+                result = new Group();
             }
-            if (result == null)
-            {
-                _logger.LogError($"Get: id {id} Message: {EMPTY_VARIABLE}");
-                return new Group();
-            }
-            return result;
+            return result ?? new Group();
         }
 
         public IEnumerable<Group> GetAll(string userId)
@@ -103,15 +101,10 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"Get: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new List<Group>();
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
+                result = new List<Group>();
             }
-            if (result == null)
-            {
-                _logger.LogError($"Get: Message: {EMPTY_VARIABLE}");
-                return new List<Group>();
-            }
-            return result;
+            return result ?? new List<Group>();
         }
 
         
