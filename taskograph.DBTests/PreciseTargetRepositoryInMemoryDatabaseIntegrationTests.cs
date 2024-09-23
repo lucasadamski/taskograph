@@ -78,15 +78,68 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
         }
 
         [Fact]
-        public async void Add_TakesValidString_ReturnsBool()
+        public async void Add_TakesInvalidString_ReturnsBool()
         {
             //Arrange
             var dbContext = await GetDbContext();
             var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
             //Act
-            var result = preciseTargetRepository.Add(new PreciseTarget() { Name = "TestTarget", TaskId = 1, DateDue = _dueOctober });
+            var result = preciseTargetRepository.Add(new PreciseTarget() {TaskId = 1, DateDue = _dueOctober });
+            //Assert
+            result.Should().Be(false);
+        }
+
+        [Fact]
+        public async void Add_TakesNull_ReturnsBool()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.Add(null);
+            //Assert
+            result.Should().Be(false);
+        }
+
+        [Fact]
+        public async void Delete_TakesValidObject_ReturnsBool()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            var targetObject = preciseTargetRepository.Get(1);
+
+            //Act
+            var result = preciseTargetRepository.Delete(targetObject);
             //Assert
             result.Should().Be(true);
+            targetObject = preciseTargetRepository.Get(1);
+            targetObject.Deleted.Should().NotBe(null);
+        }
+
+
+        [Fact]
+        public async void Delete_TakesNonExistentObject_ReturnsTrue()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.Delete(new PreciseTarget() { Name = "testItem", TaskId = 1, DateDue = _dueOctober });
+            //Assert
+            result.Should().Be(false);
+        }
+
+        [Fact]
+        public async void Delete_TakesInvalidObject_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.Delete(new PreciseTarget() {TaskId = 1, DateDue = _dueOctober });
+            //Assert
+            result.Should().Be(false);
         }
     }
 }
