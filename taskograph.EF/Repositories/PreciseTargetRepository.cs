@@ -27,7 +27,6 @@ namespace taskograph.EF.Repositories
             bool result = true;
             try
             {
-                preciseTarget.Created = DateTime.Now;
                 _db.PreciseTargets.Add(preciseTarget);
                 _db.SaveChanges();
             }

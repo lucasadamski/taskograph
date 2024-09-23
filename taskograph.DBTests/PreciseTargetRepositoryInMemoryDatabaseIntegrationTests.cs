@@ -16,7 +16,7 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
 {
     public class PreciseTargetRepositoryInMemoryDatabaseIntegrationTests
     {
-        private readonly ILogger<TaskRepository> _logger;
+        private readonly ILogger<PreciseTargetRepository> _logger;
         private readonly IMapper _mapper;
         private string _userIdOne = "testUserIdOne";
         private string _userIdTwo = "testUserIdTwo";
@@ -29,7 +29,7 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
 
         public PreciseTargetRepositoryInMemoryDatabaseIntegrationTests()
         {
-            _logger = A.Fake<ILogger<TaskRepository>>();
+            _logger = A.Fake<ILogger<PreciseTargetRepository>>();
             _mapper = A.Fake<IMapper>();
         }
 
@@ -41,11 +41,12 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
             //creating DBcontext from mock
             var dbContext = new TasksContext(options);
             dbContext.Database.EnsureDeleted();
-            dbContext.Entries.AsNoTracking();
+            dbContext.Tasks.AsNoTracking();
+            dbContext.PreciseTargets.AsNoTracking();
 
             dbContext.Tasks.Add(new Task { Id = 1, Name = "Running", GroupId = 4, Created = _created, ApplicationUserId = _userIdOne });
             dbContext.Tasks.Add(new Task { Id = 2, Name = "Cooking", GroupId = 4, Created = _created, ApplicationUserId = _userIdOne });
-            dbContext.Tasks.Add(new Task { Id = 2, Name = "Reading", GroupId = 4, Created = _created, ApplicationUserId = _userIdTwo });
+            dbContext.Tasks.Add(new Task { Id = 3, Name = "Reading", GroupId = 4, Created = _created, ApplicationUserId = _userIdTwo });
 
             dbContext.PreciseTargets.Add(new PreciseTarget { Id = 1, Name = "Run 1", TaskId = 1, DateDue = _dueOctober, Created =  _created});
             dbContext.PreciseTargets.Add(new PreciseTarget { Id = 2, Name = "Run 2", TaskId = 1, DateDue = _dueNovember, Created = _created });
@@ -61,6 +62,31 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
             await dbContext.SaveChangesAsync();
 
             return dbContext;
+        }
+
+        [Fact]
+        public async void Add_TakesValidObject_ReturnsBool()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.Add(new PreciseTarget() { Name = "TestTarget", TaskId = 1, DateDue = _dueOctober, Created = DateTime.Now});
+            //Assert
+            result.Should().Be(true);
+            dbContext.PreciseTargets.Count().Should().Be(10);
+        }
+
+        [Fact]
+        public async void Add_TakesValidString_ReturnsBool()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.Add(new PreciseTarget() { Name = "TestTarget", TaskId = 1, DateDue = _dueOctober });
+            //Assert
+            result.Should().Be(true);
         }
     }
 }
