@@ -141,5 +141,135 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
             //Assert
             result.Should().Be(false);
         }
+
+        [Fact]
+        public async void Edit_TakesValidObject_ReturnsTrue()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            var targetObject = preciseTargetRepository.Get(1);
+            targetObject.Name = "Modified object";
+            //Act
+            var result = preciseTargetRepository.Edit(targetObject);
+            //Assert
+            result.Should().Be(true);
+            targetObject = preciseTargetRepository.Get(1);
+            targetObject.LastUpdated.Should().NotBe(null);
+            targetObject.Name.Should().Be("Modified object");
+        }
+
+        [Fact]
+        public async void Edit_TakesInvalidObject_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.Edit(new PreciseTarget() { Name = "testItem", TaskId = 1, DateDue = _dueOctober });
+            //Assert
+            result.Should().Be(false);
+        }
+
+
+        [Fact]
+        public async void Edit_TakesNull_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.Edit(null);
+            //Assert
+            result.Should().Be(false);
+        }
+
+        [Fact]
+        public async void Get_TakesValidId_ReturnsValidObject()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.Get(1);
+            //Assert
+            result.Name.Should().Be("Run 1");
+        }
+
+        [Fact]
+        public async void Get_TakesInvalidId_ReturnsEmptyObject()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.Get(12423);
+            //Assert
+            result.Name.Should().Be(null);
+        }
+
+        [Fact]
+        public async void Get_TakesDateRange_ReturnsSixObjects()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.Get(_userIdOne, _dueOctober, _dueDecember);
+            //Assert
+            result.Count().Should().Be(6);
+        }
+
+
+        [Fact]
+        public async void Get_TakesDateRange_ReturnsThreeObjects()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.Get(_userIdTwo, _dueOctober, _dueDecember);
+            //Assert
+            result.Count().Should().Be(3);
+        }
+
+        [Fact]
+        public async void Get_TakesDateRange_ReturnsOneObject()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.Get(_userIdTwo, _dueDecember, _dueDecember);
+            //Assert
+            result.Count().Should().Be(1);
+        }
+
+        [Fact]
+        public async void Get_TakesDateRange_ReturnsEmptyList()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.Get(_userIdTwo, _dueDecember.AddDays(1) , _dueDecember.AddDays(2));
+            //Assert
+            result.Count().Should().Be(0);
+        }
+
+        [Fact]
+        public async void Get_TakesDateRangeWithNonExistentUserId_ReturnsEmptyList()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.Get("Non existing user id", _dueOctober, _dueDecember);
+            //Assert
+            result.Count().Should().Be(0);
+        }
+
+
+
     }
 }

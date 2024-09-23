@@ -63,6 +63,8 @@ namespace taskograph.EF.Repositories
 
             try
             {
+                if (!_db.PreciseTargets.Contains(preciseTarget)) throw new Exception("Can't delete this object because it does not exist in DB.");
+
                 preciseTarget.LastUpdated = DateTime.Now;
                 _db.PreciseTargets.Update(preciseTarget);
                 _db.SaveChanges();
@@ -102,7 +104,7 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.PreciseTargets
-                    .Include(n => n.Task.ApplicationUser)
+                    .Include(n => n.Task)
                     .Where(n => n.Task.ApplicationUserId == userId)
                     .Where(n => (n.DateDue.Date >= from.Date) && (n.DateDue.Date <= to.Date))
                     .ToList();
@@ -121,7 +123,7 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.PreciseTargets
-                    .Include(n => n.Task.ApplicationUser)
+                    .Include(n => n.Task)
                     .Where(n => n.Deleted == null)
                     .Where(n => n.Task.ApplicationUserId == userId)
                     .ToList();
