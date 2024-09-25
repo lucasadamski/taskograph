@@ -24,50 +24,57 @@ namespace taskograph.EF.Repositories
 
         public bool Add(PreciseTarget preciseTarget)
         {
+            bool result = true;
             try
             {
-                preciseTarget.Created = DateTime.Now;
                 _db.PreciseTargets.Add(preciseTarget);
                 _db.SaveChanges();
             }
             catch (Exception e)
             {
-                _logger.LogError($"PreciseTargetRepository: Add {preciseTarget.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return false;
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public bool Delete(PreciseTarget preciseTarget)
         {
+            bool result = true;
+
             try
             {
+                if (!_db.PreciseTargets.Contains(preciseTarget)) throw new Exception("Can't delete this object because it does not exist in DB.");
                 preciseTarget.Deleted = DateTime.Now;
                 _db.PreciseTargets.Update(preciseTarget);
                 _db.SaveChanges();
             }
             catch (Exception e)
             {
-                _logger.LogError($"PreciseTargetRepository: Delete {preciseTarget.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return false;
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public bool Edit(PreciseTarget preciseTarget)
         {
+            bool result = true;
+
             try
             {
+                if (!_db.PreciseTargets.Contains(preciseTarget)) throw new Exception("Can't delete this object because it does not exist in DB.");
+
                 preciseTarget.LastUpdated = DateTime.Now;
                 _db.PreciseTargets.Update(preciseTarget);
                 _db.SaveChanges();
             }
             catch (Exception e)
             {
-                _logger.LogError($"PreciseTargetRepository: Edit {preciseTarget.Name}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return false;
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public PreciseTarget Get(int id)
@@ -83,15 +90,10 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"PreciseTargetRepository: Get: id {id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new PreciseTarget();
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
+                result = null;
             }
-            if (result == null)
-            {
-                _logger.LogError($"PreciseTargetRepository: Get: id {id} Message: {EMPTY_VARIABLE}");
-                return new PreciseTarget();
-            }
-            return result;
+            return result ?? new PreciseTarget();
         }
 
        
@@ -102,17 +104,17 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.PreciseTargets
-                    .Include(n => n.Task.ApplicationUser)
+                    .Include(n => n.Task)
                     .Where(n => n.Task.ApplicationUserId == userId)
                     .Where(n => (n.DateDue.Date >= from.Date) && (n.DateDue.Date <= to.Date))
                     .ToList();
             }
             catch (Exception e)
             {
-                _logger.LogError($"PreciseTargetRepository: Get from {from} to {to} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new List<PreciseTarget>();
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
+                result = null;
             }
-            return result;
+            return result ?? new List<PreciseTarget>();
         }
 
         public IEnumerable<PreciseTarget> GetAll(string userId)
@@ -121,17 +123,17 @@ namespace taskograph.EF.Repositories
             try
             {
                 result = _db.PreciseTargets
-                    .Include(n => n.Task.ApplicationUser)
+                    .Include(n => n.Task)
                     .Where(n => n.Deleted == null)
                     .Where(n => n.Task.ApplicationUserId == userId)
                     .ToList();
             }
             catch (Exception e)
             {
-                _logger.LogError($"PreciseTargetRepository: GetAll from Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
-                return new List<PreciseTarget>();
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
+                result = null;
             }
-            return result;
+            return result ?? new List<PreciseTarget>();
         }
     }
 }
