@@ -8,6 +8,7 @@ using static taskograph.Helpers.Messages;
 using Microsoft.EntityFrameworkCore;
 using taskograph.Models.StoredProcedures;
 using taskograph.Models.DTOs;
+using Microsoft.Identity.Client;
 
 namespace taskograph.EF.Repositories
 {
@@ -28,13 +29,15 @@ namespace taskograph.EF.Repositories
         {
             try
             {
+                if (regularTarget.RegularTimeIntervalToAchieveTarget == 0 || regularTarget.TimeDedicatedToPerformTarget ==  0) 
+                        throw new Exception("One of mandatory fields are empty");
                 regularTarget.Created = DateTime.Now;
                 _db.RegularTargets.Add(regularTarget);
                 _db.SaveChanges();
             }
             catch (Exception e)
             {
-                _logger.LogError($"RegularTargetRepository: Add TargetID: {regularTarget.Id}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -50,7 +53,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"RegularTargetRepository: Delete TargetID: {regularTarget.Id}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -66,7 +69,7 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"RegularTargetRepository: Edit TargetID: {regularTarget.Id}: Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return false;
             }
             return true;
@@ -81,22 +84,14 @@ namespace taskograph.EF.Repositories
                     .Where(n => n.Id == id)
                     .Include(n => n.Task)           //nullable
                     .Include(n => n.Task.Group)
-                    .Include(n => n.TimeDedicatedToPerformTarget)
-                    .Include(n => n.RegularTimeIntervalToAchieveTarget)
-                    .Where(n => n.Deleted == null)
                     .FirstOrDefault();
             }
             catch (Exception e)
             {
-                _logger.LogError($"RegularTargetRepository: Get: id {id} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new RegularTarget();
             }
-            if (result == null)
-            {
-                _logger.LogError($"RegularTargetRepository: Get: id {id} Message: {EMPTY_VARIABLE}");
-                return new RegularTarget();
-            }
-            return result;
+            return result ?? new RegularTarget();
         }
 
         public IEnumerable<RegularTargetDTO> Get(string userId, DateTime? from = null, DateTime? to = null)
@@ -122,10 +117,10 @@ namespace taskograph.EF.Repositories
             }
             catch (Exception e)
             {
-                _logger.LogError($"RegularTargetRepository: Get from {(from ?? new DateTime())} to {(to ?? new DateTime())} Message: {DATABASE_ERROR_CONNECTION} Exception: {e.Message}");
+                _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
                 return new List<RegularTargetDTO>();
             }
-            return result;
+            return result ?? new List<RegularTargetDTO>();
         }
     }
 }

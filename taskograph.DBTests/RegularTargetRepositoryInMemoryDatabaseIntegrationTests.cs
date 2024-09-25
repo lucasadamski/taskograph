@@ -51,5 +51,74 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
 
             return dbContext;
         }
+
+        [Fact]
+        public async void Add_TakesValidObject_ReturnsTrue()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var regularTargetRepository = new RegularTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = regularTargetRepository.Add(new RegularTarget { TaskId = 1, Created = _createdOctober, TimeDedicatedToPerformTarget = 30, RegularTimeIntervalToAchieveTarget = 100 });
+            //Assert
+            result.Should().Be(true);
+            dbContext.RegularTargets.Count().Should().Be(4);
+        }
+
+        [Fact]
+        public async void Add_TakesNull_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var regularTargetRepository = new RegularTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = regularTargetRepository.Add(null);
+            //Assert
+            result.Should().Be(false);
+            dbContext.RegularTargets.Count().Should().Be(3);
+        }
+
+        [Fact]
+        public async void Add_TakesInvalidObject_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var regularTargetRepository = new RegularTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = regularTargetRepository.Add(new RegularTarget { Created = _createdOctober, RegularTimeIntervalToAchieveTarget = 100 });
+            //Assert
+            result.Should().Be(false);
+            dbContext.RegularTargets.Count().Should().Be(3);
+        }
+
+        [Fact]
+        public async void Add_TakesObjectIdAlreadyTaken_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var regularTargetRepository = new RegularTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = regularTargetRepository.Add(new RegularTarget { Id = 1, TimeDedicatedToPerformTarget = 30,  RegularTimeIntervalToAchieveTarget = 100 });
+            //Assert
+            result.Should().Be(false);
+            dbContext.RegularTargets.Count().Should().Be(3);
+        }
+
+        [Fact]
+        public async void Delete_TakesValidObject_ReturnsTrue()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var regularTargetRepository = new RegularTargetRepository(dbContext, _logger, _mapper);
+            var regularTargetObject = regularTargetRepository.Get(1);
+            //Act
+            var result = regularTargetRepository.Delete(regularTargetObject);
+            //Assert
+            result.Should().Be(true);
+            regularTargetObject = regularTargetRepository.Get(1);
+            regularTargetObject.Deleted.Should().NotBe(null);
+        }
+
+
     }
 }
