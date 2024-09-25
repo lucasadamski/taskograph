@@ -269,6 +269,45 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
             result.Count().Should().Be(0);
         }
 
+        [Fact]
+        public async void GetAll_TakesUserId_ReturnsSixElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.GetAll(_userIdOne);
+            //Assert
+            result.Should().BeOfType(typeof(List<PreciseTarget>));
+            result.Count().Should().Be(6);
+        }
+
+        [Fact]
+        public async void GetAll_TakesNonExistingUserId_ReturnsZeroElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.GetAll("non existing user id");
+            //Assert
+            result.Should().BeOfType(typeof(List<PreciseTarget>));
+            result.Count().Should().Be(0);
+        }
+
+        [Fact]
+        public async void GetAll_TakesNull_ReturnsZeroElements()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var preciseTargetRepository = new PreciseTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = preciseTargetRepository.GetAll("non existing user id");
+            //Assert
+            result.Should().BeOfType(typeof(List<PreciseTarget>));
+            result.Count().Should().Be(0);
+        }
+
 
 
     }
