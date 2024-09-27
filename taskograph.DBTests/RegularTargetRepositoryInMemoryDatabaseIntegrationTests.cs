@@ -119,6 +119,30 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
             regularTargetObject.Deleted.Should().NotBe(null);
         }
 
+        [Fact]
+        public async void Delete_TakesNonExistentObject_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var regularTargetRepository = new RegularTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = regularTargetRepository.Delete(new RegularTarget { TimeDedicatedToPerformTarget = 30, RegularTimeIntervalToAchieveTarget = 100 });
+            //Assert
+            result.Should().Be(false);
+        }
+
+        [Fact]
+        public async void Delete_TakesNull_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var regularTargetRepository = new RegularTargetRepository(dbContext, _logger, _mapper);
+            //Act
+            var result = regularTargetRepository.Delete(null);
+            //Assert
+            result.Should().Be(false);
+        }
+
 
     }
 }

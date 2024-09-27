@@ -47,6 +47,7 @@ namespace taskograph.EF.Repositories
         {
             try
             {
+                if (!_db.RegularTargets.Contains(regularTarget)) throw new Exception("Can't delete this object because it does not exist in DB.");
                 regularTarget.Deleted = DateTime.Now;
                 _db.Update(regularTarget);
                 _db.SaveChanges();
