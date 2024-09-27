@@ -143,6 +143,50 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
             result.Should().Be(false);
         }
 
+        [Fact]
+        public async void Edit_TakesValidObject_ReturnsTrue()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var regularTargetRepository = new RegularTargetRepository(dbContext, _logger, _mapper);
+            var regularTargetObject = regularTargetRepository.Get(1);
+            regularTargetObject.TimeDedicatedToPerformTarget = 123456789;
+            //Act
+            var result = regularTargetRepository.Edit(regularTargetObject);
+            //Assert
+            result.Should().Be(true);
+            regularTargetObject = regularTargetRepository.Get(1);
+            regularTargetObject.TimeDedicatedToPerformTarget.Should().Be(123456789);
+            regularTargetObject.LastUpdated.Should().NotBe(null);
+        }
+
+        [Fact]
+        public async void Edit_TakesNonExistingObject_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var regularTargetRepository = new RegularTargetRepository(dbContext, _logger, _mapper);
+            
+            //Act
+            var result = regularTargetRepository.Edit(new RegularTarget { TimeDedicatedToPerformTarget = 30, RegularTimeIntervalToAchieveTarget = 100 });
+            //Assert
+            result.Should().Be(false);
+        }
+
+        [Fact]
+        public async void Edit_TakesNullObject_ReturnsFalse()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var regularTargetRepository = new RegularTargetRepository(dbContext, _logger, _mapper);
+
+            //Act
+            var result = regularTargetRepository.Edit(null);
+            //Assert
+            result.Should().Be(false);
+        }
+
+
 
     }
 }
