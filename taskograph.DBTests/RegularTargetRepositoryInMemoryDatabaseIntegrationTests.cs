@@ -11,6 +11,7 @@ using Task = taskograph.Models.Tables.Task;
 using taskograph.Models.Tables;
 using taskograph.Models;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using taskograph.Models.DTOs;
 
 namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
 {
@@ -186,7 +187,19 @@ namespace taskograph.RepositoriesInMemoryDatabaseIntegrationTests
             result.Should().Be(false);
         }
 
+        [Fact]
+        public async void Get_TakesValidId_ReturnsValidObject()
+        {
+            //Arrange
+            var dbContext = await GetDbContext();
+            var regularTargetRepository = new RegularTargetRepository(dbContext, _logger, _mapper);
 
+            //Act
+            var result = regularTargetRepository.Get(1);
+            //Assert
+            result.Should().BeOfType(typeof(RegularTarget));
+            result.Id.Should().Be(1);
+        }
 
     }
 }

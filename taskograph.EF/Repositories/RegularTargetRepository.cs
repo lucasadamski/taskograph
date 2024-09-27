@@ -27,6 +27,7 @@ namespace taskograph.EF.Repositories
 
         public bool Add(RegularTarget regularTarget)
         {
+            bool result = true;
             try
             {
                 if (regularTarget.RegularTimeIntervalToAchieveTarget == 0 || regularTarget.TimeDedicatedToPerformTarget ==  0) 
@@ -38,13 +39,14 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return false;
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public bool Delete(RegularTarget regularTarget)
         {
+            bool result = true;
             try
             {
                 if (!_db.RegularTargets.Contains(regularTarget)) throw new Exception("Can't delete this object because it does not exist in DB.");
@@ -55,13 +57,14 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return false;
+                result =false;
             }
-            return true;
+            return result;
         }
 
         public bool Edit(RegularTarget regularTarget)
         {
+            bool result = true;
             try
             {
                 if (!_db.RegularTargets.Contains(regularTarget)) throw new Exception("Can't delete this object because it does not exist in DB.");
@@ -72,9 +75,9 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return false;
+                result = false;
             }
-            return true;
+            return result;
         }
 
         public RegularTarget Get(int id)
@@ -91,11 +94,12 @@ namespace taskograph.EF.Repositories
             catch (Exception e)
             {
                 _logger.LogError($"Exception: {e.Message} StackTrace: {e.StackTrace}");
-                return new RegularTarget();
+                result = null;
             }
             return result ?? new RegularTarget();
         }
 
+        //Not tested in integration tests. InMemoryDB can't test raw sql queries.
         public IEnumerable<RegularTargetDTO> Get(string userId, DateTime? from = null, DateTime? to = null)
         {
             List<RegularTargetSP> spOutput;
