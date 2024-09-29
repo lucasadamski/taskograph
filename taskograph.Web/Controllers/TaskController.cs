@@ -39,7 +39,19 @@ namespace taskograph.Web.Controllers
            
         }
 
-        private string? GetIdentityUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier);
+        private string? GetIdentityUserId() 
+        {
+            string? result = "test user";
+            try
+            {
+                result = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error message {0} Stack trace: {1}", e.Message, e.StackTrace);
+            }
+            return result;
+        }
 
 
 
@@ -158,7 +170,7 @@ namespace taskograph.Web.Controllers
             taskToEdit.Name = task.Name;
             taskToEdit.GroupId = task.GroupId == 0 ? null : task.GroupId; //Unassigned will return Id value 0
             _taskRepository.Edit(taskToEdit);
-            return ConfigTasks();
+            return RedirectToAction("ConfigTasks");
         }
         public IActionResult EditGroup(int id)
         {
@@ -208,7 +220,7 @@ namespace taskograph.Web.Controllers
                 _taskRepository.Edit(taskToAddeGroupIdTo);
             }
             
-            return ConfigTasks();
+            return RedirectToAction("ConfigTasks");
         }
 
         private void ReadGroupsSelectedItems(TaskViewModel task)
@@ -257,6 +269,7 @@ namespace taskograph.Web.Controllers
                 })
                 .ToList();
         }
+
 
         public void DeleteTask(int id)
         {
