@@ -31,9 +31,24 @@ namespace taskograph.Web.Controllers
 
 
         }
+
+        private string? GetIdentityUserId()
+        {
+            string? result = "test user";
+            try
+            {
+                result = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error message {0} Stack trace: {1}", e.Message, e.StackTrace);
+            }
+            return result;
+        }
+
         public IActionResult Index()
         {
-            _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _userId = GetIdentityUserId();
 
             TargetViewModel targetVM = new TargetViewModel();
 
