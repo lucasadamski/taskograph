@@ -33,9 +33,24 @@ namespace taskograph.Web.Controllers
             _configuration = configuration;
 
         }
+
+        private string? GetIdentityUserId()
+        {
+            string? result = "test user";
+            try
+            {
+                result = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Error message {0} Stack trace: {1}", e.Message, e.StackTrace);
+            }
+            return result;
+        }
+
         public IActionResult Index()
         {
-            _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _userId = GetIdentityUserId();
 
             if (_userId.IsNullOrEmpty())
             {
