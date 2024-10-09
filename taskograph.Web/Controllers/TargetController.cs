@@ -57,5 +57,15 @@ namespace taskograph.Web.Controllers
 
             return View(targetVM);
         }
+
+        public IActionResult AddPreciseTarget()
+        {
+            return View("AddPreciseTarget");
+        }
+
+        public IActionResult AddRegularTarget()
+        {
+            return View("AddRegularTarget");
+        }
     }
 }
