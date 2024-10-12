@@ -20,6 +20,7 @@ namespace taskograph.ControllerUnitTests
     {
         private IPreciseTargetRepository _preciseTargetRepository;
         private IRegularTargetRepository _regularTargetRepository;
+        private ITaskRepository _taskRepository;
 
         private readonly ILogger<TargetController> _logger;
         private IConfiguration _configuration;
@@ -33,11 +34,12 @@ namespace taskograph.ControllerUnitTests
             // Dependencies;
             _preciseTargetRepository = A.Fake<IPreciseTargetRepository>();
             _regularTargetRepository = A.Fake<IRegularTargetRepository>();
+            _taskRepository = A.Fake<ITaskRepository>();
             _logger = A.Fake<ILogger<TargetController>>();
             _configuration = A.Fake<IConfiguration>();
 
             // Subject Under Testing
-            _targetController = new TargetController(_preciseTargetRepository, _regularTargetRepository, _logger, _configuration);
+            _targetController = new TargetController(_preciseTargetRepository, _regularTargetRepository, _taskRepository, _logger, _configuration);
         }
 
         [Fact]

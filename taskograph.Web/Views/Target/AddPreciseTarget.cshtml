@@ -1,7 +1,24 @@
-﻿@using Task = taskograph.Models.Tables.Task;
-@using taskograph.Models.DTOs
-@using taskograph.Models.Tables
-@using taskograph.Web.Models.DTOs
-
+﻿@model TargetViewModel
 
 <h1>Add Precise Target</h1>
+
+
+<form asp-controller="Target" asp-action="AddPreciseTarget" method="post">
+    <div class="form-group">
+        <label asp-for="@Model.Name">Description</label>
+        <input asp-for="@Model.Name">
+    </div>
+
+    <div>
+        <label asp-for="@Model.TaskId">Connected Task</label>
+        <select asp-for="@Model.TaskId" asp-items="@Model.TasksSLI">
+        </select>
+    </div>
+
+    <div>
+        <label asp-for="@Model.DateDue">DateDue</label>
+        <input asp-for="@Model.DateDue">
+    </div>
+ 
+    <input type="submit" class="btn btn-primary" value="Add Precise Target" />
+</form>
