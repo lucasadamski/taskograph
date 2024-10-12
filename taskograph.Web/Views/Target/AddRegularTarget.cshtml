@@ -1,13 +1,8 @@
-﻿@model TargetViewModel
+﻿@model RegularTargetViewModel
 
 <h1>Add Regular Target</h1>
 
-<form asp-controller="Target" asp-action="AddPreciseTarget" method="post">
-    <div class="form-group">
-        <label asp-for="@Model.Name">Description</label>
-        <input asp-for="@Model.Name">
-    </div>
-
+<form asp-controller="Target" asp-action="AddRegularTarget" method="post">
     <div>
         <label asp-for="@Model.TaskId">Connected Task</label>
         <select asp-for="@Model.TaskId" asp-items="@Model.TasksSLI">
@@ -15,8 +10,13 @@
     </div>
 
     <div>
-        <label asp-for="@Model.DateDue">DateDue</label>
-        <input asp-for="@Model.DateDue">
+        <label asp-for="@Model.TimeDedicated">TimeDedicated</label>
+        <input asp-for="@Model.TimeDedicated">
+    </div
+    
+    ><div>
+        <label asp-for="@Model.TimeInterval">TimeInterval</label>
+        <input asp-for="@Model.TimeInterval">
     </div>
 
     <input type="submit" class="btn btn-primary" value="Add Precise Target" />

@@ -74,7 +74,6 @@ namespace taskograph.Web.Controllers
         [HttpPost]
         public IActionResult AddPreciseTarget(TargetViewModel targetVM)
         {
-            _userId = GetIdentityUserId();
             PreciseTarget preciseTarget = new PreciseTarget()
             {
                 TaskId = targetVM.TaskId,
@@ -88,7 +87,22 @@ namespace taskograph.Web.Controllers
 
         public IActionResult AddRegularTarget()
         {
-            return View("AddRegularTarget");
+            _userId = GetIdentityUserId();
+            RegularTargetViewModel regularTargetVM = new();
+            regularTargetVM.TasksSLI = GetAllTasksSLI(_userId);
+            return View("AddRegularTarget", regularTargetVM);
+        }
+        [HttpPost]
+        public IActionResult AddRegularTarget(RegularTargetViewModel regularTargetVM)
+        {
+            RegularTarget regularTarget = new RegularTarget()
+            {
+                TaskId = regularTargetVM.TaskId,
+                TimeDedicatedToPerformTarget = regularTargetVM.TimeDedicated,
+                RegularTimeIntervalToAchieveTarget = regularTargetVM.TimeInterval
+            };
+            _regularTargetRepository.Add(regularTarget);
+            return RedirectToAction("AddRegularTarget");
         }
 
         private List<SelectListItem> GetAllTasksSLI(string userId)
