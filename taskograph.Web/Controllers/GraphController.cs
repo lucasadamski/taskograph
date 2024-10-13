@@ -85,6 +85,12 @@ namespace taskograph.Web.Controllers
             return View(graphVM);
         }
 
+        [HttpPost]
+        public IActionResult ShowGraph(GraphViewModel graphVM)
+        {
+            return View("ShowGraph", graphVM);
+        }
+
         private List<TaskDTO> ConvertTasksToDTO(List<Task> input, DateTime date)
         {
             return input.Select(n => new TaskDTO()

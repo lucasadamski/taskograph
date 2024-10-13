@@ -7,6 +7,23 @@
 
 <h2>Last week Text Graph</h2>
 
+<p>
+    Showing graph for number: @Model.Number length: @Model.Length
+</p>
+
+
+<form asp-controller="Graph" asp-action="ShowGraph" method="post">
+    <div>
+        <label asp-for="@Model.Number">Number</label>
+        <input asp-for="@Model.Number" />
+    </div>
+    <div>
+        <label asp-for="@Model.Length">Length</label>
+        <input asp-for="@Model.Length" />
+    </div>
+    <input type="submit" class="btn btn-primary" value="Show Graph" />
+</form>
+
 <table class="table">
     <thead>
         <tr>
