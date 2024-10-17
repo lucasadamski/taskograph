@@ -11,6 +11,8 @@ using taskograph.Web.Models.DTOs;
 using taskograph.Models.Tables;
 using Microsoft.IdentityModel.Tokens;
 using taskograph.Models;
+using System.Runtime.CompilerServices;
+using taskograph.Web.Models.Graph;
 
 namespace taskograph.Web.Controllers
 {
@@ -52,42 +54,19 @@ namespace taskograph.Web.Controllers
         {
             _userId = GetIdentityUserId();
 
-            if (_userId.IsNullOrEmpty())
+            if (_userId == null)
             {
                 return View("CustomErrorPage", ERROR_NO_USER);
             }
 
-            GraphViewModel graphVM = new GraphViewModel();
-
-            //fixed for 7 days
-            //load 7 days of tasks
-            List<Task> tasks = new List<Task>();
-            tasks = _taskRepository.GetAll(_userId).ToList();
-            if (tasks.IsNullOrEmpty())
-            {
-                return View("CustomErrorPage", ERROR_NO_TASKS);
-            }
-            DateTime day = DateTime.Now.AddDays(-7);
-
-            TextGraphOneCellDTO temp = new TextGraphOneCellDTO();
-            for (int i = 0; i < 7; i++)
-            {
-                temp = new TextGraphOneCellDTO()
-                {
-                    Description = $"{day.AddDays(i + 1).DayOfWeek} {day.AddDays(i + 1).Date.ToString("dd-MM-yy")}",
-                    Tasks = ConvertTasksToDTO(tasks, day.AddDays(i + 1)),
-                    TotalDuration = new Duration(GetTotalDurationFromTasks(ConvertTasksToDTO(tasks, day.AddDays(i + 1))))
-                };
-                graphVM.TextGraphCell.Add(temp);
-            }
-            
-
-            return View(graphVM);
+            return View(new GraphViewModel());
         }
 
         [HttpPost]
         public IActionResult ShowGraph(GraphViewModel graphVM)
         {
+            graphVM = GenerateGraph(1, GetIdentityUserId(), new DateTime(2024, 10, 8),
+                new DateTime(2024, 10, 12));
             return View("ShowGraph", graphVM);
         }
 
@@ -98,7 +77,7 @@ namespace taskograph.Web.Controllers
                 Id = n.Id,
                 Name = n.Name,
                 Group = n.Group?.Name ?? NULL_VALUE,
-                TotalDurationToday = new Duration(_entryRepository.GetTotalDurationForTask(n.Id, date))
+                Duration = new Duration(_entryRepository.GetTotalDurationForTask(n.Id, date))
             })
                 .ToList();
         }
@@ -111,12 +90,75 @@ namespace taskograph.Web.Controllers
             }
             else
             {
-                List<long> durations = input.Select(n => n.TotalDurationToday.Minutes).ToList();
+                List<long> durations = input.Select(n => n.Duration.Minutes).ToList();
                 return durations.Aggregate((a, b) => a + b);
             }
 
         }
 
-        
+        // howManyCalendarUnits - eg 2, 4, 3
+        // calendarUnit - eg. week, month, year
+        // => 2 weeks, 4 years etc.
+        private GraphViewModel GenerateGraph(int calendarUnit, string _userId, DateTime from, DateTime to)
+        {
+            GraphViewModel graphVM = new GraphViewModel();
+
+            List<Task> tasks = new List<Task>();
+            tasks = _taskRepository.GetAll(_userId).ToList();
+            if (tasks == null)
+            {
+                return graphVM;
+            }
+           
+                /*temp = new Column()
+                {
+                    Title = $"{day.AddDays(i + 1).DayOfWeek} {day.AddDays(i + 1).Date.ToString("dd-MM-yy")}",
+                    Tasks = ConvertTasksToDTO(tasks, day.AddDays(i + 1)),
+                    DurationSummary = new Duration(GetTotalDurationFromTasks(ConvertTasksToDTO(tasks, day.AddDays(i + 1))))
+                };
+                graphVM.OneWeekTable.Add(temp);*/
+            
+
+            if (calendarUnit == 1)
+            {
+                // week
+                // check beggining of a week
+                // check end of the week
+                // 
+                Column column;
+                Table table = new Table();
+                while (from.DayOfWeek != DayOfWeek.Monday)
+                {
+                    from = from.AddDays(-1);
+                }
+                while (to.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    to = to.AddDays(1);
+                }
+                while (from.Date != to.Date)
+                {
+                    column  = new Column()
+                    {
+                        Title = $"{from.DayOfWeek} {from.Date.ToString("dd-MM-yy")}",
+                        Tasks = ConvertTasksToDTO(tasks, from),
+                        DurationSummary = new Duration(GetTotalDurationFromTasks(ConvertTasksToDTO(tasks, from)))
+                    };
+                    table.Columns.Add(column);
+                    if (from.DayOfWeek == DayOfWeek.Sunday)
+                    {
+                        graphVM.Tables.Add(table);
+                        table = new Table();
+                    }
+                    from = from.AddDays(1);
+                }
+
+            }
+
+
+
+           return graphVM;
+            
+        }
     }
+
 }

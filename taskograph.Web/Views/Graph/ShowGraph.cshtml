@@ -6,18 +6,23 @@
 <h1>Show Graph</h1>
 
 <p>
-    Showing graph for number: @Model.Number length: @Model.Length
+    Showing graph for number: @Model.HowManyCalendarUnits length: @Model.CalendarUnit
 </p>
 
 
 <form asp-controller="Graph" asp-action="ShowGraph" method="post">
     <div>
-        <label asp-for="@Model.Number">Number</label>
-        <input asp-for="@Model.Number" />
+        <label asp-for="@Model.HowManyCalendarUnits">Number</label>
+        <input asp-for="@Model.HowManyCalendarUnits" />
     </div>
     <div>
-        <label asp-for="@Model.Length">Length</label>
-        <input asp-for="@Model.Length" />
+        <label asp-for="@Model.CalendarUnit">Length</label>
+        <input asp-for="@Model.CalendarUnit" />
     </div>
     <input type="submit" class="btn btn-primary" value="Show Graph" />
 </form>
+
+
+@{
+  
+}

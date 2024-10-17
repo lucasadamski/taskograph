@@ -129,7 +129,7 @@ namespace taskograph.EF.Repositories
                         Id = n.Id,
                         Name = n.Name,
                         Group = n.Group?.Name ?? NULL_VALUE,
-                        TotalDurationToday = new Duration(_entryRepository.GetTotalDurationForTask(n.Id, DateTime.Now))
+                        Duration = new Duration(_entryRepository.GetTotalDurationForTask(n.Id, DateTime.Now))
                     })
                  .ToList();
             }

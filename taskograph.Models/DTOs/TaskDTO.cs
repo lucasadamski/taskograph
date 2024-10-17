@@ -9,6 +9,6 @@ namespace taskograph.Web.Models.DTOs
         public string Name { get; set; }
         public string Group { get; set; }
         public string Color { get; set; }
-        public Duration TotalDurationToday { get; set; }
+        public Duration Duration { get; set; }
     }
 }
