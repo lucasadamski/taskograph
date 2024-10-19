@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using taskograph.Models;
 using System.Runtime.CompilerServices;
 using taskograph.Web.Models.Graph;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace taskograph.Web.Controllers
 {
@@ -138,7 +139,7 @@ namespace taskograph.Web.Controllers
                 {
                     to = to.AddDays(1);
                 }
-
+ 
                 // generate tables
                 do
                 {
@@ -149,24 +150,21 @@ namespace taskograph.Web.Controllers
                         DurationSummary = new Duration(GetTotalDurationFromTasks(ConvertTasksToDTO(tasks, from)))
                     };
                     table.Columns.Add(column);
-                    from = from.AddDays(1);
+                   
                     if (from.DayOfWeek == DayOfWeek.Sunday)
                     {
-                        column = new Column()
-                        {
-                            Title = $"{from.DayOfWeek} {from.Date.ToString("dd-MM-yy")}",
-                            Tasks = ConvertTasksToDTO(tasks, from),
-                            DurationSummary = new Duration(GetTotalDurationFromTasks(ConvertTasksToDTO(tasks, from)))
-                        };
-                        table.Columns.Add(column);
                         graphVM.Tables.Add(table);
                         table = new Table();
                     }
+                    if (from.DayOfWeek == DayOfWeek.Monday)
+                    {
+                        //determine Week number
+                        table.Description = "Week " + System.Globalization.ISOWeek.GetWeekOfYear(from).ToString();
+                    }
+                    from = from.AddDays(1);
                 } while (from.Date <= to.Date);
-
+               
             }
-
-
 
            return graphVM;
             

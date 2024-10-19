@@ -26,7 +26,7 @@
 @{
     foreach (var table in Model.Tables)
     {
-        <h1>Table description</h1>
+        <h1>@table.Description</h1>
         <table>
             <tr>
                 @for (int j = 0; j < table.Columns.Count(); j++)
