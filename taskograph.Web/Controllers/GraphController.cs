@@ -65,7 +65,7 @@ namespace taskograph.Web.Controllers
         [HttpPost]
         public IActionResult ShowGraph(GraphViewModel graphVM)
         {
-            graphVM = GenerateGraph(1, GetIdentityUserId(), new DateTime(2024, 10, 8),
+            graphVM = GenerateGraph(1, GetIdentityUserId(), new DateTime(2024, 10, 2),
                 new DateTime(2024, 10, 12));
             return View("ShowGraph", graphVM);
         }
@@ -127,30 +127,42 @@ namespace taskograph.Web.Controllers
                 // 
                 Column column;
                 Table table = new Table();
+
+                //find begging of a week (Monday)
                 while (from.DayOfWeek != DayOfWeek.Monday)
                 {
                     from = from.AddDays(-1);
                 }
+                //find end of the week (Sunday)
                 while (to.DayOfWeek != DayOfWeek.Sunday)
                 {
                     to = to.AddDays(1);
                 }
-                while (from.Date != to.Date)
+
+                // generate tables
+                do
                 {
-                    column  = new Column()
+                    column = new Column()
                     {
                         Title = $"{from.DayOfWeek} {from.Date.ToString("dd-MM-yy")}",
                         Tasks = ConvertTasksToDTO(tasks, from),
                         DurationSummary = new Duration(GetTotalDurationFromTasks(ConvertTasksToDTO(tasks, from)))
                     };
                     table.Columns.Add(column);
+                    from = from.AddDays(1);
                     if (from.DayOfWeek == DayOfWeek.Sunday)
                     {
+                        column = new Column()
+                        {
+                            Title = $"{from.DayOfWeek} {from.Date.ToString("dd-MM-yy")}",
+                            Tasks = ConvertTasksToDTO(tasks, from),
+                            DurationSummary = new Duration(GetTotalDurationFromTasks(ConvertTasksToDTO(tasks, from)))
+                        };
+                        table.Columns.Add(column);
                         graphVM.Tables.Add(table);
                         table = new Table();
                     }
-                    from = from.AddDays(1);
-                }
+                } while (from.Date <= to.Date);
 
             }
 

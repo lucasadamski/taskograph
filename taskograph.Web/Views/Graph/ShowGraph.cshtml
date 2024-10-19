@@ -24,5 +24,31 @@
 
 
 @{
-  
+    foreach (var table in Model.Tables)
+    {
+        <h1>Table description</h1>
+        <table>
+            <tr>
+                @for (int j = 0; j < table.Columns.Count(); j++)
+                {
+                    <td>@table.Columns.ElementAt(j).Title</td>
+                }
+            </tr>
+            @for (int i = 0; i < table.Columns.ElementAt(0).Tasks.Count(); i++)
+            {
+                <tr>
+                    @for (int j = 0; j < table.Columns.Count(); j++)
+                    {
+                        <td>@table.Columns.ElementAt(j).Tasks.ElementAt(i).Name : @table.Columns.ElementAt(j).Tasks.ElementAt(i).Duration :</td>
+                    }
+                </tr>
+            }
+            <tr>
+                @for (int i = 0; i < table.Columns.Count(); i++)
+                {
+                    <td>Total Duration: @table.Columns.ElementAt(i).DurationSummary</td>
+                }
+            </tr>
+        </table>
+    }
 }
