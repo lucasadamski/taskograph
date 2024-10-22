@@ -60,14 +60,28 @@ namespace taskograph.Web.Controllers
                 return View("CustomErrorPage", ERROR_NO_USER);
             }
 
-            return View(new GraphViewModel());
+            GraphViewModel graphVM = new GraphViewModel()
+            {
+                Start = DateTime.Now.AddDays(-7),
+                End = DateTime.Now
+            };
+
+            return View(graphVM);
         }
 
         [HttpPost]
         public IActionResult ShowGraph(GraphViewModel graphVM)
         {
-            graphVM = GenerateGraph(1, GetIdentityUserId(), new DateTime(2024, 10, 2),
-                new DateTime(2024, 10, 12));
+            DateTime Start = graphVM.Start;
+            DateTime End = graphVM.End;
+            //sanitize date
+            if (Start >= End)
+            {
+                Start = DateTime.Now.AddDays(-7);
+                End = DateTime.Now;
+            }
+
+            graphVM.Tables = GenerateTables(1, GetIdentityUserId(), Start, End);
             return View("ShowGraph", graphVM);
         }
 
@@ -100,15 +114,15 @@ namespace taskograph.Web.Controllers
         // howManyCalendarUnits - eg 2, 4, 3
         // calendarUnit - eg. week, month, year
         // => 2 weeks, 4 years etc.
-        private GraphViewModel GenerateGraph(int calendarUnit, string _userId, DateTime from, DateTime to)
+        private List<Table> GenerateTables(int calendarUnit, string _userId, DateTime from, DateTime to)
         {
-            GraphViewModel graphVM = new GraphViewModel();
+            List<Table> result = new List<Table>();
 
             List<Task> tasks = new List<Task>();
             tasks = _taskRepository.GetAll(_userId).ToList();
             if (tasks == null)
             {
-                return graphVM;
+                return result;
             }
            
                 /*temp = new Column()
@@ -150,10 +164,10 @@ namespace taskograph.Web.Controllers
                         DurationSummary = new Duration(GetTotalDurationFromTasks(ConvertTasksToDTO(tasks, from)))
                     };
                     table.Columns.Add(column);
-                   
+                    table.Total += column.DurationSummary;
                     if (from.DayOfWeek == DayOfWeek.Sunday)
                     {
-                        graphVM.Tables.Add(table);
+                        result.Add(table);
                         table = new Table();
                     }
                     if (from.DayOfWeek == DayOfWeek.Monday)
@@ -165,8 +179,16 @@ namespace taskograph.Web.Controllers
                 } while (from.Date <= to.Date);
                
             }
+            if (calendarUnit == 2)
+            {
+                // month
+                // determine start and end of month
+                // for each week get total week 
+                // get total month
+                // 1 month = 1 table 
+            }
 
-           return graphVM;
+           return result;
             
         }
     }

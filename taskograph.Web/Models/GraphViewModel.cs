@@ -10,5 +10,8 @@ namespace taskograph.Web.Models
         public int HowManyCalendarUnits { get; set; }
         public int CalendarUnit { get; set; }
 
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+
     }
 }
