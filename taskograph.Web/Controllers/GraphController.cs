@@ -81,7 +81,7 @@ namespace taskograph.Web.Controllers
                 End = DateTime.Now;
             }
 
-            graphVM.Tables = GenerateTables(1, GetIdentityUserId(), Start, End);
+            graphVM.Tables = GenerateTables(2, GetIdentityUserId(), Start, End);
             return View("ShowGraph", graphVM);
         }
 
@@ -133,6 +133,8 @@ namespace taskograph.Web.Controllers
                 };
                 graphVM.OneWeekTable.Add(temp);*/
             
+            Column column;
+            Table table = new Table();
 
             if (calendarUnit == 1)
             {
@@ -140,8 +142,6 @@ namespace taskograph.Web.Controllers
                 // check beggining of a week
                 // check end of the week
                 // 
-                Column column;
-                Table table = new Table();
 
                 //find begging of a week (Monday)
                 while (from.DayOfWeek != DayOfWeek.Monday)
@@ -186,6 +186,47 @@ namespace taskograph.Web.Controllers
                 // for each week get total week 
                 // get total month
                 // 1 month = 1 table 
+
+                // start of the month
+                int month = from.Month;
+                int year = from.Year;
+                from = new DateTime(year, month, 1);
+
+                // end of the month
+                month = to.Month;
+                year = to.Year;
+                to = new DateTime(year, month, 1);
+                to = to.AddMonths(1);
+                to = to.AddDays(-1);
+
+                //find begging of a week (Monday)
+                while (from.DayOfWeek != DayOfWeek.Monday)
+                {
+                    from = from.AddDays(-1);
+                }
+
+                //find end of the week (Sunday)
+                while (to.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    to = to.AddDays(1);
+                }
+
+                List<Entry> entries = _entryRepository.Get(_userId, from, to).ToList();
+
+                do
+                {
+                    column = new Column()
+                    {
+                        Title = "Week " + System.Globalization.ISOWeek.GetWeekOfYear(from).ToString(),
+                        Tasks = new List<TaskDTO>(),
+                        DurationSummary = new Duration(entries.Where(n => n.Created >= from && n.Created <= from.AddDays(7)).Select(n => n.Duration).Sum())
+                    };
+                    table.Columns.Add(column);
+                    from = from.AddDays(7);
+                } while (from.Date <= to.Date);
+                table.Description = "test descript";
+                table.Total = new Duration(12345);
+                result.Add(table);
             }
 
            return result;
