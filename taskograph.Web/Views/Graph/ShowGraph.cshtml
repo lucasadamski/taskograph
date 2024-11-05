@@ -27,7 +27,7 @@
     {
         <h1>@table.Description</h1>
         <h2>Total Duration: @table.Total.ToString()</h2>
-        <table>
+        <table class="table">
             <tr>
                 @for (int j = 0; j < table.Columns.Count(); j++)
                 {
@@ -39,7 +39,14 @@
                 <tr>
                     @for (int j = 0; j < table.Columns.Count(); j++)
                     {
-                        <td>@table.Columns.ElementAt(j).Tasks.ElementAt(i).Name : @table.Columns.ElementAt(j).Tasks.ElementAt(i).Duration :</td>
+                        try
+                        {
+                            <td>@table.Columns.ElementAt(j).Tasks.ElementAt(i).Name : @table.Columns.ElementAt(j).Tasks.ElementAt(i).Duration :</td>
+                        }
+                        catch (Exception)
+                        {
+                            <td>Empty</td>
+                        }
                     }
                 </tr>
             }

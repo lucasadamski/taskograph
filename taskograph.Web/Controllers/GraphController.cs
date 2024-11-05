@@ -14,6 +14,7 @@ using taskograph.Models;
 using System.Runtime.CompilerServices;
 using taskograph.Web.Models.Graph;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Text;
 
 namespace taskograph.Web.Controllers
 {
@@ -82,6 +83,7 @@ namespace taskograph.Web.Controllers
             }
 
             graphVM.Tables = GenerateTables(2, GetIdentityUserId(), Start, End);
+            graphVM.GraphDescription = GenerateGraphDescription(Start, End, 2);         // TODO 
             return View("ShowGraph", graphVM);
         }
 
@@ -187,6 +189,8 @@ namespace taskograph.Web.Controllers
                 // get total month
                 // 1 month = 1 table 
 
+                table.Description = from.ToString("MMMM") + " " + from.ToString("yyyy");
+                
                 // start of the month
                 int month = from.Month;
                 int year = from.Year;
@@ -213,18 +217,35 @@ namespace taskograph.Web.Controllers
 
                 List<Entry> entries = _entryRepository.Get(_userId, from, to).ToList();
 
+                int currentMonth = from.Month;
                 do
                 {
+                    // ask DAL for entries for current week that have any duration
+                    List<Entry> entriesForCurrentWeek = entries.Where(n => n.Duration != 0 && n.Created >= from && n.Created <= from.AddDays(7)).ToList();
                     column = new Column()
                     {
                         Title = "Week " + System.Globalization.ISOWeek.GetWeekOfYear(from).ToString(),
                         Tasks = new List<TaskDTO>(),
-                        DurationSummary = new Duration(entries.Where(n => n.Created >= from && n.Created <= from.AddDays(7)).Select(n => n.Duration).Sum())
+                        DurationSummary = new Duration(entriesForCurrentWeek.Select(n => n.Duration).Sum())
                     };
+
+                    // calculate individual tasks, only those who has entires
+
+                    foreach (var entry in entriesForCurrentWeek)
+                    {
+                        column.Tasks.Add(new TaskDTO()
+                        {
+                            Name = entry.Task.Name,
+                            Duration = new Duration(entry.Duration)
+                        });
+
+                    }
+                    
+
                     table.Columns.Add(column);
                     from = from.AddDays(7);
                 } while (from.Date <= to.Date);
-                table.Description = "test descript";
+                 
                 table.Total = new Duration(12345);
                 result.Add(table);
             }
@@ -232,6 +253,21 @@ namespace taskograph.Web.Controllers
            return result;
             
         }
+        public string GenerateGraphDescription(DateTime from, DateTime to, int option)
+        {
+            //option = weekly, monthly, yearly
+            StringBuilder result = new StringBuilder("Monthly graph for: " + from.ToString("MMMM") + " " + from.ToString("yyyy"));
+            if (!(from.Month == to.Month && from.Year == to.Year))
+            {
+                for (int i = 1; from.AddMonths(i) <= to ; i++)
+                {
+                    result = result.Append(", " + from.AddMonths(i).ToString("MMMM") + " " + from.AddMonths(i).ToString("yyyy"));
+                }
+            }
+
+            return result.ToString();
+        }
     }
+
 
 }
