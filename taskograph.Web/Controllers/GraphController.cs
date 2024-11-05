@@ -15,6 +15,7 @@ using System.Runtime.CompilerServices;
 using taskograph.Web.Models.Graph;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Text;
+using taskograph.Web.Models.Enums;
 
 namespace taskograph.Web.Controllers
 {
@@ -82,8 +83,8 @@ namespace taskograph.Web.Controllers
                 End = DateTime.Now;
             }
 
-            graphVM.Tables = GenerateTables(2, GetIdentityUserId(), Start, End);
-            graphVM.GraphDescription = GenerateGraphDescription(Start, End, 2);         // TODO 
+            graphVM.Tables = GenerateTables(GraphTimeUnit.Month, GetIdentityUserId(), Start, End);
+            graphVM.GraphDescription = GenerateGraphDescription(Start, End, GraphTimeUnit.Month);         // TODO 
             return View("ShowGraph", graphVM);
         }
 
@@ -116,7 +117,7 @@ namespace taskograph.Web.Controllers
         // howManyCalendarUnits - eg 2, 4, 3
         // calendarUnit - eg. week, month, year
         // => 2 weeks, 4 years etc.
-        private List<Table> GenerateTables(int calendarUnit, string _userId, DateTime from, DateTime to)
+        private List<Table> GenerateTables(GraphTimeUnit graphTimeUnit, string _userId, DateTime from, DateTime to)
         {
             List<Table> result = new List<Table>();
 
@@ -138,7 +139,7 @@ namespace taskograph.Web.Controllers
             Column column;
             Table table = new Table();
 
-            if (calendarUnit == 1)
+            if (graphTimeUnit == GraphTimeUnit.Week)
             {
                 // week
                 // check beggining of a week
@@ -181,7 +182,7 @@ namespace taskograph.Web.Controllers
                 } while (from.Date <= to.Date);
                
             }
-            if (calendarUnit == 2)
+            if (graphTimeUnit == GraphTimeUnit.Month)
             {
                 // month
                 // determine start and end of month
@@ -253,7 +254,7 @@ namespace taskograph.Web.Controllers
            return result;
             
         }
-        public string GenerateGraphDescription(DateTime from, DateTime to, int option)
+        public string GenerateGraphDescription(DateTime from, DateTime to, GraphTimeUnit graphTimeUnit)
         {
             //option = weekly, monthly, yearly
             StringBuilder result = new StringBuilder("Monthly graph for: " + from.ToString("MMMM") + " " + from.ToString("yyyy"));
