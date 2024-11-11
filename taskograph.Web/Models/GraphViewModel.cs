@@ -1,11 +1,17 @@
 ﻿using taskograph.Web.Models.DTOs;
+using taskograph.Web.Models.Graph;
 
 namespace taskograph.Web.Models
 {
     public class GraphViewModel
     {
-        public List<TextGraphOneCellDTO> TextGraphCell { get; set; } = new List<TextGraphOneCellDTO>();
-        public int Number { get; set; }
-        public int Length { get; set; }
+        public List<Table> Tables { get; set; } = new List<Table>();
+        public string GraphDescription { get; set; }
+        public int HowManyCalendarUnits { get; set; }
+        public int CalendarUnit { get; set; }
+
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+
     }
 }

@@ -3,21 +3,59 @@
 @using taskograph.Web.Models.DTOs
 
 
-<h1>Show Graph</h1>
-
-<p>
-    Showing graph for number: @Model.Number length: @Model.Length
-</p>
-
+<h1>Number @Model.CalendarUnit from @Model.Start.ToShortDateString() to @Model.End.ToShortDateString()</h1>
 
 <form asp-controller="Graph" asp-action="ShowGraph" method="post">
     <div>
-        <label asp-for="@Model.Number">Number</label>
-        <input asp-for="@Model.Number" />
+        <label asp-for="@Model.CalendarUnit">Graph Type: 1 - weeks 2 - months 3 - years</label>
+        <input asp-for="@Model.CalendarUnit" />
     </div>
     <div>
-        <label asp-for="@Model.Length">Length</label>
-        <input asp-for="@Model.Length" />
+        <label asp-for="@Model.Start">Start Date</label>
+        <input asp-for="@Model.Start" type="date"/>
+    </div>
+    <div>
+        <label asp-for="@Model.End">End Date</label>
+        <input asp-for="@Model.End" type="date" />
     </div>
     <input type="submit" class="btn btn-primary" value="Show Graph" />
 </form>
+
+
+@{
+    foreach (var table in Model.Tables)
+    {
+        <h1>@table.Description</h1>
+        <h2>Total Duration: @table.Total.ToString()</h2>
+        <table class="table">
+            <tr>
+                @for (int j = 0; j < table.Columns.Count(); j++)
+                {
+                    <td>@table.Columns.ElementAt(j).Title</td>
+                }
+            </tr>
+            @for (int i = 0; i < table.Columns.ElementAt(0).Tasks.Count(); i++)
+            {
+                <tr>
+                    @for (int j = 0; j < table.Columns.Count(); j++)
+                    {
+                        try
+                        {
+                            <td>@table.Columns.ElementAt(j).Tasks.ElementAt(i).Name : @table.Columns.ElementAt(j).Tasks.ElementAt(i).Duration :</td>
+                        }
+                        catch (Exception)
+                        {
+                            <td>Empty</td>
+                        }
+                    }
+                </tr>
+            }
+            <tr>
+                @for (int i = 0; i < table.Columns.Count(); i++)
+                {
+                    <td>Total Duration: @table.Columns.ElementAt(i).DurationSummary</td>
+                }
+            </tr> 
+        </table>
+    }
+}
