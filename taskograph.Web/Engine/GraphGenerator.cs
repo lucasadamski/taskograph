@@ -160,7 +160,6 @@ namespace taskograph.Web.Engine
             }
 
             return result;
-
         }
 
         public string GenerateGraphDescription(DateTime from, DateTime to, GraphTimeUnit graphTimeUnit)
