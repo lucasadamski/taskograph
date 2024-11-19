@@ -98,7 +98,7 @@ namespace taskograph.Web.Engine
                 // get total month
                 // 1 month = 1 table 
 
-                table.Description = from.ToString("MMMM") + " " + from.ToString("yyyy");
+               
 
                 // start of the month
                 int month = from.Month;
@@ -123,7 +123,7 @@ namespace taskograph.Web.Engine
                 {
                     to = to.AddDays(1);
                 }
-
+                table.Description = from.ToString("MMMM") + " " + from.ToString("yyyy");
                 List<Entry> entries = _entryRepository.Get(_userId, from, to).ToList();
 
                 int currentMonth = from.Month;
@@ -137,7 +137,7 @@ namespace taskograph.Web.Engine
                         Tasks = new List<TaskDTO>()
                     };
                     column.DurationSummary = new Duration(entriesForCurrentWeek.Select(n => n.Duration).Sum());
-
+                    table.Total += column.DurationSummary;
                     // calculate individual tasks, only those who has entires
 
                     foreach (var entry in entriesForCurrentWeek)
@@ -153,9 +153,15 @@ namespace taskograph.Web.Engine
 
                     table.Columns.Add(column);
                     from = from.AddDays(7);
+                    if (currentMonth != from.Month)
+                    {
+                        currentMonth = from.Month;
+                        result.Add(table);
+                        table = new Table();
+                        table.Description = from.ToString("MMMM") + " " + from.ToString("yyyy");
+                    }
                 } while (from.Date <= to.Date);
 
-                table.Total = new Duration(12345);
                 result.Add(table);
             }
 
