@@ -7,8 +7,9 @@
 
 <form asp-controller="Graph" asp-action="ShowGraph" method="post">
     <div>
-        <label asp-for="@Model.GraphTimeUnit">Graph Type: 1 - weeks 2 - months 3 - years</label>
-        <input asp-for="@Model.GraphTimeUnit" />
+        <label asp-for="@Model.GraphTimeUnit">Graph Type:</label>
+        <select asp-for="@Model.GraphTimeUnit" asp-items="@Model.GraphUnitsSLI">
+        </select>
     </div>
     <div>
         <label asp-for="@Model.Start">Start Date</label>

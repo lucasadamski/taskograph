@@ -2,9 +2,7 @@
 {
     public enum GraphTimeUnit
     {
-        Day,
         Week,
-        Month,
-        Year
+        Month
     }
 }

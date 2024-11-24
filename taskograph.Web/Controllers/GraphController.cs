@@ -63,6 +63,8 @@ namespace taskograph.Web.Controllers
                 End = DateTime.Now
             };
 
+            graphVM.GraphUnitsSLI = GraphTimeUnitToSLI();
+
             return View(graphVM);
         }
 
@@ -78,8 +80,10 @@ namespace taskograph.Web.Controllers
                 End = DateTime.Now;
             }
 
-            graphVM.Tables = _graphGenerator.GenerateTables(GraphTimeUnit.Month, GetIdentityUserId(), Start, End);
-            graphVM.GraphDescription = _graphGenerator.GenerateGraphDescription(Start, End, GraphTimeUnit.Month);         // TODO 
+            graphVM.GraphUnitsSLI = GraphTimeUnitToSLI();
+
+            graphVM.Tables = _graphGenerator.GenerateTables(graphVM.GraphTimeUnit, GetIdentityUserId(), Start, End);
+            graphVM.GraphDescription = _graphGenerator.GenerateGraphDescription(Start, End, graphVM.GraphTimeUnit);         // TODO 
             return View("ShowGraph", graphVM);
         }
 

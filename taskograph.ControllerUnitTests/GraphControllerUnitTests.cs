@@ -60,16 +60,10 @@ namespace taskograph.ControllerUnitTests
 
             // Assert
             result.ElementAt(0).Value.Should().Be("0");
-            result.ElementAt(0).Text.Should().Be("Day");
+            result.ElementAt(0).Text.Should().Be("Week");
 
             result.ElementAt(1).Value.Should().Be("1");
-            result.ElementAt(1).Text.Should().Be("Week");
-
-            result.ElementAt(2).Value.Should().Be("2");
-            result.ElementAt(2).Text.Should().Be("Month");
-
-            result.ElementAt(3).Value.Should().Be("3");
-            result.ElementAt(3).Text.Should().Be("Year");
+            result.ElementAt(1).Text.Should().Be("Month");
         }
     }
 }
