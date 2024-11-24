@@ -25,37 +25,18 @@
 @{
     foreach (var table in Model.Tables)
     {
-        <h1>@table.Description</h1>
-        <h2>Total Duration: @table.Total.ToString()</h2>
-        <table class="table">
-            <tr>
-                @for (int j = 0; j < table.Columns.Count(); j++)
-                {
-                    <td>@table.Columns.ElementAt(j).Title</td>
-                }
-            </tr>
-            @for (int i = 0; i < table.Columns.ElementAt(0).Tasks.Count(); i++)
+        <h3>@table.Description (Total: @table.Total)</h3>
+        <ul>
+            @foreach(var column in table.Columns)
             {
-                <tr>
-                    @for (int j = 0; j < table.Columns.Count(); j++)
-                    {
-                        try
-                        {
-                            <td>@table.Columns.ElementAt(j).Tasks.ElementAt(i).Name : @table.Columns.ElementAt(j).Tasks.ElementAt(i).Duration :</td>
-                        }
-                        catch (Exception)
-                        {
-                            <td>Empty</td>
-                        }
-                    }
-                </tr>
-            }
-            <tr>
-                @for (int i = 0; i < table.Columns.Count(); i++)
+                <li>@column.Title (Total: @column.DurationSummary)</li>
+                <ul>
+                @foreach (var task in column.Tasks)
                 {
-                    <td>Total Duration: @table.Columns.ElementAt(i).DurationSummary</td>
+                    <li>@task.Name (@task.Duration)</li>
                 }
-            </tr> 
-        </table>
+                </ul>
+            }
+        </ul>
     }
 }
