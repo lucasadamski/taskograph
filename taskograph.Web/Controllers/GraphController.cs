@@ -8,6 +8,7 @@ using static taskograph.Helpers.Messages;
 using System.Text;
 using taskograph.Web.Models.Enums;
 using taskograph.Web.Engine;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace taskograph.Web.Controllers
 {
@@ -62,6 +63,8 @@ namespace taskograph.Web.Controllers
                 End = DateTime.Now
             };
 
+            graphVM.GraphUnitsSLI = GraphTimeUnitToSLI();
+
             return View(graphVM);
         }
 
@@ -77,9 +80,29 @@ namespace taskograph.Web.Controllers
                 End = DateTime.Now;
             }
 
-            graphVM.Tables = _graphGenerator.GenerateTables(GraphTimeUnit.Month, GetIdentityUserId(), Start, End);
-            graphVM.GraphDescription = _graphGenerator.GenerateGraphDescription(Start, End, GraphTimeUnit.Month);         // TODO 
+            graphVM.GraphUnitsSLI = GraphTimeUnitToSLI();
+
+            graphVM.Tables = _graphGenerator.GenerateTables(graphVM.GraphTimeUnit, GetIdentityUserId(), Start, End);
+            graphVM.GraphDescription = _graphGenerator.GenerateGraphDescription(Start, End, graphVM.GraphTimeUnit);         // TODO 
             return View("ShowGraph", graphVM);
+        }
+
+        public List<SelectListItem> GraphTimeUnitToSLI()
+        {
+            GraphTimeUnit[] allEnums = Enum.GetValues<GraphTimeUnit>();
+
+            List<SelectListItem> result = new List<SelectListItem>();
+
+            foreach (var item in allEnums)
+            {
+                result.Add(new SelectListItem()
+                {
+                    Value = ((int)item).ToString(),
+                    Text = item.ToString()
+                });
+            }
+
+            return result;
         }
     }
 }

@@ -49,5 +49,21 @@ namespace taskograph.ControllerUnitTests
             // Assert
             result.Should().BeOfType(typeof(ViewResult));
         }
+
+        [Fact]
+        public void GraphTimeUnitToSLI_ReturnsValidSLI()
+        {
+            // Arrange
+
+            // Act
+            var result  = _graphController.GraphTimeUnitToSLI();
+
+            // Assert
+            result.ElementAt(0).Value.Should().Be("0");
+            result.ElementAt(0).Text.Should().Be("Week");
+
+            result.ElementAt(1).Value.Should().Be("1");
+            result.ElementAt(1).Text.Should().Be("Month");
+        }
     }
 }
